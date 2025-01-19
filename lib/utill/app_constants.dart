@@ -2,7 +2,7 @@ import 'package:flutter_sixvalley_ecommerce/localization/models/language_model.d
 import 'package:flutter_sixvalley_ecommerce/utill/images.dart';
 
 class AppConstants {
-  static const String appName = '3Rood';
+  static const String appName = '3R Store';
   static const String slogan = 'E-Commerce';
   static const String appVersion = '15.0';
 
