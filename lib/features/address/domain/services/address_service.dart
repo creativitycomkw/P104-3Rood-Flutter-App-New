@@ -1,9 +1,9 @@
 
-import 'package:flutter_sixvalley_ecommerce/data/model/api_response.dart';
-import 'package:flutter_sixvalley_ecommerce/features/address/domain/models/address_model.dart';
-import 'package:flutter_sixvalley_ecommerce/features/address/domain/models/label_model.dart';
-import 'package:flutter_sixvalley_ecommerce/features/address/domain/repositories/address_repository_interface.dart';
-import 'package:flutter_sixvalley_ecommerce/features/address/domain/services/address_service_interface.dart';
+import 'package:flutter_ecommerce/data/model/api_response.dart';
+import 'package:flutter_ecommerce/features/address/domain/models/address_model.dart';
+import 'package:flutter_ecommerce/features/address/domain/models/label_model.dart';
+import 'package:flutter_ecommerce/features/address/domain/repositories/address_repository_interface.dart';
+import 'package:flutter_ecommerce/features/address/domain/services/address_service_interface.dart';
 
  class AddressService implements AddressServiceInterface{
   final AddressRepoInterface addressRepoInterface;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/features/splash/controllers/splash_controller.dart';
+import 'package:flutter_ecommerce/features/splash/controllers/splash_controller.dart';
 import 'package:provider/provider.dart';
 
 class PriceConverter {

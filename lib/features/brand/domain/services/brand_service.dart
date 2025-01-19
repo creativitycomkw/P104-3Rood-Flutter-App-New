@@ -1,5 +1,5 @@
-import 'package:flutter_sixvalley_ecommerce/features/brand/domain/repositories/brand_repo_interface.dart';
-import 'package:flutter_sixvalley_ecommerce/features/brand/domain/services/brand_service_interface.dart';
+import 'package:flutter_ecommerce/features/brand/domain/repositories/brand_repo_interface.dart';
+import 'package:flutter_ecommerce/features/brand/domain/services/brand_service_interface.dart';
 
 class BrandService implements BrandServiceInterface{
   BrandRepoInterface brandRepoInterface;

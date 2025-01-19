@@ -1,5 +1,5 @@
-import 'package:flutter_sixvalley_ecommerce/features/product/domain/repositories/seller_product_repository_interface.dart';
-import 'package:flutter_sixvalley_ecommerce/features/product/domain/services/seller_product_service_interface.dart';
+import 'package:flutter_ecommerce/features/product/domain/repositories/seller_product_repository_interface.dart';
+import 'package:flutter_ecommerce/features/product/domain/services/seller_product_service_interface.dart';
 
 class SellerProductService implements SellerProductServiceInterface{
   SellerProductRepositoryInterface sellerProductRepositoryInterface;

@@ -1,5 +1,5 @@
-import 'package:flutter_sixvalley_ecommerce/localization/models/language_model.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/images.dart';
+import 'package:flutter_ecommerce/localization/models/language_model.dart';
+import 'package:flutter_ecommerce/utill/images.dart';
 
 class AppConstants {
   static const String appName = '3R Store';
@@ -208,7 +208,7 @@ class AppConstants {
   static const String countryCode = 'country_code';
   static const String languageCode = 'language_code';
   static const String theme = 'theme';
-  static const String topic = 'sixvalley';
+  static const String topic = '3R Store';
   static const String demoTopic = 'demo_reset';
   static const String userAddress = 'user_address';
 

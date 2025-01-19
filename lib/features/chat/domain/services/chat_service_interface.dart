@@ -1,6 +1,6 @@
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_sixvalley_ecommerce/features/chat/domain/models/message_body.dart';
+import 'package:flutter_ecommerce/features/chat/domain/models/message_body.dart';
 import 'package:image_picker/image_picker.dart';
 
 abstract class ChatServiceInterface {

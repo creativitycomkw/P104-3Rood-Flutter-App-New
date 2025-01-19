@@ -1,12 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/features/banner/controllers/banner_controller.dart';
-import 'package:flutter_sixvalley_ecommerce/features/banner/widgets/banner_shimmer.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/color_resources.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/custom_themes.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/dimensions.dart';
-import 'package:flutter_sixvalley_ecommerce/common/basewidget/custom_button_widget.dart';
-import 'package:flutter_sixvalley_ecommerce/common/basewidget/custom_image_widget.dart';
+import 'package:flutter_ecommerce/features/banner/controllers/banner_controller.dart';
+import 'package:flutter_ecommerce/features/banner/widgets/banner_shimmer.dart';
+import 'package:flutter_ecommerce/utill/color_resources.dart';
+import 'package:flutter_ecommerce/utill/custom_themes.dart';
+import 'package:flutter_ecommerce/utill/dimensions.dart';
+import 'package:flutter_ecommerce/common/basewidget/custom_button_widget.dart';
+import 'package:flutter_ecommerce/common/basewidget/custom_image_widget.dart';
 import 'package:provider/provider.dart';
 
 

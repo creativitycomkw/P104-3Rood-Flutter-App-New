@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/data/local/cache_response.dart';
-import 'package:flutter_sixvalley_ecommerce/data/model/api_response.dart';
-import 'package:flutter_sixvalley_ecommerce/features/brand/domain/models/brand_model.dart';
-import 'package:flutter_sixvalley_ecommerce/features/brand/domain/repositories/brand_repository.dart';
-import 'package:flutter_sixvalley_ecommerce/main.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/app_constants.dart';
+import 'package:flutter_ecommerce/data/local/cache_response.dart';
+import 'package:flutter_ecommerce/data/model/api_response.dart';
+import 'package:flutter_ecommerce/features/brand/domain/models/brand_model.dart';
+import 'package:flutter_ecommerce/features/brand/domain/repositories/brand_repository.dart';
+import 'package:flutter_ecommerce/main.dart';
+import 'package:flutter_ecommerce/utill/app_constants.dart';
 
 
 class BrandController extends ChangeNotifier {

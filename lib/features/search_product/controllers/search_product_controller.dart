@@ -1,14 +1,14 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/data/model/api_response.dart';
-import 'package:flutter_sixvalley_ecommerce/features/compare/controllers/compare_controller.dart';
-import 'package:flutter_sixvalley_ecommerce/features/product/domain/models/product_model.dart';
-import 'package:flutter_sixvalley_ecommerce/features/search_product/domain/models/author_model.dart';
-import 'package:flutter_sixvalley_ecommerce/features/search_product/domain/models/suggestion_product_model.dart';
-import 'package:flutter_sixvalley_ecommerce/features/search_product/domain/services/search_product_service_interface.dart';
-import 'package:flutter_sixvalley_ecommerce/helper/api_checker.dart';
-import 'package:flutter_sixvalley_ecommerce/main.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/app_constants.dart';
+import 'package:flutter_ecommerce/data/model/api_response.dart';
+import 'package:flutter_ecommerce/features/compare/controllers/compare_controller.dart';
+import 'package:flutter_ecommerce/features/product/domain/models/product_model.dart';
+import 'package:flutter_ecommerce/features/search_product/domain/models/author_model.dart';
+import 'package:flutter_ecommerce/features/search_product/domain/models/suggestion_product_model.dart';
+import 'package:flutter_ecommerce/features/search_product/domain/services/search_product_service_interface.dart';
+import 'package:flutter_ecommerce/helper/api_checker.dart';
+import 'package:flutter_ecommerce/main.dart';
+import 'package:flutter_ecommerce/utill/app_constants.dart';
 import 'package:provider/provider.dart';
 
 class SearchProductController with ChangeNotifier {

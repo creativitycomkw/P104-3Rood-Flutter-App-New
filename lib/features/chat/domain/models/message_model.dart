@@ -1,4 +1,4 @@
-import 'package:flutter_sixvalley_ecommerce/features/chat/domain/models/chat_model.dart';
+import 'package:flutter_ecommerce/features/chat/domain/models/chat_model.dart';
 
 class MessageModel {
   int? totalSize;

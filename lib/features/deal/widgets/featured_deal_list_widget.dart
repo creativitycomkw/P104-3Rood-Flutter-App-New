@@ -1,10 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/common/basewidget/product_widget.dart';
-import 'package:flutter_sixvalley_ecommerce/features/deal/controllers/featured_deal_controller.dart';
-import 'package:flutter_sixvalley_ecommerce/helper/responsive_helper.dart';
-import 'package:flutter_sixvalley_ecommerce/features/home/widgets/aster_theme/find_what_you_need_shimmer.dart';
-import 'package:flutter_sixvalley_ecommerce/features/deal/widgets/featured_deal_card_widget.dart';
+import 'package:flutter_ecommerce/common/basewidget/product_widget.dart';
+import 'package:flutter_ecommerce/features/deal/controllers/featured_deal_controller.dart';
+import 'package:flutter_ecommerce/helper/responsive_helper.dart';
+import 'package:flutter_ecommerce/features/home/widgets/aster_theme/find_what_you_need_shimmer.dart';
+import 'package:flutter_ecommerce/features/deal/widgets/featured_deal_card_widget.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 

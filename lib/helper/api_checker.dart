@@ -1,11 +1,11 @@
 import 'dart:developer';
 
-import 'package:flutter_sixvalley_ecommerce/data/model/api_response.dart';
-import 'package:flutter_sixvalley_ecommerce/data/model/error_response.dart';
-import 'package:flutter_sixvalley_ecommerce/localization/language_constrants.dart';
-import 'package:flutter_sixvalley_ecommerce/main.dart';
-import 'package:flutter_sixvalley_ecommerce/features/auth/controllers/auth_controller.dart';
-import 'package:flutter_sixvalley_ecommerce/common/basewidget/show_custom_snakbar_widget.dart';
+import 'package:flutter_ecommerce/data/model/api_response.dart';
+import 'package:flutter_ecommerce/data/model/error_response.dart';
+import 'package:flutter_ecommerce/localization/language_constrants.dart';
+import 'package:flutter_ecommerce/main.dart';
+import 'package:flutter_ecommerce/features/auth/controllers/auth_controller.dart';
+import 'package:flutter_ecommerce/common/basewidget/show_custom_snakbar_widget.dart';
 import 'package:provider/provider.dart';
 
 class ApiChecker {

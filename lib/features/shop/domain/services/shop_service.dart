@@ -1,5 +1,5 @@
-import 'package:flutter_sixvalley_ecommerce/features/shop/domain/repositories/shop_repository_interface.dart';
-import 'package:flutter_sixvalley_ecommerce/features/shop/domain/services/shop_service_interface.dart';
+import 'package:flutter_ecommerce/features/shop/domain/repositories/shop_repository_interface.dart';
+import 'package:flutter_ecommerce/features/shop/domain/services/shop_service_interface.dart';
 
 class ShopService implements ShopServiceInterface{
   ShopRepositoryInterface shopRepositoryInterface;

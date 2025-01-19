@@ -1,5 +1,5 @@
-import 'package:flutter_sixvalley_ecommerce/features/notification/domain/repositories/notification_repository_interface.dart';
-import 'package:flutter_sixvalley_ecommerce/features/notification/domain/services/notification_service_interface.dart';
+import 'package:flutter_ecommerce/features/notification/domain/repositories/notification_repository_interface.dart';
+import 'package:flutter_ecommerce/features/notification/domain/services/notification_service_interface.dart';
 
 class NotificationService implements NotificationServiceInterface{
   NotificationRepositoryInterface notificationRepositoryInterface;

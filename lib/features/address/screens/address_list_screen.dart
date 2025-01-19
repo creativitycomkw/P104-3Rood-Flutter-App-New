@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/features/address/controllers/address_controller.dart';
-import 'package:flutter_sixvalley_ecommerce/features/address/widgets/address_shimmer.dart';
-import 'package:flutter_sixvalley_ecommerce/localization/language_constrants.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/color_resources.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/custom_themes.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/dimensions.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/images.dart';
-import 'package:flutter_sixvalley_ecommerce/common/basewidget/custom_app_bar_widget.dart';
-import 'package:flutter_sixvalley_ecommerce/common/basewidget/no_internet_screen_widget.dart';
-import 'package:flutter_sixvalley_ecommerce/features/address/widgets/remove_address_bottom_sheet_widget.dart';
-import 'package:flutter_sixvalley_ecommerce/features/address/screens/add_new_address_screen.dart';
+import 'package:flutter_ecommerce/features/address/controllers/address_controller.dart';
+import 'package:flutter_ecommerce/features/address/widgets/address_shimmer.dart';
+import 'package:flutter_ecommerce/localization/language_constrants.dart';
+import 'package:flutter_ecommerce/utill/color_resources.dart';
+import 'package:flutter_ecommerce/utill/custom_themes.dart';
+import 'package:flutter_ecommerce/utill/dimensions.dart';
+import 'package:flutter_ecommerce/utill/images.dart';
+import 'package:flutter_ecommerce/common/basewidget/custom_app_bar_widget.dart';
+import 'package:flutter_ecommerce/common/basewidget/no_internet_screen_widget.dart';
+import 'package:flutter_ecommerce/features/address/widgets/remove_address_bottom_sheet_widget.dart';
+import 'package:flutter_ecommerce/features/address/screens/add_new_address_screen.dart';
 import 'package:provider/provider.dart';
 
 class AddressListScreen extends StatefulWidget {

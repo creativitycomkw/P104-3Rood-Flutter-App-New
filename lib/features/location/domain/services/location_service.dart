@@ -1,5 +1,5 @@
-import 'package:flutter_sixvalley_ecommerce/features/location/domain/repositories/location_repository_interface.dart';
-import 'package:flutter_sixvalley_ecommerce/features/location/domain/services/location_service_interface.dart';
+import 'package:flutter_ecommerce/features/location/domain/repositories/location_repository_interface.dart';
+import 'package:flutter_ecommerce/features/location/domain/services/location_service_interface.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationService implements LocationServiceInterface{

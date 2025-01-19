@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_sixvalley_ecommerce/common/basewidget/custom_directionality_widget.dart';
-import 'package:flutter_sixvalley_ecommerce/features/coupon/domain/models/coupon_item_model.dart';
-import 'package:flutter_sixvalley_ecommerce/helper/date_converter.dart';
-import 'package:flutter_sixvalley_ecommerce/helper/price_converter.dart';
-import 'package:flutter_sixvalley_ecommerce/localization/controllers/localization_controller.dart';
-import 'package:flutter_sixvalley_ecommerce/localization/language_constrants.dart';
-import 'package:flutter_sixvalley_ecommerce/theme/controllers/theme_controller.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/custom_themes.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/dimensions.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/images.dart';
+import 'package:flutter_ecommerce/common/basewidget/custom_directionality_widget.dart';
+import 'package:flutter_ecommerce/features/coupon/domain/models/coupon_item_model.dart';
+import 'package:flutter_ecommerce/helper/date_converter.dart';
+import 'package:flutter_ecommerce/helper/price_converter.dart';
+import 'package:flutter_ecommerce/localization/controllers/localization_controller.dart';
+import 'package:flutter_ecommerce/localization/language_constrants.dart';
+import 'package:flutter_ecommerce/theme/controllers/theme_controller.dart';
+import 'package:flutter_ecommerce/utill/custom_themes.dart';
+import 'package:flutter_ecommerce/utill/dimensions.dart';
+import 'package:flutter_ecommerce/utill/images.dart';
 import 'package:just_the_tooltip/just_the_tooltip.dart';
 import 'package:provider/provider.dart';
 

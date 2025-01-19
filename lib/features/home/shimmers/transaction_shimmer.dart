@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/color_resources.dart';
+import 'package:flutter_ecommerce/utill/color_resources.dart';
 import 'package:shimmer/shimmer.dart';
 
 class TransactionShimmer extends StatelessWidget {

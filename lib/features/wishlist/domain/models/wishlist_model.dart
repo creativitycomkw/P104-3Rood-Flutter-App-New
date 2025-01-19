@@ -1,5 +1,5 @@
-import 'package:flutter_sixvalley_ecommerce/data/model/image_full_url.dart';
-import 'package:flutter_sixvalley_ecommerce/features/product/domain/models/product_model.dart';
+import 'package:flutter_ecommerce/data/model/image_full_url.dart';
+import 'package:flutter_ecommerce/features/product/domain/models/product_model.dart';
 
 class WishlistModel {
   int? id;

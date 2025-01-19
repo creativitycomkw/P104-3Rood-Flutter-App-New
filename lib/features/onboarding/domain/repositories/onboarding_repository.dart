@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_sixvalley_ecommerce/data/datasource/remote/dio/dio_client.dart';
-import 'package:flutter_sixvalley_ecommerce/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:flutter_sixvalley_ecommerce/data/model/api_response.dart';
-import 'package:flutter_sixvalley_ecommerce/features/onboarding/domain/models/onboarding_model.dart';
-import 'package:flutter_sixvalley_ecommerce/features/onboarding/domain/repositories/onboarding_repository_interface.dart';
-import 'package:flutter_sixvalley_ecommerce/localization/language_constrants.dart';
-import 'package:flutter_sixvalley_ecommerce/main.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/app_constants.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/images.dart';
+import 'package:flutter_ecommerce/data/datasource/remote/dio/dio_client.dart';
+import 'package:flutter_ecommerce/data/datasource/remote/exception/api_error_handler.dart';
+import 'package:flutter_ecommerce/data/model/api_response.dart';
+import 'package:flutter_ecommerce/features/onboarding/domain/models/onboarding_model.dart';
+import 'package:flutter_ecommerce/features/onboarding/domain/repositories/onboarding_repository_interface.dart';
+import 'package:flutter_ecommerce/localization/language_constrants.dart';
+import 'package:flutter_ecommerce/main.dart';
+import 'package:flutter_ecommerce/utill/app_constants.dart';
+import 'package:flutter_ecommerce/utill/images.dart';
 
 class OnBoardingRepository implements OnBoardingRepositoryInterface{
   final DioClient? dioClient;

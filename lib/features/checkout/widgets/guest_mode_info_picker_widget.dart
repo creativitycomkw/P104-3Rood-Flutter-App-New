@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/features/address/controllers/address_controller.dart';
-import 'package:flutter_sixvalley_ecommerce/features/checkout/controllers/checkout_controller.dart';
-import 'package:flutter_sixvalley_ecommerce/localization/language_constrants.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/custom_themes.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/dimensions.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/images.dart';
-import 'package:flutter_sixvalley_ecommerce/features/checkout/widgets/shipping_details_widget.dart';
+import 'package:flutter_ecommerce/features/address/controllers/address_controller.dart';
+import 'package:flutter_ecommerce/features/checkout/controllers/checkout_controller.dart';
+import 'package:flutter_ecommerce/localization/language_constrants.dart';
+import 'package:flutter_ecommerce/utill/custom_themes.dart';
+import 'package:flutter_ecommerce/utill/dimensions.dart';
+import 'package:flutter_ecommerce/utill/images.dart';
+import 'package:flutter_ecommerce/features/checkout/widgets/shipping_details_widget.dart';
 import 'package:provider/provider.dart';
 
 class GuestModeInfoPickerWidget extends StatelessWidget {

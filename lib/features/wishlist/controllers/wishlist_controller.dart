@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_sixvalley_ecommerce/data/model/api_response.dart';
-import 'package:flutter_sixvalley_ecommerce/features/wishlist/domain/models/wishlist_model.dart';
-import 'package:flutter_sixvalley_ecommerce/features/wishlist/domain/services/wishlist_service_interface.dart';
-import 'package:flutter_sixvalley_ecommerce/helper/api_checker.dart';
-import 'package:flutter_sixvalley_ecommerce/localization/language_constrants.dart';
-import 'package:flutter_sixvalley_ecommerce/main.dart';
-import 'package:flutter_sixvalley_ecommerce/common/basewidget/show_custom_snakbar_widget.dart';
+import 'package:flutter_ecommerce/data/model/api_response.dart';
+import 'package:flutter_ecommerce/features/wishlist/domain/models/wishlist_model.dart';
+import 'package:flutter_ecommerce/features/wishlist/domain/services/wishlist_service_interface.dart';
+import 'package:flutter_ecommerce/helper/api_checker.dart';
+import 'package:flutter_ecommerce/localization/language_constrants.dart';
+import 'package:flutter_ecommerce/main.dart';
+import 'package:flutter_ecommerce/common/basewidget/show_custom_snakbar_widget.dart';
 
 class WishListController extends ChangeNotifier {
   final WishlistServiceInterface? wishlistServiceInterface;

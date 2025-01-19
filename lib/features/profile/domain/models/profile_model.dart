@@ -1,4 +1,4 @@
-import 'package:flutter_sixvalley_ecommerce/data/model/image_full_url.dart';
+import 'package:flutter_ecommerce/data/model/image_full_url.dart';
 
 class ProfileModel {
   int? id;

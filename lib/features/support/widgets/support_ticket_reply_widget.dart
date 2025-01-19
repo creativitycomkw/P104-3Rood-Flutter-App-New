@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/common/basewidget/custom_image_widget.dart';
-import 'package:flutter_sixvalley_ecommerce/common/basewidget/image_diaglog_widget.dart';
-import 'package:flutter_sixvalley_ecommerce/features/support/domain/models/support_reply_model.dart';
-import 'package:flutter_sixvalley_ecommerce/localization/controllers/localization_controller.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/color_resources.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/custom_themes.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/dimensions.dart';
+import 'package:flutter_ecommerce/common/basewidget/custom_image_widget.dart';
+import 'package:flutter_ecommerce/common/basewidget/image_diaglog_widget.dart';
+import 'package:flutter_ecommerce/features/support/domain/models/support_reply_model.dart';
+import 'package:flutter_ecommerce/localization/controllers/localization_controller.dart';
+import 'package:flutter_ecommerce/utill/color_resources.dart';
+import 'package:flutter_ecommerce/utill/custom_themes.dart';
+import 'package:flutter_ecommerce/utill/dimensions.dart';
 import 'package:provider/provider.dart';
 
 class SupportTicketReplyWidget extends StatelessWidget {

@@ -1,5 +1,5 @@
-import 'package:flutter_sixvalley_ecommerce/features/cart/domain/models/cart_model.dart';
-import 'package:flutter_sixvalley_ecommerce/features/product/domain/models/product_model.dart';
+import 'package:flutter_ecommerce/features/cart/domain/models/cart_model.dart';
+import 'package:flutter_ecommerce/features/product/domain/models/product_model.dart';
 
 abstract class CartServiceInterface{
 

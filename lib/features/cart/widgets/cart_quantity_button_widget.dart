@@ -2,10 +2,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/common/basewidget/show_custom_snakbar_widget.dart';
-import 'package:flutter_sixvalley_ecommerce/features/cart/controllers/cart_controller.dart';
-import 'package:flutter_sixvalley_ecommerce/features/cart/domain/models/cart_model.dart';
-import 'package:flutter_sixvalley_ecommerce/localization/language_constrants.dart';
+import 'package:flutter_ecommerce/common/basewidget/show_custom_snakbar_widget.dart';
+import 'package:flutter_ecommerce/features/cart/controllers/cart_controller.dart';
+import 'package:flutter_ecommerce/features/cart/domain/models/cart_model.dart';
+import 'package:flutter_ecommerce/localization/language_constrants.dart';
 import 'package:provider/provider.dart';
 
 class CartQuantityButton extends StatelessWidget {

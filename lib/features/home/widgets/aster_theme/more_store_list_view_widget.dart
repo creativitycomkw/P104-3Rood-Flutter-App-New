@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/features/shop/controllers/shop_controller.dart';
-import 'package:flutter_sixvalley_ecommerce/features/home/widgets/aster_theme/more_store_widget.dart';
+import 'package:flutter_ecommerce/features/shop/controllers/shop_controller.dart';
+import 'package:flutter_ecommerce/features/home/widgets/aster_theme/more_store_widget.dart';
 import 'package:provider/provider.dart';
 
 class MoreStoreView extends StatefulWidget {

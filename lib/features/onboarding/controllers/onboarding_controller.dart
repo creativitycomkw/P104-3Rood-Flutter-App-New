@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/data/model/api_response.dart';
-import 'package:flutter_sixvalley_ecommerce/features/onboarding/domain/models/onboarding_model.dart';
-import 'package:flutter_sixvalley_ecommerce/features/onboarding/domain/services/onboarding_service_interface.dart';
-import 'package:flutter_sixvalley_ecommerce/helper/api_checker.dart';
+import 'package:flutter_ecommerce/data/model/api_response.dart';
+import 'package:flutter_ecommerce/features/onboarding/domain/models/onboarding_model.dart';
+import 'package:flutter_ecommerce/features/onboarding/domain/services/onboarding_service_interface.dart';
+import 'package:flutter_ecommerce/helper/api_checker.dart';
 
 class OnBoardingController with ChangeNotifier {
   final OnBoardingServiceInterface onBoardingServiceInterface;

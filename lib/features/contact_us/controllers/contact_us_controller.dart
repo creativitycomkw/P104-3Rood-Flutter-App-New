@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_sixvalley_ecommerce/common/basewidget/show_custom_snakbar_widget.dart';
-import 'package:flutter_sixvalley_ecommerce/data/model/api_response.dart';
-import 'package:flutter_sixvalley_ecommerce/features/contact_us/domain/models/contact_us_body.dart';
-import 'package:flutter_sixvalley_ecommerce/features/contact_us/domain/services/contact_us_service_interface.dart';
-import 'package:flutter_sixvalley_ecommerce/helper/api_checker.dart';
-import 'package:flutter_sixvalley_ecommerce/localization/language_constrants.dart';
-import 'package:flutter_sixvalley_ecommerce/main.dart';
+import 'package:flutter_ecommerce/common/basewidget/show_custom_snakbar_widget.dart';
+import 'package:flutter_ecommerce/data/model/api_response.dart';
+import 'package:flutter_ecommerce/features/contact_us/domain/models/contact_us_body.dart';
+import 'package:flutter_ecommerce/features/contact_us/domain/services/contact_us_service_interface.dart';
+import 'package:flutter_ecommerce/helper/api_checker.dart';
+import 'package:flutter_ecommerce/localization/language_constrants.dart';
+import 'package:flutter_ecommerce/main.dart';
 
 class ContactUsController extends ChangeNotifier{
   ContactUsServiceInterface contactUsServiceInterface;

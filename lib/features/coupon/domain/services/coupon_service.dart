@@ -1,5 +1,5 @@
-import 'package:flutter_sixvalley_ecommerce/features/coupon/domain/repositories/coupon_repository_interface.dart';
-import 'package:flutter_sixvalley_ecommerce/features/coupon/domain/services/coupon_service_interface.dart';
+import 'package:flutter_ecommerce/features/coupon/domain/repositories/coupon_repository_interface.dart';
+import 'package:flutter_ecommerce/features/coupon/domain/services/coupon_service_interface.dart';
 
 class CouponService implements CouponServiceInterface{
   CouponRepositoryInterface couponRepositoryInterface;

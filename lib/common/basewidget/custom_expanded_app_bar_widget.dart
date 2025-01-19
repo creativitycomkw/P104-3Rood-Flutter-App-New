@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/features/auth/controllers/auth_controller.dart';
-import 'package:flutter_sixvalley_ecommerce/features/splash/controllers/splash_controller.dart';
-import 'package:flutter_sixvalley_ecommerce/theme/controllers/theme_controller.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/color_resources.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/custom_themes.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/dimensions.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/images.dart';
-import 'package:flutter_sixvalley_ecommerce/common/basewidget/not_loggedin_widget.dart';
+import 'package:flutter_ecommerce/features/auth/controllers/auth_controller.dart';
+import 'package:flutter_ecommerce/features/splash/controllers/splash_controller.dart';
+import 'package:flutter_ecommerce/theme/controllers/theme_controller.dart';
+import 'package:flutter_ecommerce/utill/color_resources.dart';
+import 'package:flutter_ecommerce/utill/custom_themes.dart';
+import 'package:flutter_ecommerce/utill/dimensions.dart';
+import 'package:flutter_ecommerce/utill/images.dart';
+import 'package:flutter_ecommerce/common/basewidget/not_loggedin_widget.dart';
 import 'package:provider/provider.dart';
 
 class CustomExpandedAppBarWidget extends StatelessWidget {

@@ -1,5 +1,5 @@
-import 'package:flutter_sixvalley_ecommerce/features/category/domain/repositories/category_repo_interface.dart';
-import 'package:flutter_sixvalley_ecommerce/features/category/domain/services/category_service_interface.dart';
+import 'package:flutter_ecommerce/features/category/domain/repositories/category_repo_interface.dart';
+import 'package:flutter_ecommerce/features/category/domain/services/category_service_interface.dart';
 
 class CategoryService implements CategoryServiceInterface{
   CategoryRepoInterface categoryRepoInterface;

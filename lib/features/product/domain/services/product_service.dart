@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/features/product/domain/repositories/product_repository_interface.dart';
-import 'package:flutter_sixvalley_ecommerce/features/product/domain/services/product_service_interface.dart';
-import 'package:flutter_sixvalley_ecommerce/features/product/enums/product_type.dart';
+import 'package:flutter_ecommerce/features/product/domain/repositories/product_repository_interface.dart';
+import 'package:flutter_ecommerce/features/product/domain/services/product_service_interface.dart';
+import 'package:flutter_ecommerce/features/product/enums/product_type.dart';
 
 class ProductService implements ProductServiceInterface{
   ProductRepositoryInterface productRepositoryInterface;

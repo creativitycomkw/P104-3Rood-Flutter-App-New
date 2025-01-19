@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sixvalley_ecommerce/common/basewidget/custom_image_widget.dart';
+import 'package:flutter_ecommerce/common/basewidget/custom_image_widget.dart';
 
 class ImageDialog extends StatelessWidget {
   final String imageUrl;

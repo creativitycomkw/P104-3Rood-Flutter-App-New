@@ -1,14 +1,14 @@
 import 'dart:developer';
 
-import 'package:flutter_sixvalley_ecommerce/data/datasource/remote/dio/dio_client.dart';
-import 'package:flutter_sixvalley_ecommerce/data/model/api_response.dart';
+import 'package:flutter_ecommerce/data/datasource/remote/dio/dio_client.dart';
+import 'package:flutter_ecommerce/data/model/api_response.dart';
 import 'dart:io';
-import 'package:flutter_sixvalley_ecommerce/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:flutter_sixvalley_ecommerce/features/auth/controllers/auth_controller.dart';
-import 'package:flutter_sixvalley_ecommerce/features/review/domain/models/review_body.dart';
-import 'package:flutter_sixvalley_ecommerce/features/review/domain/repositories/review_repository_interface.dart';
-import 'package:flutter_sixvalley_ecommerce/main.dart';
-import 'package:flutter_sixvalley_ecommerce/utill/app_constants.dart';
+import 'package:flutter_ecommerce/data/datasource/remote/exception/api_error_handler.dart';
+import 'package:flutter_ecommerce/features/auth/controllers/auth_controller.dart';
+import 'package:flutter_ecommerce/features/review/domain/models/review_body.dart';
+import 'package:flutter_ecommerce/features/review/domain/repositories/review_repository_interface.dart';
+import 'package:flutter_ecommerce/main.dart';
+import 'package:flutter_ecommerce/utill/app_constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 

@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:flutter_sixvalley_ecommerce/interface/repo_interface.dart';
+import 'package:flutter_ecommerce/interface/repo_interface.dart';
 
 abstract class ProductDetailsRepositoryInterface implements RepositoryInterface{
   Future<dynamic> getCount(String productID);

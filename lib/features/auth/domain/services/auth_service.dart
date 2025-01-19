@@ -1,5 +1,5 @@
-import 'package:flutter_sixvalley_ecommerce/features/auth/domain/repositories/auth_repository_interface.dart';
-import 'package:flutter_sixvalley_ecommerce/features/auth/domain/services/auth_service_interface.dart';
+import 'package:flutter_ecommerce/features/auth/domain/repositories/auth_repository_interface.dart';
+import 'package:flutter_ecommerce/features/auth/domain/services/auth_service_interface.dart';
 
 class AuthService implements AuthServiceInterface{
   AuthRepoInterface authRepoInterface;

@@ -1,5 +1,5 @@
-import 'package:flutter_sixvalley_ecommerce/features/refund/domain/repositories/refund_repository_interface.dart';
-import 'package:flutter_sixvalley_ecommerce/features/refund/domain/services/refund_service_interface.dart';
+import 'package:flutter_ecommerce/features/refund/domain/repositories/refund_repository_interface.dart';
+import 'package:flutter_ecommerce/features/refund/domain/services/refund_service_interface.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RefundService implements RefundServiceInterface{

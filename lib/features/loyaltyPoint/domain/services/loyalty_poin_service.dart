@@ -1,5 +1,5 @@
-import 'package:flutter_sixvalley_ecommerce/features/loyaltyPoint/domain/repositories/loyalty_point_repository_interface.dart';
-import 'package:flutter_sixvalley_ecommerce/features/loyaltyPoint/domain/services/loyalty_point_service_interface.dart';
+import 'package:flutter_ecommerce/features/loyaltyPoint/domain/repositories/loyalty_point_repository_interface.dart';
+import 'package:flutter_ecommerce/features/loyaltyPoint/domain/services/loyalty_point_service_interface.dart';
 
 class LoyaltyPointService implements LoyaltyPointServiceInterface{
   LoyaltyPointRepositoryInterface loyaltyPointRepositoryInterface;
