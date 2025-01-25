@@ -81,6 +81,7 @@ dependencies:
   flutter_inappwebview_ios: ^1.1.2
   drift: ^2.21.0
   drift_flutter: ^0.1.0
+  dropdown_search: ^6.0.2
 
 
 dev_dependencies:

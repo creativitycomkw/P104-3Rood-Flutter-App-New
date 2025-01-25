@@ -45,13 +45,13 @@ class CartScreenState extends State<CartScreen> {
     await Provider.of<CartController>(Get.context!, listen: false)
         .getCartData(Get.context!);
     Provider.of<CartController>(Get.context!, listen: false).setCartData();
-    if (Provider.of<SplashController>(Get.context!, listen: false)
-            .configModel!
-            .shippingMethod !=
-        'sellerwise_shipping') {
-      Provider.of<ShippingController>(Get.context!, listen: false)
-          .getAdminShippingMethodList(Get.context!);
-    }
+    // if (Provider.of<SplashController>(Get.context!, listen: false)
+    //         .configModel!
+    //         .shippingMethod !=
+    //     'sellerwise_shipping') {
+    //   Provider.of<ShippingController>(Get.context!, listen: false)
+    //       .getAdminShippingMethodList(Get.context!);
+    // }
   }
 
   Color _currentColor = Theme.of(Get.context!).cardColor; // Initial color
@@ -429,32 +429,40 @@ class CartScreenState extends State<CartScreen> {
                                               'unavailable_shop_product_in_your_cart',
                                               context),
                                           context);
-                                    } else if (hasNull &&
-                                        configProvider
-                                                .configModel!.shippingMethod ==
-                                            'sellerwise_shipping' &&
-                                        !onlyDigital) {
-                                      changeColor();
-                                      showCustomSnackBar(
-                                          getTranslated(
-                                              'select_all_shipping_method',
-                                              context),
-                                          context);
-                                    } else if (shippingController
-                                            .chosenShippingList.isEmpty &&
-                                        configProvider
-                                                .configModel!.shippingMethod !=
-                                            'sellerwise_shipping' &&
-                                        configProvider.configModel!
-                                                .inhouseSelectedShippingType ==
-                                            'order_wise' &&
-                                        !onlyDigital) {
-                                      showCustomSnackBar(
-                                          getTranslated(
-                                              'select_all_shipping_method',
-                                              context),
-                                          context);
-                                    } else if (minimum) {
+                                    } 
+                                    
+                                    ////Shipping checkingd 
+
+                                    // else if (hasNull &&
+                                    //     configProvider
+                                    //             .configModel!.shippingMethod ==
+                                    //         'sellerwise_shipping' &&
+                                    //     !onlyDigital) {
+                                    //   changeColor();
+                                    //   showCustomSnackBar(
+                                    //       getTranslated(
+                                    //           'select_all_shipping_method',
+                                    //           context),
+                                    //       context);
+                                    // } else if (shippingController
+                                    //         .chosenShippingList.isEmpty &&
+                                    //     configProvider
+                                    //             .configModel!.shippingMethod !=
+                                    //         'sellerwise_shipping' &&
+                                    //     configProvider.configModel!
+                                    //             .inhouseSelectedShippingType ==
+                                    //         'order_wise' &&
+                                    //     !onlyDigital) {
+                                    //   showCustomSnackBar(
+                                    //       getTranslated(
+                                    //           'select_all_shipping_method',
+                                    //           context),
+                                    //       context);
+                                    // } 
+                                    
+                                    
+                                    ////Shipping checkingd ends here
+                                    else if (minimum) {
                                       changeColor();
                                       showCustomSnackBar(
                                           getTranslated(
@@ -726,6 +734,8 @@ class CartScreenState extends State<CartScreen> {
                                                                             ),
                                                                           )
                                                                       ]))),
+                                                             
+                                                             
                                                               SizedBox(
                                                                 width: 200,
                                                                 child: configProvider.configModel!.shippingMethod ==
@@ -777,6 +787,10 @@ class CartScreenState extends State<CartScreen> {
                                                                       )
                                                                     : const SizedBox(),
                                                               )
+
+
+
+
                                                             ],
                                                           ),
                                                         )
@@ -1105,130 +1119,136 @@ class CartScreenState extends State<CartScreen> {
                                   ),
                                 ),
                               ),
-                              (!onlyDigital &&
-                                      configProvider
-                                              .configModel!.shippingMethod !=
-                                          'sellerwise_shipping' &&
-                                      configProvider.configModel!
-                                              .inhouseSelectedShippingType ==
-                                          'order_wise')
-                                  ? InkWell(
-                                      onTap: () {
-                                        showModalBottomSheet(
-                                            context: context,
-                                            isScrollControlled: true,
-                                            backgroundColor: Colors.transparent,
-                                            builder: (context) =>
-                                                const ShippingMethodBottomSheetWidget(
-                                                    groupId: 'all_cart_group',
-                                                    sellerIndex: 0,
-                                                    sellerId: 1));
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            Dimensions.paddingSizeDefault,
-                                            Dimensions.paddingSizeSmall,
-                                            Dimensions.paddingSizeDefault,
-                                            0),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  width: 0.5,
-                                                  color: Colors.grey),
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(10))),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Row(children: [
-                                                    SizedBox(
-                                                        width: 15,
-                                                        height: 15,
-                                                        child: Image.asset(
-                                                            Images.delivery,
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodyLarge
-                                                                ?.color)),
-                                                    const SizedBox(
-                                                        width: Dimensions
-                                                            .paddingSizeExtraSmall),
-                                                    Text(
-                                                      getTranslated(
-                                                          'choose_shipping',
-                                                          context)!,
-                                                      style: textRegular,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      maxLines: 1,
-                                                    ),
-                                                  ]),
-                                                  Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: [
-                                                        Text(
-                                                          (shippingController
-                                                                          .shippingList ==
-                                                                      null ||
-                                                                  shippingController
-                                                                      .chosenShippingList
-                                                                      .isEmpty ||
-                                                                  shippingController
-                                                                      .shippingList!
-                                                                      .isEmpty ||
-                                                                  shippingController
-                                                                          .shippingList![
-                                                                              0]
-                                                                          .shippingMethodList ==
-                                                                      null ||
-                                                                  shippingController
-                                                                          .shippingList![
-                                                                              0]
-                                                                          .shippingIndex ==
-                                                                      -1)
-                                                              ? ''
-                                                              : shippingController
-                                                                  .shippingList![
-                                                                      0]
-                                                                  .shippingMethodList![
-                                                                      shippingController
-                                                                          .shippingList![
-                                                                              0]
-                                                                          .shippingIndex!]
-                                                                  .title
-                                                                  .toString(),
-                                                          style: titilliumSemiBold
-                                                              .copyWith(
-                                                                  color: Theme.of(
-                                                                          context)
-                                                                      .hintColor),
-                                                          maxLines: 1,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                        ),
-                                                        const SizedBox(
-                                                            width: Dimensions
-                                                                .paddingSizeExtraSmall),
-                                                        Icon(
-                                                            Icons
-                                                                .keyboard_arrow_down,
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .primaryColor),
-                                                      ]),
-                                                ]),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  : const SizedBox(),
+
+
+                              // (!onlyDigital &&
+                              //         configProvider
+                              //                 .configModel!.shippingMethod !=
+                              //             'sellerwise_shipping' &&
+                              //         configProvider.configModel!
+                              //                 .inhouseSelectedShippingType ==
+                              //             'order_wise')
+                              //     ? InkWell(
+                              //         onTap: () {
+                              //           showModalBottomSheet(
+                              //               context: context,
+                              //               isScrollControlled: true,
+                              //               backgroundColor: Colors.transparent,
+                              //               builder: (context) =>
+                              //                   const ShippingMethodBottomSheetWidget(
+                              //                       groupId: 'all_cart_group',
+                              //                       sellerIndex: 0,
+                              //                       sellerId: 1));
+                              //         },
+                              //         child: Padding(
+                              //           padding: const EdgeInsets.fromLTRB(
+                              //               Dimensions.paddingSizeDefault,
+                              //               Dimensions.paddingSizeSmall,
+                              //               Dimensions.paddingSizeDefault,
+                              //               0),
+                              //           child: Container(
+                              //             decoration: BoxDecoration(
+                              //                 border: Border.all(
+                              //                     width: 0.5,
+                              //                     color: Colors.grey),
+                              //                 borderRadius:
+                              //                     const BorderRadius.all(
+                              //                         Radius.circular(10))),
+                              //             child: Padding(
+                              //               padding: const EdgeInsets.all(8.0),
+                              //               child: Row(
+                              //                   mainAxisAlignment:
+                              //                       MainAxisAlignment
+                              //                           .spaceBetween,
+                              //                   children: [
+                              //                     Row(children: [
+                              //                       SizedBox(
+                              //                           width: 15,
+                              //                           height: 15,
+                              //                           child: Image.asset(
+                              //                               Images.delivery,
+                              //                               color: Theme.of(
+                              //                                       context)
+                              //                                   .textTheme
+                              //                                   .bodyLarge
+                              //                                   ?.color)),
+                              //                       const SizedBox(
+                              //                           width: Dimensions
+                              //                               .paddingSizeExtraSmall),
+                              //                       Text(
+                              //                         getTranslated(
+                              //                             'choose_shipping',
+                              //                             context)!,
+                              //                         style: textRegular,
+                              //                         overflow:
+                              //                             TextOverflow.ellipsis,
+                              //                         maxLines: 1,
+                              //                       ),
+                              //                     ]),
+                              //                     Row(
+                              //                         mainAxisAlignment:
+                              //                             MainAxisAlignment.end,
+                              //                         children: [
+                              //                           Text(
+                              //                             (shippingController
+                              //                                             .shippingList ==
+                              //                                         null ||
+                              //                                     shippingController
+                              //                                         .chosenShippingList
+                              //                                         .isEmpty ||
+                              //                                     shippingController
+                              //                                         .shippingList!
+                              //                                         .isEmpty ||
+                              //                                     shippingController
+                              //                                             .shippingList![
+                              //                                                 0]
+                              //                                             .shippingMethodList ==
+                              //                                         null ||
+                              //                                     shippingController
+                              //                                             .shippingList![
+                              //                                                 0]
+                              //                                             .shippingIndex ==
+                              //                                         -1)
+                              //                                 ? ''
+                              //                                 : shippingController
+                              //                                     .shippingList![
+                              //                                         0]
+                              //                                     .shippingMethodList![
+                              //                                         shippingController
+                              //                                             .shippingList![
+                              //                                                 0]
+                              //                                             .shippingIndex!]
+                              //                                     .title
+                              //                                     .toString(),
+                              //                             style: titilliumSemiBold
+                              //                                 .copyWith(
+                              //                                     color: Theme.of(
+                              //                                             context)
+                              //                                         .hintColor),
+                              //                             maxLines: 1,
+                              //                             overflow: TextOverflow
+                              //                                 .ellipsis,
+                              //                           ),
+                              //                           const SizedBox(
+                              //                               width: Dimensions
+                              //                                   .paddingSizeExtraSmall),
+                              //                           Icon(
+                              //                               Icons
+                              //                                   .keyboard_arrow_down,
+                              //                               color: Theme.of(
+                              //                                       context)
+                              //                                   .primaryColor),
+                              //                         ]),
+                              //                   ]),
+                              //             ),
+                              //           ),
+                              //         ),
+                              //       )
+                              //     : const SizedBox(),
+
+
+
+
                             ],
                           ),
                         )

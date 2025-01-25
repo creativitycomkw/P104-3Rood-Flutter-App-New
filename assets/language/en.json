@@ -272,8 +272,8 @@
     "others": "Others",
     "edit": "Edit",
     "delete": "Delete",
-    "city": "City",
-    "zip": "Zip Code",
+    "city": "Block",
+    "zip": "House/building no.",
     "additional_note": "Additional note",
     "shipping_and_billing_is_same": "Shipping and Billing Address is same",
     "select_delivery_address": "Select Delivery Address",
@@ -638,8 +638,8 @@
     "minimum_purchase_amount": "Minimum purchase amount",
     "minimum_password_length": "Minimum 8 characters",
     "ticket_closed_successfully": "Ticket closed successfully",
-    "city_is_required": "City is required",
-    "zip_code_is_required": "Zip code is required",
+    "city_is_required": "Block is required",
+    "zip_code_is_required": "House/building no. is required",
     "compare_list": "Compare List",
     "compare_products": "Compare Products",
     "ratings": "Ratings",
@@ -648,7 +648,7 @@
     "picture_uploaded_by": "Picture Uploaded by",
     "contact_person_name_is_required": "Contact person name is required",
     "contact_person_phone_is_required": "Contact person phone is required",
-    "address_is_required": "Address is required",
+    "address_is_required": "Street is required",
     "product_specification": "Product Specification",
     "currently_no_offers_available": "Currently No Offers Available",
     "no_transaction_history": "No Transaction History",
@@ -849,5 +849,15 @@
     "refund_request_status": "Refund Request Status",
     "can_not_select_more_than_5_files": "Cannot select more than 5 files",
     "write_somethings": "Write somethings",
-    "no_payment_method_available_right_now": "No Payment method available right now."
+    "no_payment_method_available_right_now": "No Payment method available right now.",
+
+
+
+    "area": "Area",
+    "street": "Street",
+    "area_is_required": "Area is required",
+    "address_1": "Address 1",
+    "address_2": "Address 2",
+    "address_1_required": "Address 1 is required",
+    "address_2_required": "Address 2 is required"
 }

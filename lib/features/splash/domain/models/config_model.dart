@@ -80,6 +80,8 @@ class ConfigModel {
   bool? hasLocaldb;
   bool? localMaintenanceMode;
   List<Branch>? branches;
+  List<Country>? countries;
+  late List<Area> areas;
   ConfigModel(
       {this.brandSetting,
       this.digitalProductSetting,
@@ -158,7 +160,7 @@ class ConfigModel {
       this.otpResendTime,
       this.hasLocaldb,
       this.localMaintenanceMode,
-      this.branches});
+      this.branches,this.countries,required this.areas});
 
   ConfigModel.fromJson(Map<String, dynamic> json) {
     brandSetting = json['brand_setting'];
@@ -373,6 +375,16 @@ class ConfigModel {
     branches = json.containsKey('branches')
         ? List.from(json['branches'].map((branch) {
             return Branch.fromJson(branch);
+          }))
+        : [];
+
+        countries =json.containsKey('countries') ? List.from(json['countries'].map((country) {
+            return Country.fromJson(country);
+          }))
+        : [];
+
+        areas=json.containsKey('areas') ? List.from(json['areas'].map((area) {
+            return Area.fromJson(area);
           }))
         : [];
   }
@@ -1082,5 +1094,52 @@ class IconFullUrl {
         "key": key,
         "path": path,
         "status": status,
+      };
+}
+
+class Country {
+  String? id;
+  String? name;
+  String? flagUrl;
+
+  Country({
+    this.id,
+    this.name,
+    this.flagUrl,
+  });
+
+  factory Country.fromJson(Map<String, dynamic> json) => Country(
+        id: json["country_id"],
+        name: json["name"],
+        flagUrl: json["img"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "country_id": id,
+        "name": name,
+        "img": flagUrl,
+      };
+}
+
+
+
+class Area {
+  String? zoneId;
+  String? countryId;
+  String? name;
+  String? name_ar;
+
+  Area({this.zoneId, this.countryId, this.name, this.name_ar});
+
+  factory Area.fromJson(Map<String, dynamic> json) => Area(
+      zoneId: json["zone_id"],
+      countryId: json["country_id"],
+      name: json["name"],
+      name_ar: json['name_ar']);
+
+  Map<String, dynamic> toJson() => {
+        "zone_id": zoneId,
+        "country_id": countryId,
+        "name": name,
       };
 }
