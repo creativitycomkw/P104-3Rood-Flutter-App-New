@@ -32,17 +32,19 @@ class LatestProductListWidget extends StatelessWidget {
 
 
         SizedBox(
-          height: ResponsiveHelper.isTab(context)? MediaQuery.of(context).size.width * .58 : 320,
+          height: ResponsiveHelper.isTab(context)? MediaQuery.of(context).size.width * .58 : 240,
           child: CarouselSlider.builder(
             options: CarouselOptions(
-              viewportFraction: ResponsiveHelper.isTab(context)? .5 :.65,
+              viewportFraction: ResponsiveHelper.isTab(context)? .5 :.45,
               autoPlay: false,
               pauseAutoPlayOnTouch: true,
               pauseAutoPlayOnManualNavigate: true,
-              enlargeFactor: 0.2,
-              enlargeCenterPage: true,
+              enlargeFactor: 0,
+              enlargeCenterPage:false,
               pauseAutoPlayInFiniteScroll: true,
               disableCenter: true,
+              pageSnapping: false,
+              enableInfiniteScroll: true,initialPage: 0
             ),
             itemCount: prodProvider.latestProductList?.length,
             itemBuilder: (context, index, next) {

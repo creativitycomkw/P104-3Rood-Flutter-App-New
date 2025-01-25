@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/features/auth/controllers/auth_controller.dart';
 import 'package:flutter_ecommerce/features/cart/screens/cart_screen.dart';
+import 'package:flutter_ecommerce/features/category/screens/category_screen.dart';
 import 'package:flutter_ecommerce/features/chat/controllers/chat_controller.dart';
 import 'package:flutter_ecommerce/features/dashboard/models/navigation_model.dart';
 import 'package:flutter_ecommerce/features/dashboard/widgets/dashboard_menu_widget.dart';
@@ -77,7 +78,8 @@ class DashBoardScreenState extends State<DashBoardScreen> {
               ? const AsterThemeHomeScreen(): const FashionThemeHomePage(),
         ),
 
-        NavigationModel(name: 'inbox', icon: Images.messageImage, screen: const InboxScreen(isBackButtonExist: false)),
+        // NavigationModel(name: 'inbox', icon: Images.messageImage, screen: const InboxScreen(isBackButtonExist: false)),
+          NavigationModel(name: 'categories', icon: Images.category, screen:  const CategoryScreen(showBackButton: false,)),
         NavigationModel(name: 'cart', icon: Images.cartArrowDownImage, screen: const CartScreen(showBackButton: false), showCartIcon: true),
         NavigationModel(name: 'orders', icon: Images.shoppingImage, screen:  const OrderScreen(isBacButtonExist: false)),
         NavigationModel(name: 'more', icon: Images.moreImage, screen:  const MoreScreen()),

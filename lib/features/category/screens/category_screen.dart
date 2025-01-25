@@ -14,7 +14,9 @@ import 'package:flutter_ecommerce/common/basewidget/custom_app_bar_widget.dart';
 import 'package:provider/provider.dart';
 
 class CategoryScreen extends StatefulWidget {
-  const CategoryScreen({super.key});
+  const CategoryScreen({super.key,this.showBackButton=true});
+
+  final bool showBackButton;
 
   @override
   State<CategoryScreen> createState() => _CategoryScreenState();
@@ -29,7 +31,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: getTranslated('CATEGORY', context)),
+   
+      appBar: CustomAppBar(title: getTranslated('CATEGORY', context),isBackButtonExist: widget.showBackButton,),
       body: Consumer<CategoryController>(
         builder: (context, categoryProvider, child) {
           return categoryProvider.categoryList.isNotEmpty ? Row(crossAxisAlignment: CrossAxisAlignment.start, children: [

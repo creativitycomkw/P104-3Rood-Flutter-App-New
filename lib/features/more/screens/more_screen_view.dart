@@ -72,6 +72,7 @@ class _MoreScreenState extends State<MoreScreen> {
     ConfigModel? configModel = Provider.of<SplashController>(context, listen: false).configModel;
     return Scaffold(
       body: CustomScrollView(slivers: [
+        
         SliverAppBar(
             floating: true,
             elevation: 0,

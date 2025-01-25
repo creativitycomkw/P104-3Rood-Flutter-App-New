@@ -33,7 +33,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: AppBar(
 
           actions: showResetIcon? [reset!]:[],
-          backgroundColor: Theme.of(context).cardColor,
+          backgroundColor: Theme.of(context).primaryColor,
             toolbarHeight: 50,
             iconTheme: IconThemeData(color: Theme.of(context).textTheme.bodyLarge?.color),
             automaticallyImplyLeading: false,

@@ -7,7 +7,7 @@ class AppConstants {
   static const String appVersion = '15.0';
 
 
-  static const String baseUrl = 'https://3rweb.sellexa.net/laravel';
+  static const String baseUrl = 'https://3roodq8.sellexa.net';
 
   static const String userId = 'userId';
   static const String name = 'name';

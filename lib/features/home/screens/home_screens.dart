@@ -161,744 +161,761 @@ class _HomePageState extends State<HomePage> {
     ];
 
     return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
             await HomePage.loadData(true);
           },
-          child: CustomScrollView(
-            controller: _scrollController,
-            slivers: [
-              SliverAppBar(
-                floating: true,
-                elevation: 0,
-                centerTitle: false,
-                automaticallyImplyLeading: false,
-                backgroundColor: Theme.of(context).highlightColor,
-                title: Image.asset(Images.logoWithNameImage, height: 35),
-              ),
-              SliverToBoxAdapter(
-                  child: Provider.of<SplashController>(context, listen: false)
-                              .configModel!
-                              .announcement!
-                              .status ==
-                          '1'
-                      ? Consumer<SplashController>(
-                          builder: (context, announcement, _) {
-                          return (announcement.configModel!.announcement!
-                                          .announcement !=
-                                      null &&
-                                  announcement.onOff)
-                              ? AnnouncementWidget(
-                                  announcement:
-                                      announcement.configModel!.announcement)
-                              : const SizedBox();
-                        })
-                      : const SizedBox()),
-              SliverPersistentHeader(
-                  pinned: true,
-                  delegate: SliverDelegate(
-                    child: InkWell(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const SearchScreen())),
-                      child: const Hero(
-                          tag: 'search',
-                          child: Material(child: SearchHomePageWidget())),
-                    ),
-                  )),
-              SliverToBoxAdapter(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const BannersWidget(),
-                    const SizedBox(height: Dimensions.paddingSizeDefault),
-
-                    const CategoryListWidget(isHomePage: true),
-                    const SizedBox(height: Dimensions.paddingSizeDefault),
-
-                    Consumer<FlashDealController>(
-                        builder: (context, megaDeal, child) {
-                      return megaDeal.flashDeal == null
-                          ? const FlashDealShimmer()
-                          : megaDeal.flashDealList.isNotEmpty
-                              ? Column(children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal:
-                                            Dimensions.paddingSizeDefault),
-                                    child: TitleRowWidget(
-                                      title:
-                                          getTranslated('flash_deal', context)
-                                              ?.toUpperCase(),
-                                      eventDuration: megaDeal.flashDeal != null
-                                          ? megaDeal.duration
-                                          : null,
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (_) =>
-                                                    const FlashDealScreenView()));
-                                      },
-                                      isFlash: true,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                      height: Dimensions.paddingSizeSmall),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal:
-                                            Dimensions.paddingSizeDefault),
-                                    child: Text(
-                                      getTranslated(
-                                              'hurry_up_the_offer_is_limited_grab_while_it_lasts',
-                                              context) ??
-                                          '',
-                                      style: textRegular.copyWith(
-                                          color: Provider.of<ThemeController>(
-                                                      context,
-                                                      listen: false)
-                                                  .darkTheme
-                                              ? Theme.of(context).hintColor
-                                              : Theme.of(context).primaryColor,
-                                          fontSize: Dimensions.fontSizeDefault),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                      height: Dimensions.paddingSizeSmall),
-                                  const FlashDealsListWidget()
-                                ])
-                              : const SizedBox.shrink();
-                    }),
-                    const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-
-                    Consumer<FeaturedDealController>(
-                        builder: (context, featuredDealProvider, child) {
-                      return featuredDealProvider.featuredDealProductList !=
-                              null
-                          ? featuredDealProvider
-                                  .featuredDealProductList!.isNotEmpty
-                              ? Column(
-                                  children: [
-                                    Stack(children: [
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        height: 150,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onTertiary,
-                                      ),
-                                      Column(children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: Dimensions
-                                                  .paddingSizeDefault),
-                                          child: TitleRowWidget(
-                                            title:
-                                                '${getTranslated('featured_deals', context)}',
-                                            onTap: () => Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (_) =>
-                                                        const FeaturedDealScreenView())),
-                                          ),
-                                        ),
-                                        const FeaturedDealsListWidget(),
-                                      ]),
-                                    ]),
-                                    const SizedBox(
-                                        height: Dimensions.paddingSizeDefault),
-                                  ],
-                                )
-                              : const SizedBox.shrink()
-                          : const FindWhatYouNeedShimmer();
-                    }),
-
-                    const ClearanceListWidget(),
-                    const SizedBox(height: Dimensions.paddingSizeDefault),
-
-                    Consumer<BannerController>(
-                        builder: (context, footerBannerProvider, child) {
-                      return footerBannerProvider.footerBannerList != null &&
-                              footerBannerProvider.footerBannerList!.isNotEmpty
-                          ? Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: Dimensions.paddingSizeDefault),
-                              child: SingleBannersWidget(
-                                  bannerModel: footerBannerProvider
-                                      .footerBannerList?[0]))
-                          : const SizedBox();
-                    }),
-                    const SizedBox(height: Dimensions.paddingSizeDefault),
-
-                    Consumer<ProductController>(
-                        builder: (context, productController, _) {
-                      return const FeaturedProductWidget();
-                    }),
-                    const SizedBox(height: Dimensions.paddingSizeDefault),
-
-                    singleVendor
-                        ? const SizedBox()
-                        : Consumer<ShopController>(
-                            builder: (context, topSellerProvider, child) {
-                            return (topSellerProvider.sellerModel != null &&
-                                    (topSellerProvider.sellerModel!.sellers !=
-                                            null &&
-                                        topSellerProvider
-                                            .sellerModel!.sellers!.isNotEmpty))
-                                ? TitleRowWidget(
-                                    title: getTranslated('top_seller', context),
-                                    onTap: () => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) =>
-                                                const AllTopSellerScreen(
-                                                  title: 'top_stores',
-                                                ))))
-                                : const SizedBox();
-                          }),
-                    singleVendor
-                        ? const SizedBox(height: 0)
-                        : const SizedBox(height: Dimensions.paddingSizeSmall),
-
-                    singleVendor
-                        ? const SizedBox()
-                        : Consumer<ShopController>(
-                            builder: (context, topSellerProvider, child) {
-                            return (topSellerProvider.sellerModel != null &&
-                                    (topSellerProvider.sellerModel!.sellers !=
-                                            null &&
-                                        topSellerProvider
-                                            .sellerModel!.sellers!.isNotEmpty))
-                                ? Padding(
-                                    padding: const EdgeInsets.only(
-                                        bottom: Dimensions.paddingSizeDefault),
-                                    child: SizedBox(
-                                        height: ResponsiveHelper.isTab(context)
-                                            ? 170
-                                            : 165,
-                                        child: TopSellerView(
-                                          isHomePage: true,
-                                          scrollController: _scrollController,
-                                        )))
-                                : const SizedBox();
-                          }),
-
-                    const Padding(
-                        padding: EdgeInsets.only(
-                            bottom: Dimensions.paddingSizeDefault),
-                        child: RecommendedProductWidget()),
-
-                    const Padding(
-                        padding: EdgeInsets.only(
-                            bottom: Dimensions.paddingSizeDefault),
-                        child: LatestProductListWidget()),
-
-                    if (configModel?.brandSetting == "1")
-                      TitleRowWidget(
-                        title: getTranslated('brand', context),
-                        onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const BrandsView())),
-                      ),
-
-                    SizedBox(
-                        height: configModel?.brandSetting == "1"
-                            ? Dimensions.paddingSizeSmall
-                            : 0),
-
-                    if (configModel!.brandSetting == "1") ...[
-                      const BrandListWidget(isHomePage: true),
-                      const SizedBox(height: Dimensions.paddingSizeDefault),
-                    ],
-
-                    const HomeCategoryProductWidget(isHomePage: true),
-                    const SizedBox(height: Dimensions.paddingSizeDefault),
-
-                    const FooterBannerSliderWidget(),
-                    const SizedBox(height: Dimensions.paddingSizeDefault),
-
-                    Consumer<ProductController>(
-                        builder: (ctx, prodProvider, child) {
-                      return Container(
-                          decoration: BoxDecoration(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSecondaryContainer),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        Dimensions.paddingSizeDefault,
-                                        0,
-                                        Dimensions.paddingSizeSmall,
-                                        0),
-                                    child: Row(children: [
-                                      Expanded(
-                                          child: Text(
-                                              prodProvider.title == 'xyz'
-                                                  ? getTranslated(
-                                                      'new_arrival', context)!
-                                                  : prodProvider.title!,
-                                              style: titleHeader)),
-                                      prodProvider.latestProductList != null
-                                          ? PopupMenuButton(
-                                              padding: const EdgeInsets.all(0),
-                                              itemBuilder: (context) {
-                                                return [
-                                                  PopupMenuItem(
-                                                    value:
-                                                        ProductType.newArrival,
-                                                    child: Text(
-                                                        getTranslated(
-                                                                'new_arrival',
-                                                                context) ??
-                                                            '',
-                                                        style: textRegular
-                                                            .copyWith(
-                                                          color: prodProvider
-                                                                      .productType ==
-                                                                  ProductType
-                                                                      .newArrival
-                                                              ? Theme.of(
-                                                                      context)
-                                                                  .primaryColor
-                                                              : Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyLarge
-                                                                  ?.color,
-                                                        )),
-                                                  ),
-                                                  PopupMenuItem(
-                                                    value:
-                                                        ProductType.topProduct,
-                                                    child: Text(
-                                                        getTranslated(
-                                                                'top_product',
-                                                                context) ??
-                                                            '',
-                                                        style: textRegular
-                                                            .copyWith(
-                                                          color: prodProvider
-                                                                      .productType ==
-                                                                  ProductType
-                                                                      .topProduct
-                                                              ? Theme.of(
-                                                                      context)
-                                                                  .primaryColor
-                                                              : Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyLarge
-                                                                  ?.color,
-                                                        )),
-                                                  ),
-                                                  PopupMenuItem(
-                                                    value:
-                                                        ProductType.bestSelling,
-                                                    child: Text(
-                                                        getTranslated(
-                                                                'best_selling',
-                                                                context) ??
-                                                            '',
-                                                        style: textRegular
-                                                            .copyWith(
-                                                          color: prodProvider
-                                                                      .productType ==
-                                                                  ProductType
-                                                                      .bestSelling
-                                                              ? Theme.of(
-                                                                      context)
-                                                                  .primaryColor
-                                                              : Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyLarge
-                                                                  ?.color,
-                                                        )),
-                                                  ),
-                                                  PopupMenuItem(
-                                                    value: ProductType
-                                                        .discountedProduct,
-                                                    child: Text(
-                                                        getTranslated(
-                                                                'discounted_product',
-                                                                context) ??
-                                                            '',
-                                                        style: textRegular
-                                                            .copyWith(
-                                                          color: prodProvider
-                                                                      .productType ==
-                                                                  ProductType
-                                                                      .discountedProduct
-                                                              ? Theme.of(
-                                                                      context)
-                                                                  .primaryColor
-                                                              : Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyLarge
-                                                                  ?.color,
-                                                        )),
-                                                  ),
-                                                ];
-                                              },
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius
-                                                      .circular(Dimensions
-                                                          .paddingSizeSmall)),
-                                              child: Padding(
-                                                  padding: const EdgeInsets
-                                                      .fromLTRB(
-                                                      Dimensions
-                                                          .paddingSizeExtraSmall,
-                                                      Dimensions
-                                                          .paddingSizeSmall,
-                                                      Dimensions
-                                                          .paddingSizeExtraSmall,
-                                                      Dimensions
-                                                          .paddingSizeSmall),
-                                                  child: Image.asset(
-                                                      Images.dropdown,
-                                                      scale: 3)),
-                                              onSelected: (ProductType value) {
-                                                if (value ==
-                                                    ProductType.newArrival) {
-                                                  Provider.of<ProductController>(
-                                                          context,
-                                                          listen: false)
-                                                      .changeTypeOfProduct(
-                                                          value, types[0]);
-                                                } else if (value ==
-                                                    ProductType.topProduct) {
-                                                  Provider.of<ProductController>(
-                                                          context,
-                                                          listen: false)
-                                                      .changeTypeOfProduct(
-                                                          value, types[1]);
-                                                } else if (value ==
-                                                    ProductType.bestSelling) {
-                                                  Provider.of<ProductController>(
-                                                          context,
-                                                          listen: false)
-                                                      .changeTypeOfProduct(
-                                                          value, types[2]);
-                                                } else if (value ==
-                                                    ProductType
-                                                        .discountedProduct) {
-                                                  Provider.of<ProductController>(
-                                                          context,
-                                                          listen: false)
-                                                      .changeTypeOfProduct(
-                                                          value, types[3]);
-                                                }
-                                                //  Provider.of<ProductController>(context, listen: false).getLatestProductList(1, reload: true);
-                                              },
-                                            )
-                                          : const SizedBox()
-                                    ])),
-                                Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal:
-                                            Dimensions.paddingSizeSmall),
-                                    child: ProductListWidget(
-                                        isHomePage: false,
-                                        productType: ProductType.newArrival,
-                                        scrollController: _scrollController)),
-                                const SizedBox(
-                                    height: Dimensions.homePagePadding)
-                              ]));
-                    }),
-
-                    // Branches slider
-                   
-
-                   
+          child: Container(
+            color: Colors.white,
+            child: CustomScrollView(
+              controller: _scrollController,
+              slivers: [
+                // SliverAppBar(
+                //   floating: true,
+                //   elevation: 0,
+                //   centerTitle: false,
+                //   automaticallyImplyLeading: false,
+                //   backgroundColor: Theme.of(context).primaryColor,
+                //   title: Image.asset(Images.logoImage, height: 55),
+                // ),
+                SliverToBoxAdapter(
                   
-                    if (configModel.branches!.isNotEmpty)
-                      Column(
-                        children: [
-                           Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0,vertical: 18),
-                      child:Text(
-                                                        getTranslated(
-                                                                'Our Branches',
-                                                                context) ??
-                                                            '',
-                                                        style: textRegular
-                                                            .copyWith(
-                                                              fontWeight: FontWeight.bold,
-                                                              fontSize: 16,
-                                                          color:  Theme.of(
-                                                                      context)
-                                                                  .primaryColor,
-                                                        )),
-                    ),
-                          Container(
-                            height: 340,
-                            child: Scaffold(
-                              body: Stack(
-                                clipBehavior: Clip.none,
-                                children: [
-                                  Stack(
-                                    children: [
-                                      // GoogleMap(
-                                      //   // markers: Set<Marker>.of([currentLocationMarker!]),
-                                      //   onMapCreated:
-                                      //       (GoogleMapController controller) {
-                                      //     _controller = controller;
-                                      //   },
-                                      //   initialCameraPosition: CameraPosition(
-                                      //     target: controller.coordinates.value[
-                                      //         0], // Center the map on the first coordinate
-                                      //     zoom: _currentZoom,
-                                      //   ),
-
-                                      //   zoomControlsEnabled: false,
-                                      //   myLocationButtonEnabled: false,
-                                      //   mapToolbarEnabled: false,
-                                      //   scrollGesturesEnabled: true,
-                                      //   // cameraTargetBounds: CameraTargetBounds(_bounds(_markers)),
-
-                                      //   markers: controller.data!.branches!
-                                      //       .map((branch) {
-                                      //     return Marker(
-                                      //       markerId: MarkerId(
-                                      //           branch.latitude.toString()),
-                                      //       position: LatLng(
-                                      //           double.parse(
-                                      //             branch.latitude.toString(),
-                                      //           ),
-                                      //           double.parse(branch.longitude
-                                      //               .toString())),
-                                      //       infoWindow: InfoWindow(
-                                      //         title: 'storeLocation'.tr,
-                                      //         snippet:
-                                      //             '${isEnglish.value ? branch.nameEn : branch.nameAr}',
-                                      //       ),
-                                      //     );
-                                      //   }).toSet(),
-                                      // ),
-                                      // Positioned(
-                                      //   top: 20,
-                                      //   right: 12,
-                                      //   child: Column(
-                                      //     children: [
-                                      //       FloatingActionButton(
-                                      //         onPressed: _zoomIn,
-                                      //         mini: true,
-                                      //         backgroundColor: themeColor,
-                                      //         child: Icon(Icons.add,
-                                      //             color: Colors.white),
-                                      //       ),
-                                      //       // SizedBox(height: 2),
-                                      //       FloatingActionButton(
-                                      //         onPressed: _zoomOut,
-                                      //         mini: true,
-                                      //         backgroundColor: themeColor,
-                                      //         child: Icon(Icons.remove,
-                                      //             color: Colors.white),
-                                      //       ),
-                                      //     ],
-                                      //   ),
-                                      // ),
-                                    ],
-                                  ),
-                                  Positioned(
-                                    bottom: -60,
-                                    left: 0,
-                                    right: 0,
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 8, vertical: 16),
-                                      child: Row(
-                                        children: [
-                                          for (int i = 0;
-                                              i <
-                                                  configModel.branches!.length;
-                                              i++)
-                                            InkWell(
-                                              onTap: () async {
-                                                if (await canLaunchUrlString(
-                                                    configModel.branches![i]
-                                                        .mapUrl!)) {
-                                                  await launchUrlString(
-                                                      configModel.branches![i]
-                                                        .mapUrl!,
-                                                      mode: LaunchMode
-                                                          .externalApplication);
-                                                }
-                                                // openGoogleMaps(
-                                                //     double.parse(
-                                                //         controller
-                                                //             .data!
-                                                //             .branches![
-                                                //                 i]
-                                                //             .latitude
-                                                //             .toString()),
-                                                //     double.parse(controller
-                                                //         .data!
-                                                //         .branches![i]
-                                                //         .longitude
-                                                //         .toString()));
-                                              },
-                                              child: Container(
-                                                width: 279,
-                                                padding: EdgeInsets.all(8),
-                                                margin: EdgeInsets.only(
-                                                    right: 16),
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                          color:
-                                                              Color(0xFF000000)
-                                                                  .withOpacity(
-                                                                      0.04),
-                                                          blurRadius: 16,
-                                                          spreadRadius: 0,
-                                                          offset: Offset(0, 8))
-                                                    ]),
-                                                child: Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Container(
-                                                          width: 72,
-                                                          height: 72,
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5),
-                                                            child:
-                                                                CachedNetworkImage(
-                                                              imageUrl: configModel.branches![i]
-                                                        .iconFullUrl!.path!,
-                                                              errorWidget: (context,
-                                                                      url,
-                                                                      error) =>
-                                                                  Image.asset(Images.logoWithNameImage, height: 35),
-                                                              fit: BoxFit.fill,
-                                                            ),
-                                                          )),
-                                                      Expanded(
-                                                        child: Padding(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  horizontal:
-                                                                      12,
-                                                                  vertical:
-                                                                      4),
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .stretch,
-                                                            children: [
-                                                              Text(
-                                                                configModel.branches![i].name!,
-                                                                style: TextStyle(
-                                                                    color:
-                                                                      Theme.of(context).primaryColor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        12),
-                                                              ),
-                                                              SizedBox(
-                                                                height: 2,
-                                                              ),
-                                                              Text(
-                                                               configModel.branches![i].description!,
-                                                                maxLines: 2,
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
-                                                                softWrap: true,
-                                                                style: TextStyle(
-                                                                    color:
-                                                                       Colors.grey,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    fontSize:
-                                                                        10),
-                                                              ),
-                                                              Padding(
-                                                                padding: EdgeInsets
-                                                                    .symmetric(
-                                                                        vertical:
-                                                                            4),
-                                                              ),
-                                                              Row(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .min,
-                                                                children: [
-                                                                  Icon(
-                                                                    Icons
-                                                                        .directions_rounded,
-                                                                    size: 16,
-                                                                    color: Colors
-                                                                        .black,
-                                                                  ),
-                                                                  Padding(
-                                                                    padding: EdgeInsets.symmetric(
-                                                                        horizontal:
-                                                                            4),
-                                                                  ),
-                                                                  Text(
-                                                                    "direction"
-                                                                        ,
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color:
-                                                                         Theme.of(context).primaryColor,
-                                                                      fontSize:
-                                                                          12,
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ]),
-                                              ),
-                                            )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                    child: Provider.of<SplashController>(context, listen: false)
+                                .configModel!
+                                .announcement!
+                                .status ==
+                            '1'
+                        ? Consumer<SplashController>(
+                            builder: (context, announcement, _) {
+                            return (announcement.configModel!.announcement!
+                                            .announcement !=
+                                        null &&
+                                    announcement.onOff)
+                                ? AnnouncementWidget(
+                                    announcement:
+                                        announcement.configModel!.announcement)
+                                : const SizedBox();
+                          })
+                        : const SizedBox()),
+                SliverPersistentHeader(
+                    pinned: true,
+                    delegate: SliverDelegate(
+                      child: Container(
+                        color: Theme.of(context).primaryColor,
+                        child: Row(
+                          children: [
+                        
+                            Expanded(
+                              child: InkWell(
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => const SearchScreen())),
+                                child: const Hero(
+                                    tag: 'search',
+                                    child: Material(child: SearchHomePageWidget())),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    SizedBox(
-                      height: 60,
-                    ),
-                    //Branches slider end
-                  ],
-                ),
-              )
-            ],
+                    )),
+                SliverToBoxAdapter(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                     
+                      const SizedBox(height: Dimensions.paddingSizeDefault),
+            
+                      const CategoryListWidget(isHomePage: true),
+                       const SizedBox(height: Dimensions.paddingSizeDefault),
+                      const BannersWidget(),
+                      const SizedBox(height: Dimensions.paddingSizeDefault),
+                           const Padding(
+                          padding: EdgeInsets.only(
+                              bottom: Dimensions.paddingSizeDefault),
+                          child: LatestProductListWidget()),
+            
+                      Consumer<FlashDealController>(
+                          builder: (context, megaDeal, child) {
+                        return megaDeal.flashDeal == null
+                            ? const FlashDealShimmer()
+                            : megaDeal.flashDealList.isNotEmpty
+                                ? Column(children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal:
+                                              Dimensions.paddingSizeDefault),
+                                      child: TitleRowWidget(
+                                        title:
+                                            getTranslated('flash_deal', context)
+                                                ?.toUpperCase(),
+                                        eventDuration: megaDeal.flashDeal != null
+                                            ? megaDeal.duration
+                                            : null,
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      const FlashDealScreenView()));
+                                        },
+                                        isFlash: true,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                        height: Dimensions.paddingSizeSmall),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal:
+                                              Dimensions.paddingSizeDefault),
+                                      child: Text(
+                                        getTranslated(
+                                                'hurry_up_the_offer_is_limited_grab_while_it_lasts',
+                                                context) ??
+                                            '',
+                                        style: textRegular.copyWith(
+                                            color: Provider.of<ThemeController>(
+                                                        context,
+                                                        listen: false)
+                                                    .darkTheme
+                                                ? Theme.of(context).hintColor
+                                                : Theme.of(context).primaryColor,
+                                            fontSize: Dimensions.fontSizeDefault),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                        height: Dimensions.paddingSizeSmall),
+                                    const FlashDealsListWidget()
+                                  ])
+                                : const SizedBox.shrink();
+                      }),
+                      const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+            
+                      Consumer<FeaturedDealController>(
+                          builder: (context, featuredDealProvider, child) {
+                        return featuredDealProvider.featuredDealProductList !=
+                                null
+                            ? featuredDealProvider
+                                    .featuredDealProductList!.isNotEmpty
+                                ? Column(
+                                    children: [
+                                      Stack(children: [
+                                        Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          height: 150,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onTertiary,
+                                        ),
+                                        Column(children: [
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: Dimensions
+                                                    .paddingSizeDefault),
+                                            child: TitleRowWidget(
+                                              title:
+                                                  '${getTranslated('featured_deals', context)}',
+                                              onTap: () => Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (_) =>
+                                                          const FeaturedDealScreenView())),
+                                            ),
+                                          ),
+                                          const FeaturedDealsListWidget(),
+                                        ]),
+                                      ]),
+                                      const SizedBox(
+                                          height: Dimensions.paddingSizeDefault),
+                                    ],
+                                  )
+                                : const SizedBox.shrink()
+                            : const FindWhatYouNeedShimmer();
+                      }),
+            
+                      const ClearanceListWidget(),
+                      const SizedBox(height: Dimensions.paddingSizeDefault),
+            
+                      Consumer<BannerController>(
+                          builder: (context, footerBannerProvider, child) {
+                        return footerBannerProvider.footerBannerList != null &&
+                                footerBannerProvider.footerBannerList!.isNotEmpty
+                            ? Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: Dimensions.paddingSizeDefault),
+                                child: SingleBannersWidget(
+                                    bannerModel: footerBannerProvider
+                                        .footerBannerList?[0]))
+                            : const SizedBox();
+                      }),
+                      // const SizedBox(height: Dimensions.paddingSizeDefault),
+            
+                      Consumer<ProductController>(
+                          builder: (context, productController, _) {
+                        return const FeaturedProductWidget();
+                      }),
+                      const SizedBox(height: Dimensions.paddingSizeDefault),
+            
+                      singleVendor
+                          ? const SizedBox()
+                          : Consumer<ShopController>(
+                              builder: (context, topSellerProvider, child) {
+                              return (topSellerProvider.sellerModel != null &&
+                                      (topSellerProvider.sellerModel!.sellers !=
+                                              null &&
+                                          topSellerProvider
+                                              .sellerModel!.sellers!.isNotEmpty))
+                                  ? TitleRowWidget(
+                                      title: getTranslated('top_seller', context),
+                                      onTap: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  const AllTopSellerScreen(
+                                                    title: 'top_stores',
+                                                  ))))
+                                  : const SizedBox();
+                            }),
+                      singleVendor
+                          ? const SizedBox(height: 0)
+                          : const SizedBox(height: Dimensions.paddingSizeSmall),
+            
+                      singleVendor
+                          ? const SizedBox()
+                          : Consumer<ShopController>(
+                              builder: (context, topSellerProvider, child) {
+                              return (topSellerProvider.sellerModel != null &&
+                                      (topSellerProvider.sellerModel!.sellers !=
+                                              null &&
+                                          topSellerProvider
+                                              .sellerModel!.sellers!.isNotEmpty))
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: Dimensions.paddingSizeDefault),
+                                      child: SizedBox(
+                                          height: ResponsiveHelper.isTab(context)
+                                              ? 170
+                                              : 165,
+                                          child: TopSellerView(
+                                            isHomePage: true,
+                                            scrollController: _scrollController,
+                                          )))
+                                  : const SizedBox();
+                            }),
+            
+                      const Padding(
+                          padding: EdgeInsets.only(
+                              bottom: Dimensions.paddingSizeDefault),
+                          child: RecommendedProductWidget()),
+            
+                 
+                      if (configModel?.brandSetting == "1")
+                        TitleRowWidget(
+                          title: getTranslated('brand', context),
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const BrandsView())),
+                        ),
+            
+                      SizedBox(
+                          height: configModel?.brandSetting == "1"
+                              ? Dimensions.paddingSizeSmall
+                              : 0),
+            
+                      if (configModel!.brandSetting == "1") ...[
+                        const BrandListWidget(isHomePage: true),
+                        const SizedBox(height: Dimensions.paddingSizeDefault),
+                      ],
+            
+                      const HomeCategoryProductWidget(isHomePage: true),
+                      const SizedBox(height: Dimensions.paddingSizeDefault),
+            
+                      const FooterBannerSliderWidget(),
+                      const SizedBox(height: Dimensions.paddingSizeDefault),
+            
+                      Consumer<ProductController>(
+                          builder: (ctx, prodProvider, child) {
+                        return Container(
+                            decoration: BoxDecoration(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSecondaryContainer),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          Dimensions.paddingSizeDefault,
+                                          0,
+                                          Dimensions.paddingSizeSmall,
+                                          0),
+                                      child: Row(children: [
+                                        Expanded(
+                                            child: Text(
+                                                prodProvider.title == 'xyz'
+                                                    ? getTranslated(
+                                                        'new_arrival', context)!
+                                                    : prodProvider.title!,
+                                                style: titleHeader)),
+                                        prodProvider.latestProductList != null
+                                            ? PopupMenuButton(
+                                                padding: const EdgeInsets.all(0),
+                                                itemBuilder: (context) {
+                                                  return [
+                                                    PopupMenuItem(
+                                                      value:
+                                                          ProductType.newArrival,
+                                                      child: Text(
+                                                          getTranslated(
+                                                                  'new_arrival',
+                                                                  context) ??
+                                                              '',
+                                                          style: textRegular
+                                                              .copyWith(
+                                                            color: prodProvider
+                                                                        .productType ==
+                                                                    ProductType
+                                                                        .newArrival
+                                                                ? Theme.of(
+                                                                        context)
+                                                                    .primaryColor
+                                                                : Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyLarge
+                                                                    ?.color,
+                                                          )),
+                                                    ),
+                                                    PopupMenuItem(
+                                                      value:
+                                                          ProductType.topProduct,
+                                                      child: Text(
+                                                          getTranslated(
+                                                                  'top_product',
+                                                                  context) ??
+                                                              '',
+                                                          style: textRegular
+                                                              .copyWith(
+                                                            color: prodProvider
+                                                                        .productType ==
+                                                                    ProductType
+                                                                        .topProduct
+                                                                ? Theme.of(
+                                                                        context)
+                                                                    .primaryColor
+                                                                : Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyLarge
+                                                                    ?.color,
+                                                          )),
+                                                    ),
+                                                    PopupMenuItem(
+                                                      value:
+                                                          ProductType.bestSelling,
+                                                      child: Text(
+                                                          getTranslated(
+                                                                  'best_selling',
+                                                                  context) ??
+                                                              '',
+                                                          style: textRegular
+                                                              .copyWith(
+                                                            color: prodProvider
+                                                                        .productType ==
+                                                                    ProductType
+                                                                        .bestSelling
+                                                                ? Theme.of(
+                                                                        context)
+                                                                    .primaryColor
+                                                                : Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyLarge
+                                                                    ?.color,
+                                                          )),
+                                                    ),
+                                                    PopupMenuItem(
+                                                      value: ProductType
+                                                          .discountedProduct,
+                                                      child: Text(
+                                                          getTranslated(
+                                                                  'discounted_product',
+                                                                  context) ??
+                                                              '',
+                                                          style: textRegular
+                                                              .copyWith(
+                                                            color: prodProvider
+                                                                        .productType ==
+                                                                    ProductType
+                                                                        .discountedProduct
+                                                                ? Theme.of(
+                                                                        context)
+                                                                    .primaryColor
+                                                                : Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyLarge
+                                                                    ?.color,
+                                                          )),
+                                                    ),
+                                                  ];
+                                                },
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius
+                                                        .circular(Dimensions
+                                                            .paddingSizeSmall)),
+                                                child: Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(
+                                                        Dimensions
+                                                            .paddingSizeExtraSmall,
+                                                        Dimensions
+                                                            .paddingSizeSmall,
+                                                        Dimensions
+                                                            .paddingSizeExtraSmall,
+                                                        Dimensions
+                                                            .paddingSizeSmall),
+                                                    child: Image.asset(
+                                                        Images.dropdown,
+                                                        scale: 3)),
+                                                onSelected: (ProductType value) {
+                                                  if (value ==
+                                                      ProductType.newArrival) {
+                                                    Provider.of<ProductController>(
+                                                            context,
+                                                            listen: false)
+                                                        .changeTypeOfProduct(
+                                                            value, types[0]);
+                                                  } else if (value ==
+                                                      ProductType.topProduct) {
+                                                    Provider.of<ProductController>(
+                                                            context,
+                                                            listen: false)
+                                                        .changeTypeOfProduct(
+                                                            value, types[1]);
+                                                  } else if (value ==
+                                                      ProductType.bestSelling) {
+                                                    Provider.of<ProductController>(
+                                                            context,
+                                                            listen: false)
+                                                        .changeTypeOfProduct(
+                                                            value, types[2]);
+                                                  } else if (value ==
+                                                      ProductType
+                                                          .discountedProduct) {
+                                                    Provider.of<ProductController>(
+                                                            context,
+                                                            listen: false)
+                                                        .changeTypeOfProduct(
+                                                            value, types[3]);
+                                                  }
+                                                  //  Provider.of<ProductController>(context, listen: false).getLatestProductList(1, reload: true);
+                                                },
+                                              )
+                                            : const SizedBox()
+                                      ])),
+                                  Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal:
+                                              Dimensions.paddingSizeSmall),
+                                      child: ProductListWidget(
+                                          isHomePage: false,
+                                          productType: ProductType.newArrival,
+                                          scrollController: _scrollController)),
+                                  const SizedBox(
+                                      height: Dimensions.homePagePadding)
+                                ]));
+                      }),
+            
+                      // Branches slider
+                     
+            
+                     
+                    
+                      // if (configModel.branches!.isNotEmpty)
+                      //   Column(
+                      //     children: [
+                      //        Padding(
+                      //   padding: EdgeInsets.symmetric(horizontal: 16.0,vertical: 18),
+                      //   child:Text(
+                      //                                     getTranslated(
+                      //                                             'Our Branches',
+                      //                                             context) ??
+                      //                                         '',
+                      //                                     style: textRegular
+                      //                                         .copyWith(
+                      //                                           fontWeight: FontWeight.bold,
+                      //                                           fontSize: 16,
+                      //                                       color:  Theme.of(
+                      //                                                   context)
+                      //                                               .primaryColor,
+                      //                                     )),
+                      // ),
+                      //       Container(
+                      //         height: 340,
+                      //         child: Scaffold(
+                      //           body: Stack(
+                      //             clipBehavior: Clip.none,
+                      //             children: [
+                      //               Stack(
+                      //                 children: [
+                      //                   // GoogleMap(
+                      //                   //   // markers: Set<Marker>.of([currentLocationMarker!]),
+                      //                   //   onMapCreated:
+                      //                   //       (GoogleMapController controller) {
+                      //                   //     _controller = controller;
+                      //                   //   },
+                      //                   //   initialCameraPosition: CameraPosition(
+                      //                   //     target: controller.coordinates.value[
+                      //                   //         0], // Center the map on the first coordinate
+                      //                   //     zoom: _currentZoom,
+                      //                   //   ),
+            
+                      //                   //   zoomControlsEnabled: false,
+                      //                   //   myLocationButtonEnabled: false,
+                      //                   //   mapToolbarEnabled: false,
+                      //                   //   scrollGesturesEnabled: true,
+                      //                   //   // cameraTargetBounds: CameraTargetBounds(_bounds(_markers)),
+            
+                      //                   //   markers: controller.data!.branches!
+                      //                   //       .map((branch) {
+                      //                   //     return Marker(
+                      //                   //       markerId: MarkerId(
+                      //                   //           branch.latitude.toString()),
+                      //                   //       position: LatLng(
+                      //                   //           double.parse(
+                      //                   //             branch.latitude.toString(),
+                      //                   //           ),
+                      //                   //           double.parse(branch.longitude
+                      //                   //               .toString())),
+                      //                   //       infoWindow: InfoWindow(
+                      //                   //         title: 'storeLocation'.tr,
+                      //                   //         snippet:
+                      //                   //             '${isEnglish.value ? branch.nameEn : branch.nameAr}',
+                      //                   //       ),
+                      //                   //     );
+                      //                   //   }).toSet(),
+                      //                   // ),
+                      //                   // Positioned(
+                      //                   //   top: 20,
+                      //                   //   right: 12,
+                      //                   //   child: Column(
+                      //                   //     children: [
+                      //                   //       FloatingActionButton(
+                      //                   //         onPressed: _zoomIn,
+                      //                   //         mini: true,
+                      //                   //         backgroundColor: themeColor,
+                      //                   //         child: Icon(Icons.add,
+                      //                   //             color: Colors.white),
+                      //                   //       ),
+                      //                   //       // SizedBox(height: 2),
+                      //                   //       FloatingActionButton(
+                      //                   //         onPressed: _zoomOut,
+                      //                   //         mini: true,
+                      //                   //         backgroundColor: themeColor,
+                      //                   //         child: Icon(Icons.remove,
+                      //                   //             color: Colors.white),
+                      //                   //       ),
+                      //                   //     ],
+                      //                   //   ),
+                      //                   // ),
+                      //                 ],
+                      //               ),
+                      //               Positioned(
+                      //                 bottom: -60,
+                      //                 left: 0,
+                      //                 right: 0,
+                      //                 child: SingleChildScrollView(
+                      //                   scrollDirection: Axis.horizontal,
+                      //                   padding: EdgeInsets.symmetric(
+                      //                       horizontal: 8, vertical: 16),
+                      //                   child: Row(
+                      //                     children: [
+                      //                       for (int i = 0;
+                      //                           i <
+                      //                               configModel.branches!.length;
+                      //                           i++)
+                      //                         InkWell(
+                      //                           onTap: () async {
+                      //                             if (await canLaunchUrlString(
+                      //                                 configModel.branches![i]
+                      //                                     .mapUrl!)) {
+                      //                               await launchUrlString(
+                      //                                   configModel.branches![i]
+                      //                                     .mapUrl!,
+                      //                                   mode: LaunchMode
+                      //                                       .externalApplication);
+                      //                             }
+                      //                             // openGoogleMaps(
+                      //                             //     double.parse(
+                      //                             //         controller
+                      //                             //             .data!
+                      //                             //             .branches![
+                      //                             //                 i]
+                      //                             //             .latitude
+                      //                             //             .toString()),
+                      //                             //     double.parse(controller
+                      //                             //         .data!
+                      //                             //         .branches![i]
+                      //                             //         .longitude
+                      //                             //         .toString()));
+                      //                           },
+                      //                           child: Container(
+                      //                             width: 279,
+                      //                             padding: EdgeInsets.all(8),
+                      //                             margin: EdgeInsets.only(
+                      //                                 right: 16),
+                      //                             decoration: BoxDecoration(
+                      //                                 color: Colors.white,
+                      //                                 borderRadius:
+                      //                                     BorderRadius.circular(
+                      //                                         8),
+                      //                                 boxShadow: [
+                      //                                   BoxShadow(
+                      //                                       color:
+                      //                                           Color(0xFF000000)
+                      //                                               .withOpacity(
+                      //                                                   0.04),
+                      //                                       blurRadius: 16,
+                      //                                       spreadRadius: 0,
+                      //                                       offset: Offset(0, 8))
+                      //                                 ]),
+                      //                             child: Row(
+                      //                                 crossAxisAlignment:
+                      //                                     CrossAxisAlignment
+                      //                                         .start,
+                      //                                 children: [
+                      //                                   Container(
+                      //                                       width: 72,
+                      //                                       height: 72,
+                      //                                       child: ClipRRect(
+                      //                                         borderRadius:
+                      //                                             BorderRadius
+                      //                                                 .circular(
+                      //                                                     5),
+                      //                                         child:
+                      //                                             CachedNetworkImage(
+                      //                                           imageUrl: configModel.branches![i]
+                      //                                     .iconFullUrl!.path!,
+                      //                                           errorWidget: (context,
+                      //                                                   url,
+                      //                                                   error) =>
+                      //                                               Image.asset(Images.logoWithNameImage, height: 35),
+                      //                                           fit: BoxFit.fill,
+                      //                                         ),
+                      //                                       )),
+                      //                                   Expanded(
+                      //                                     child: Padding(
+                      //                                       padding: EdgeInsets
+                      //                                           .symmetric(
+                      //                                               horizontal:
+                      //                                                   12,
+                      //                                               vertical:
+                      //                                                   4),
+                      //                                       child: Column(
+                      //                                         crossAxisAlignment:
+                      //                                             CrossAxisAlignment
+                      //                                                 .stretch,
+                      //                                         children: [
+                      //                                           Text(
+                      //                                             configModel.branches![i].name!,
+                      //                                             style: TextStyle(
+                      //                                                 color:
+                      //                                                   Theme.of(context).primaryColor,
+                      //                                                 fontWeight:
+                      //                                                     FontWeight
+                      //                                                         .bold,
+                      //                                                 fontSize:
+                      //                                                     12),
+                      //                                           ),
+                      //                                           SizedBox(
+                      //                                             height: 2,
+                      //                                           ),
+                      //                                           Text(
+                      //                                            configModel.branches![i].description!,
+                      //                                             maxLines: 2,
+                      //                                             overflow:
+                      //                                                 TextOverflow
+                      //                                                     .ellipsis,
+                      //                                             softWrap: true,
+                      //                                             style: TextStyle(
+                      //                                                 color:
+                      //                                                    Colors.grey,
+                      //                                                 fontWeight:
+                      //                                                     FontWeight
+                      //                                                         .w500,
+                      //                                                 fontSize:
+                      //                                                     10),
+                      //                                           ),
+                      //                                           Padding(
+                      //                                             padding: EdgeInsets
+                      //                                                 .symmetric(
+                      //                                                     vertical:
+                      //                                                         4),
+                      //                                           ),
+                      //                                           Row(
+                      //                                             mainAxisSize:
+                      //                                                 MainAxisSize
+                      //                                                     .min,
+                      //                                             children: [
+                      //                                               Icon(
+                      //                                                 Icons
+                      //                                                     .directions_rounded,
+                      //                                                 size: 16,
+                      //                                                 color: Colors
+                      //                                                     .black,
+                      //                                               ),
+                      //                                               Padding(
+                      //                                                 padding: EdgeInsets.symmetric(
+                      //                                                     horizontal:
+                      //                                                         4),
+                      //                                               ),
+                      //                                               Text(
+                      //                                                 "direction"
+                      //                                                     ,
+                      //                                                 style:
+                      //                                                     TextStyle(
+                      //                                                   color:
+                      //                                                      Theme.of(context).primaryColor,
+                      //                                                   fontSize:
+                      //                                                       12,
+                      //                                                 ),
+                      //                                               ),
+                      //                                             ],
+                      //                                           )
+                      //                                         ],
+                      //                                       ),
+                      //                                     ),
+                      //                                   ),
+                      //                                 ]),
+                      //                           ),
+                      //                         )
+                      //                     ],
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      SizedBox(
+                        height: 60,
+                      ),
+                      //Branches slider end
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
