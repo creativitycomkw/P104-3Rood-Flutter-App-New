@@ -111,8 +111,8 @@ class _MoreScreenState extends State<MoreScreen> {
                       child: Column(children: [
 
 
-                        MenuButtonWidget(image: Images.trackOrderIcon, title: getTranslated('TRACK_ORDER', context),
-                            navigateTo: const GuestTrackOrderScreen()),
+                        // MenuButtonWidget(image: Images.trackOrderIcon, title: getTranslated('TRACK_ORDER', context),
+                        //     navigateTo: const GuestTrackOrderScreen()),
 
                         if(Provider.of<AuthController>(context, listen: false).isLoggedIn())
                           MenuButtonWidget(image: Images.user, title: getTranslated('profile', context),
@@ -134,17 +134,17 @@ class _MoreScreenState extends State<MoreScreen> {
                         MenuButtonWidget(image: Images.category, title: getTranslated('CATEGORY', context),
                             navigateTo: const CategoryScreen()),
 
-                        if(Provider.of<AuthController>(context, listen: false).isLoggedIn())
-                          MenuButtonWidget(image: Images.restockIcon, title: getTranslated('restock_requests', context),
-                              navigateTo: const RestockListScreen()),
+                        // if(Provider.of<AuthController>(context, listen: false).isLoggedIn())
+                        //   MenuButtonWidget(image: Images.restockIcon, title: getTranslated('restock_requests', context),
+                        //       navigateTo: const RestockListScreen()),
 
-                        if(splashController.configModel!.activeTheme != "default" && authController.isLoggedIn())
-                          MenuButtonWidget(image: Images.compare, title: getTranslated('compare_products', context),
-                              navigateTo: const CompareProductScreen()),
+                        // if(splashController.configModel!.activeTheme != "default" && authController.isLoggedIn())
+                        //   MenuButtonWidget(image: Images.compare, title: getTranslated('compare_products', context),
+                        //       navigateTo: const CompareProductScreen()),
 
-                        MenuButtonWidget(image: Images.notification, title: getTranslated('notification', context,),
-                            isNotification: true,
-                            navigateTo: const NotificationScreen()),
+                        // MenuButtonWidget(image: Images.notification, title: getTranslated('notification', context,),
+                        //     isNotification: true,
+                        //     navigateTo: const NotificationScreen()),
 
                         MenuButtonWidget(image: Images.settings, title: getTranslated('settings', context),
                             navigateTo: const SettingsScreen())]))),
@@ -167,16 +167,16 @@ class _MoreScreenState extends State<MoreScreen> {
                           Colors.white.withValues(alpha:.05) : Theme.of(context).cardColor),
                       child: Column(children: [
 
-                        singleVendor?const SizedBox():
-                        MenuButtonWidget(image: Images.chats, title: getTranslated('inbox', context),
-                            navigateTo: const InboxScreen()),
+                        // singleVendor?const SizedBox():
+                        // MenuButtonWidget(image: Images.chats, title: getTranslated('inbox', context),
+                        //     navigateTo: const InboxScreen()),
 
-                        MenuButtonWidget(image: Images.callIcon, title: getTranslated('contact_us', context),
-                            navigateTo: const ContactUsScreen()),
+                        // MenuButtonWidget(image: Images.callIcon, title: getTranslated('contact_us', context),
+                        //     navigateTo: const ContactUsScreen()),
 
 
-                        MenuButtonWidget(image: Images.preference, title: getTranslated('support_ticket', context),
-                            navigateTo: const SupportTicketScreen()),
+                        // MenuButtonWidget(image: Images.preference, title: getTranslated('support_ticket', context),
+                        //     navigateTo: const SupportTicketScreen()),
 
                         MenuButtonWidget(image: Images.termCondition, title: getTranslated('terms_condition', context),
                             navigateTo: HtmlViewScreen(title: getTranslated('terms_condition', context),

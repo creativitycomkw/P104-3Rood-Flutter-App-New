@@ -8,30 +8,46 @@ import 'package:flutter_ecommerce/main.dart';
 import 'package:flutter_ecommerce/utill/app_constants.dart';
 import 'package:provider/provider.dart';
 
-class ShippingRepository implements ShippingRepositoryInterface{
+class ShippingRepository implements ShippingRepositoryInterface {
   final DioClient? dioClient;
   ShippingRepository({required this.dioClient});
 
-
-
   @override
-  Future<ApiResponse> getShippingMethod(int? sellerId, String? type) async {
+  Future<ApiResponse> getShippingMethod(
+      int? sellerId, String? type, String? countryId) async {
+    log('===>${{"Country id for shipping methoid is : ${countryId}"}}');
     try {
-      final response = await dioClient!.get('${AppConstants.getShippingMethod}/$sellerId/$type');
+      final response = await dioClient!
+          .post('${AppConstants.getShippingMethod}/$sellerId/$type', data: {
+        "country_id": countryId,
+        "user_id": Provider.of<AuthController>(Get.context!, listen: false)
+                .isLoggedIn()
+            ? Provider.of<AuthController>(Get.context!, listen: false)
+                .getUserToken()
+            : null,
+        "guest_id": Provider.of<AuthController>(Get.context!, listen: false)
+                .isLoggedIn()
+            ? null
+            : Provider.of<AuthController>(Get.context!, listen: false)
+                .getGuestToken()
+      });
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
 
-
   @override
   Future<ApiResponse> addShippingMethod(int? id, String? cartGroupId) async {
-    log('===>${{"id":id, "cart_group_id": cartGroupId}}');
+    log('===>${{"id": id, "cart_group_id": cartGroupId}}');
     try {
-      final response = await dioClient!.post(AppConstants.chooseShippingMethod,
-          data: {"id":id, 'guest_id' : Provider.of<AuthController>(Get.context!, listen: false).getGuestToken(),
-            "cart_group_id": cartGroupId});
+      final response =
+          await dioClient!.post(AppConstants.chooseShippingMethod, data: {
+        "id": id,
+        'guest_id': Provider.of<AuthController>(Get.context!, listen: false)
+            .getGuestToken(),
+        "cart_group_id": cartGroupId
+      });
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -41,14 +57,13 @@ class ShippingRepository implements ShippingRepositoryInterface{
   @override
   Future<ApiResponse> getChosenShippingMethod() async {
     try {
-      final response =await dioClient!.get('${AppConstants.chosenShippingMethod}?guest_id=${Provider.of<AuthController>(Get.context!, listen: false).getGuestToken()}');
+      final response = await dioClient!.get(
+          '${AppConstants.chosenShippingMethod}?guest_id=${Provider.of<AuthController>(Get.context!, listen: false).getGuestToken()}');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
-
-
 
   @override
   Future add(value) {
@@ -67,7 +82,6 @@ class ShippingRepository implements ShippingRepositoryInterface{
     // TODO: implement update
     throw UnimplementedError();
   }
-
 
   @override
   Future getList({int? offset}) {

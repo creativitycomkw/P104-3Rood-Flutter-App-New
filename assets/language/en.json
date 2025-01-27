@@ -306,6 +306,7 @@
     "attachment": "Attachment",
     "refund_details": "Refund Details",
     "product_discount": "Product discount : ",
+
     "tax": "Tax",
     "cancel_order": "Cancel order",
     "order_cancelled_successfully": "Order cancelled successfully",

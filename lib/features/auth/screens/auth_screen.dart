@@ -63,7 +63,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
                     child: Column(
                       children: [
                         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                          Image.asset(Images.splashLogo, width: 130, height: 80)]),
+                          Image.asset(Images.logoImage, width: 130, height: 60)]),
 
                         Text(getTranslated('sign_up', context)!, style: titilliumRegular.copyWith(
                           color: Theme.of(context).highlightColor,

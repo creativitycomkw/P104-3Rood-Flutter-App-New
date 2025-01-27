@@ -16,6 +16,7 @@ import 'package:flutter_ecommerce/features/splash/domain/models/config_model.dar
 import 'package:flutter_ecommerce/features/splash/domain/models/config_model.dart';
 import 'package:flutter_ecommerce/helper/country_code_helper.dart';
 import 'package:flutter_ecommerce/helper/velidate_check.dart';
+import 'package:flutter_ecommerce/localization/controllers/localization_controller.dart';
 import 'package:flutter_ecommerce/localization/language_constrants.dart';
 import 'package:flutter_ecommerce/main.dart';
 import 'package:flutter_ecommerce/features/auth/controllers/auth_controller.dart';
@@ -102,12 +103,7 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                     .countryCode!)
             .dialCode!,
         notify: false);
-    _countryCodeController.text = CountryCode.fromCountryCode(
-                Provider.of<SplashController>(context, listen: false)
-                    .configModel!
-                    .countryCode!)
-            .name ??
-        'Bangladesh';
+    _countryCodeController.text = '2';
     Provider.of<AddressController>(context, listen: false).getAddressType();
     Provider.of<AddressController>(context, listen: false)
         .getRestrictedDeliveryCountryList();
@@ -138,6 +134,9 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
           true,
           widget.address!.address,
           context);
+
+          _selectedArea=widget.address!.area;
+          selectedCountryId=widget.address!.country!;
       _contactPersonNameController.text =
           '${widget.address?.contactPersonName}';
       _countryCodeController.text = '${widget.address?.country}';
@@ -265,6 +264,8 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                             onTap: () {
                                               setState(() {
                                                 selectedCountryId = country.id!;
+
+                                                _countryCodeController.text=country.id!;
                                               });
                                             },
                                             child: ClipRRect(
@@ -638,6 +639,12 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                   height: 54,
                                   child: Consumer<AddressController>(
                                       builder: (context, addressController, _) {
+                                    bool isArabic =
+                                        Provider.of<LocalizationController>(
+                                                    context)
+                                                .locale
+                                                .countryCode ==
+                                            'SA';
                                     return Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -658,54 +665,166 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                                       .hintColor
                                                       .withOpacity(0.1)),
                                             ),
-                                            child: DropdownSearch<String>(
-                                              // selectedItem:
-                                              //     _selectedArea != null
-                                              //         ? _selectedArea!.name
-                                              //         : getTranslated(
-                                              //         'area', context)!,
+                                            child: DropdownSearch<Area>(
+                                              selectedItem: _selectedArea,
+                                              compareFn: (area1, area2) =>
+                                                  isArabic
+                                                      ? area1?.name_ar ==
+                                                          area2?.name_ar
+                                                      : area1?.name ==
+                                                          area2?.name,
+
                                               items: (a, b) =>
                                                   Provider.of<SplashController>(
                                                           context,
                                                           listen: false)
                                                       .configModel!
                                                       .areas
-                                                      .map((area) => area.name!)
+                                                      .map((area) => area)
                                                       .toList(),
+                                              itemAsString: (area) => isArabic
+                                                  ? area!.name_ar!
+                                                  : area!.name!,
+                                             onChanged: (area){
+                                              setState(() {
+                                                _selectedArea=area;
+                                              });
+                                             },
+                                              popupProps: PopupProps.menu(
+                                                fit: FlexFit.loose,
+                                                
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                        cursorColor:
+                                                            Theme.of(context)
+                                                                .primaryColor,
+                                                        decoration:
+                                                            InputDecoration(
+                                                                prefixIcon:
+                                                                    Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .only(
+                                                                          right:
+                                                                              10,
+                                                                          left:
+                                                                              7),
+                                                                  child: Icon(Icons
+                                                                      .search),
+                                                                ),
+                                                                hintText: getTranslated(
+                                                                    'area', context)!,
+                                                                contentPadding:
+                                                                    EdgeInsets.symmetric(
+                                                                        horizontal:
+                                                                            10),
+                                                                enabledBorder: OutlineInputBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            5),
+                                                                    borderSide: BorderSide(
+                                                                        width:
+                                                                            1,
+                                                                        color: Color(
+                                                                            0xFFBFBFBF))),
+                                                                focusedBorder: OutlineInputBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            5),
+                                                                    borderSide: BorderSide(
+                                                                        width: 1,
+                                                                        color: Color(0xFFBFBFBF))))),
+                                                showSearchBox: true,
+                                              ),
                                               decoratorProps:
                                                   DropDownDecoratorProps(
                                                 decoration: InputDecoration(
-                                                  prefixIcon: Container(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              1),
-                                                      height: 24,
-                                                      width: 24,
-                                                      child: Center(
-                                                        child:
-                                                            CustomAssetImageWidget(
-                                                                height: 20,
-                                                                width: 20,
-                                                                Images.address,
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor
-                                                                    .withValues(
-                                                                        alpha:
-                                                                            .4)),
-                                                      )),
-                                                  labelText: getTranslated(
-                                                      'area', context)!,
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5)),
-                                                ),
+                                                    contentPadding:
+                                                        EdgeInsets.all(Dimensions
+                                                            .fontSizeDefault),
+                                                    alignLabelWithHint: true,
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                8),
+                                                        borderSide: BorderSide(
+                                                          color: const Color(
+                                                              0xFFBFBFBF),
+                                                          width: .75,
+                                                        )),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                    8),
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor,
+                                                              width: .75,
+                                                            )),
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                    8),
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: const Color(
+                                                                  0xFFBFBFBF),
+                                                              width: .75,
+                                                            )),
+                                                    fillColor: Theme.of(context)
+                                                        .cardColor,
+                                                    filled: true,
+                                                    labelStyle:
+                                                        textRegular.copyWith(
+                                                            fontSize: Dimensions
+                                                                .fontSizeSmall,
+                                                            color:
+                                                                Theme.of(context)
+                                                                    .hintColor),
+                                                    label: Text.rich(
+                                                        TextSpan(children: [
+                                                      TextSpan(
+                                                          text: getTranslated(
+                                                              'area', context)!,
+                                                          style: textRegular.copyWith(
+                                                              fontSize: Dimensions
+                                                                  .fontSizeDefault,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodyLarge!
+                                                                  .color)),
+                                                      TextSpan(
+                                                          text: ' *',
+                                                          style: textRegular.copyWith(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .error,
+                                                              fontSize: Dimensions
+                                                                  .fontSizeLarge))
+                                                    ])),
+                                                    prefixIcon: Container(
+                                                        padding: const EdgeInsets.all(1),
+                                                        height: 24,
+                                                        width: 24,
+                                                        child: Center(
+                                                          child: CustomAssetImageWidget(
+                                                              height: 20,
+                                                              width: 20,
+                                                              Images.address,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor
+                                                                  .withValues(
+                                                                      alpha:
+                                                                          .4)),
+                                                        ))),
                                               ),
-                                              popupProps: PopupProps.menu(
-                                                  fit: FlexFit.loose,
-                                                  constraints:
-                                                      BoxConstraints()),
                                             ),
                                           ),
 
@@ -878,8 +997,8 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                         ]);
                                   })),
                             ],
-                          if(selectedCountryId=='2')
-                            const SizedBox(height: 16),
+                            if (selectedCountryId == '2')
+                              const SizedBox(height: 16),
                             CustomTextFieldWidget(
                               labelText: getTranslated(
                                   selectedCountryId == '2'
@@ -1039,6 +1158,12 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                         if (_addressFormKey.currentState
                                                 ?.validate() ??
                                             false) {
+                                          if (_selectedArea == null && selectedCountryId=='2') {
+                                            showCustomSnackBar(
+                                                '${getTranslated('area_is_required', context)}',
+                                                context);
+                                            return;
+                                          }
                                           AddressModel addressModel =
                                               AddressModel(
                                             addressType: addressController
@@ -1081,8 +1206,11 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                                 : locationController
                                                     .position.longitude
                                                     .toString(),
+                                                    area: selectedCountryId=='2'? _selectedArea:null
                                           );
 
+                                          print(
+                                              "Addreesss is ${addressModel.toJson()}");
                                           if (widget.isEnableUpdate) {
                                             addressModel.id =
                                                 widget.address!.id;
@@ -1090,13 +1218,15 @@ class _AddNewAddressScreenState extends State<AddNewAddressScreen> {
                                                 context,
                                                 addressModel: addressModel,
                                                 addressId: addressModel.id);
-                                          } else if (_countryCodeController.text
-                                              .trim()
-                                              .isEmpty) {
-                                            showCustomSnackBar(
-                                                '${getTranslated('country_is_required', context)}',
-                                                context);
-                                          } else {
+                                          } 
+                                          // else if (_countryCodeController.text
+                                          //     .trim()
+                                          //     .isEmpty) {
+                                          //   showCustomSnackBar(
+                                          //       '${getTranslated('country_is_required', context)}',
+                                          //       context);
+                                          // } 
+                                          else {
                                             addressController
                                                 .addAddress(addressModel)
                                                 .then((value) {

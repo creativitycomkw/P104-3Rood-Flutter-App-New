@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/features/address/controllers/address_controller.dart';
 import 'package:flutter_ecommerce/features/address/widgets/address_shimmer.dart';
+import 'package:flutter_ecommerce/localization/controllers/localization_controller.dart';
 import 'package:flutter_ecommerce/localization/language_constrants.dart';
 import 'package:flutter_ecommerce/utill/color_resources.dart';
 import 'package:flutter_ecommerce/utill/custom_themes.dart';
@@ -19,10 +20,10 @@ class AddressListScreen extends StatefulWidget {
 }
 
 class _AddressListScreenState extends State<AddressListScreen> {
-
   @override
   void initState() {
-    Provider.of<AddressController>(context, listen: false).getAddressList(all: true);
+    Provider.of<AddressController>(context, listen: false)
+        .getAddressList(all: true);
     super.initState();
   }
 
@@ -31,71 +32,160 @@ class _AddressListScreenState extends State<AddressListScreen> {
     return Scaffold(
       appBar: CustomAppBar(title: getTranslated('addresses', context)),
       floatingActionButton: FloatingActionButton(
-        shape:  RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
-        onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AddNewAddressScreen(isBilling: false))),
-        backgroundColor: ColorResources.getPrimary(context),
-        child: Icon(Icons.add, color: Theme.of(context).highlightColor)),
-
-
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+          onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (_) => const AddNewAddressScreen(isBilling: false))),
+          backgroundColor: ColorResources.getPrimary(context),
+          child: Icon(Icons.add, color: Theme.of(context).highlightColor)),
       body: Consumer<AddressController>(
         builder: (context, locationProvider, child) {
-          return  locationProvider.addressList != null? locationProvider.addressList!.isNotEmpty ?
-          RefreshIndicator(onRefresh: () async => await locationProvider.getAddressList(),
-            backgroundColor: Theme.of(context).secondaryHeaderColor,
-            child: ListView.builder(padding: const EdgeInsets.all(0),
-              itemCount: locationProvider.addressList?.length,
-              itemBuilder: (context, index){
-              return Padding(
-                padding: const EdgeInsets.fromLTRB(Dimensions.paddingSizeDefault, Dimensions.paddingSizeDefault, Dimensions.paddingSizeDefault, 0),
-                child: Container(padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall)),
-                  child: Column(children: [
-
-                    Row(children: [
-                      Expanded(child: Text('${getTranslated('address', context)} : ${locationProvider.addressList?[index].address}',
-                          style: textRegular.copyWith(fontSize: Dimensions.fontSizeLarge),),),
-
-                      InkWell(onTap: ()=> Navigator.of(context).push(MaterialPageRoute(builder: (_)=> AddNewAddressScreen(
-                        isBilling:  locationProvider.addressList?[index].isBilling,
-                        address: locationProvider.addressList?[index], isEnableUpdate: true))),
-                        child: Container(width: 40,
-                          decoration: BoxDecoration(borderRadius:
-                         BorderRadius.circular(5),
-                            color: Theme.of(context).primaryColor.withValues(alpha:.05)),
-                          child: Padding(padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-                            child: Image.asset(Images.edit),),),
+          return locationProvider.addressList != null
+              ? locationProvider.addressList!.isNotEmpty
+                  ? RefreshIndicator(
+                      onRefresh: () async =>
+                          await locationProvider.getAddressList(),
+                      backgroundColor: Theme.of(context).secondaryHeaderColor,
+                      child: ListView.builder(
+                        padding: const EdgeInsets.all(0),
+                        itemCount: locationProvider.addressList?.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.fromLTRB(
+                                Dimensions.paddingSizeDefault,
+                                Dimensions.paddingSizeDefault,
+                                Dimensions.paddingSizeDefault,
+                                0),
+                            child: Container(
+                              padding: const EdgeInsets.all(
+                                  Dimensions.paddingSizeDefault),
+                              decoration: BoxDecoration(
+                                  color: Theme.of(context).cardColor,
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.paddingSizeSmall)),
+                              child: Column(
+                                children: [
+                                  Row(children: [
+                                    Expanded(
+                                      child: locationProvider
+                                                  .addressList?[index]
+                                                  .country ==
+                                              '2'
+                                          ? Text(
+                                              '${getTranslated('area', context)} :  ${Provider.of<LocalizationController>(context).locale.countryCode == 'SA' ? (locationProvider.addressList?[index].area!.name_ar! ?? "") : (locationProvider.addressList?[index].area!.name! ?? "")}',
+                                              style: textRegular.copyWith(
+                                                  fontSize: Dimensions
+                                                      .fontSizeDefault),
+                                            )
+                                          : Text(
+                                              '${getTranslated('country', context)} : ${locationProvider.addressList?[index].country}',
+                                              style: textRegular.copyWith(
+                                                  fontSize: Dimensions
+                                                      .fontSizeDefault),
+                                            ),
+                                    ),
+                                    InkWell(
+                                      onTap: () => Navigator.of(
+                                              context)
+                                          .push(MaterialPageRoute(
+                                              builder: (_) =>
+                                                  AddNewAddressScreen(
+                                                      isBilling:
+                                                          locationProvider
+                                                              .addressList?[
+                                                                  index]
+                                                              .isBilling,
+                                                      address: locationProvider
+                                                          .addressList?[index],
+                                                      isEnableUpdate: true))),
+                                      child: Container(
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            color: Theme.of(context)
+                                                .primaryColor
+                                                .withValues(alpha: .05)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(
+                                              Dimensions.paddingSizeSmall),
+                                          child: Image.asset(Images.edit),
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
+                                  Row(children: [
+                                    Text(
+                                      '${getTranslated(locationProvider.addressList?[index].country == '2' ? 'city' : 'address_1', context)} : ${locationProvider.addressList?[index].city ?? ""}',
+                                      style: textRegular.copyWith(
+                                          fontSize: Dimensions.fontSizeDefault),
+                                    ),
+                                    const SizedBox(
+                                        width: Dimensions.paddingSizeDefault),
+                                    if (locationProvider
+                                            .addressList?[index].country ==
+                                        '2')
+                                      Text(
+                                        '${getTranslated('street', context)} : ${locationProvider.addressList?[index].address}',
+                                        style: textRegular.copyWith(
+                                            fontSize:
+                                                Dimensions.fontSizeDefault),
+                                      ),
+                                  ]),
+                                  Row(children: [
+                                    locationProvider
+                                                .addressList?[index].country ==
+                                            '2'
+                                        ? Text(
+                                            '${getTranslated('zip', context)} : ${locationProvider.addressList?[index].zip ?? ""}',
+                                            style: textRegular.copyWith(
+                                                fontSize:
+                                                    Dimensions.fontSizeDefault))
+                                        : Text(
+                                            '${getTranslated('address_2', context)} : ${locationProvider.addressList?[index].address}',
+                                            style: textRegular.copyWith(
+                                                fontSize:
+                                                    Dimensions.fontSizeDefault),
+                                          ),
+                                    const Spacer(),
+                                    InkWell(
+                                        onTap: () {
+                                          showModalBottomSheet(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              context: context,
+                                              builder: (_) =>
+                                                  RemoveFromAddressBottomSheet(
+                                                      addressId:
+                                                          locationProvider
+                                                              .addressList![
+                                                                  index]
+                                                              .id!,
+                                                      index: index));
+                                        },
+                                        child: const Padding(
+                                            padding: EdgeInsets.only(
+                                                top: Dimensions
+                                                    .paddingSizeDefault),
+                                            child: Icon(
+                                              Icons.delete_forever,
+                                              color: Colors.red,
+                                              size: 30,
+                                            )))
+                                  ]),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                    ]
-                    ),
-
-                    Row(children: [
-                      Text('${getTranslated('city', context)} : ${locationProvider.addressList?[index].city ?? ""}',
-                        style: textRegular.copyWith(fontSize: Dimensions.fontSizeDefault),),
-                      const SizedBox(width: Dimensions.paddingSizeDefault),
-                      Text('${getTranslated('zip', context)} : ${locationProvider.addressList?[index].zip ?? ""}',
-                          style: textRegular.copyWith(fontSize: Dimensions.fontSizeDefault)),
-
-                      const Spacer(),
-                      InkWell(onTap: (){
-                        showModalBottomSheet(backgroundColor: Colors.transparent, context: context, builder: (_)=>
-                            RemoveFromAddressBottomSheet(addressId: locationProvider.addressList![index].id!, index: index));
-                      },
-                          child: const Padding(padding: EdgeInsets.only(top: Dimensions.paddingSizeDefault),
-                              child: Icon(Icons.delete_forever, color: Colors.red, size: 30,)))
-
-
-                    ]
-                    ),
-                  ],
-                  ),
-                ),
-              );
-              },
-            ),
-          ) : const NoInternetOrDataScreenWidget(isNoInternet: false,
-            message: 'no_address_found',
-            icon: Images.noAddress,): const AddressShimmerWidget();
+                    )
+                  : const NoInternetOrDataScreenWidget(
+                      isNoInternet: false,
+                      message: 'no_address_found',
+                      icon: Images.noAddress,
+                    )
+              : const AddressShimmerWidget();
         },
       ),
     );

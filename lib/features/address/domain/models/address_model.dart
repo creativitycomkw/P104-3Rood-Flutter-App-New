@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:flutter_ecommerce/features/splash/domain/models/config_model.dart';
+
 class AddressModel {
   int? id;
   String? contactPersonName;
@@ -15,24 +19,25 @@ class AddressModel {
   bool? isBilling;
   String? guestId;
   String? email;
+  Area? area;
   AddressModel(
       {this.id,
-        this.contactPersonName,
-        this.addressType,
-        this.address,
-        this.city,
-        this.zip,
-        this.phone,
-        this.createdAt,
-        this.updatedAt,
-        this.state,
-        this.country,
-        this.latitude,
-        this.longitude,
-        this.isBilling,
-        this.guestId,
-        this.email,
-      });
+      this.contactPersonName,
+      this.addressType,
+      this.address,
+      this.city,
+      this.zip,
+      this.phone,
+      this.createdAt,
+      this.updatedAt,
+      this.state,
+      this.country,
+      this.latitude,
+      this.longitude,
+      this.isBilling,
+      this.guestId,
+      this.email,
+      this.area});
 
   AddressModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -45,11 +50,19 @@ class AddressModel {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     state = json['state'];
-    country = json['country'];
+    // country = json['country'];
+    country = '2';
     latitude = json['latitude'];
     longitude = json['longitude'];
-    isBilling = json['is_billing']??false;
+    isBilling = json['is_billing'] ?? false;
     email = json['email'];
+    area = json.containsKey('area_name')
+        ? json['area_name']!='null'?Area.fromJson(jsonDecode(json['area_name']) ):null
+        : Area(
+            zoneId: "47",
+            countryId: "114",
+            name: "Abdullah Al Mubarak Al Sabah",
+            name_ar: "عبدالله المبارك الصباح");
   }
 
   Map<String, dynamic> toJson() {
@@ -70,6 +83,7 @@ class AddressModel {
     data['is_billing'] = isBilling;
     data['guest_id'] = guestId;
     data['email'] = email;
+    data['area']=area!=null?area!.toJson():null;
     return data;
   }
 }

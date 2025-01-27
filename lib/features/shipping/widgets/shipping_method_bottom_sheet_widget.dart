@@ -35,18 +35,19 @@ class ShippingMethodBottomSheetWidgetState
         Provider.of<ShippingController>(context, listen: false)
             .shippingList!
             .isNotEmpty) {
-      selectedIndex = Provider.of<ShippingController>(context, listen: false)
-              .shippingList![widget.sellerIndex]
-              .shippingIndex ??
-          0;
-    }else{
-       if (Provider.of<SplashController>(Get.context!, listen: false)
-            .configModel!
-            .shippingMethod !=
-        'sellerwise_shipping') {
-      Provider.of<ShippingController>(Get.context!, listen: false)
-          .getAdminShippingMethodList(Get.context!);
-    }
+      print("inside rebuild");
+      // selectedIndex = Provider.of<ShippingController>(context, listen: false)
+      //         .shippingList![widget.sellerIndex]
+      //         .shippingIndex ??
+      //     0;
+    } else {
+      if (Provider.of<SplashController>(Get.context!, listen: false)
+              .configModel!
+              .shippingMethod !=
+          'sellerwise_shipping') {
+        Provider.of<ShippingController>(Get.context!, listen: false)
+            .getAdminShippingMethodList(Get.context!);
+      }
     }
     super.initState();
   }
@@ -54,44 +55,51 @@ class ShippingMethodBottomSheetWidgetState
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
+      padding: const EdgeInsets.only(top: 1.0),
       child: Container(
         padding: const EdgeInsets.symmetric(
-            vertical: Dimensions.paddingSizeDefault,
+            vertical:0,
             horizontal: Dimensions.paddingSizeSmall),
         decoration: BoxDecoration(
-          color: Theme.of(context).highlightColor,
+          // color: Theme.of(context).highlightColor,
           borderRadius: const BorderRadius.vertical(
             top: Radius.circular(Dimensions.paddingSizeDefault),
           ),
         ),
         child: SingleChildScrollView(
-          child: Column(
-           
-            mainAxisSize: MainAxisSize.min, children: [
-            InkWell(
-                onTap: () => Navigator.pop(context),
-                child: Container(
-                    width: 40,
-                    height: 5,
-                    decoration: BoxDecoration(
-                        color:
-                            Theme.of(context).hintColor.withValues(alpha: .5),
-                        borderRadius: BorderRadius.circular(20)))),
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            // InkWell(
+            //     onTap: () => Navigator.pop(context),
+            //     child: Container(
+            //         width: 40,
+            //         height: 5,
+            //         decoration: BoxDecoration(
+            //             color:
+            //                 Theme.of(context).hintColor.withValues(alpha: .5),
+            //             borderRadius: BorderRadius.circular(20)))),
+            // const SizedBox(
+            //   height: 10,
+            // ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(
+                  getTranslated('select_shipping_method', context)!,
+                  style: textMedium.copyWith(fontSize: Dimensions.fontSizeLarge),
+                ),
+              ),
+            ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
-            Text(
-              getTranslated('select_shipping_method', context)!,
-              style: textBold.copyWith(fontSize: Dimensions.fontSizeLarge),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: Dimensions.paddingSizeDefault,
-                  bottom: Dimensions.paddingSizeLarge),
-              child: Text(
-                  '${getTranslated('choose_a_method_for_your_delivery', context)}'),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(
+            //       top: Dimensions.paddingSizeDefault,
+            //       bottom: Dimensions.paddingSizeLarge),
+            //   child: Text(
+            //       '${getTranslated('choose_a_method_for_your_delivery', context)}'),
+            // ),
             Padding(
               padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
               child: Consumer<ShippingController>(
@@ -136,24 +144,68 @@ class ShippingMethodBottomSheetWidgetState
                                                             .withValues(
                                                                 alpha: .25),
                                                         width: .5),
-                                                    color: selectedIndex == index
+                                                    color: Provider.of<ShippingController>(context, listen: false)
+                                                                .shippingList![widget
+                                                                    .sellerIndex]
+                                                                .shippingIndex ==
+                                                            index
                                                         ? Theme.of(context)
                                                             .primaryColor
-                                                            .withValues(
-                                                                alpha: .1)
-                                                        : Theme.of(context)
-                                                            .cardColor),
+                                                            .withValues(alpha: .1)
+                                                        : Theme.of(context).cardColor),
                                                 child: InkWell(
                                                     onTap: () {
+                                                    
+
                                                       setState(() {
                                                         selectedIndex = index;
                                                       });
+
+                                                      Provider.of<ShippingController>(
+                                                              context,
+                                                              listen: false)
+                                                          .setSelectedShippingMethod(
+                                                              index,
+                                                              widget
+                                                                  .sellerIndex);
+
+                                                      ShippingMethodModel
+                                                          shipping =
+                                                          ShippingMethodModel();
+
+                                                      shipping.id = shippingController
+                                                          .shippingList![widget
+                                                              .sellerIndex]
+                                                          .shippingMethodList![
+                                                              index]
+                                                          .id;
+                                                      shipping.duration =
+                                                          widget.groupId;
+
+                                                      shippingController
+                                                              .isLoading
+                                                          ? const Center(
+                                                              child:
+                                                                  CircularProgressIndicator())
+                                                          : shippingController
+                                                              .addShippingMethod(
+                                                                  context,
+                                                                  shipping.id,
+                                                                  shipping
+                                                                      .duration);
                                                     },
                                                     child: Padding(
-                                                        padding:
-                                                            const EdgeInsets.all(8.0),
+                                                        padding: const EdgeInsets.all(8.0),
                                                         child: Row(children: [
-                                                          selectedIndex == index
+                                                          Provider.of<ShippingController>(
+                                                                          context,
+                                                                          listen:
+                                                                              false)
+                                                                      .shippingList![
+                                                                          widget
+                                                                              .sellerIndex]
+                                                                      .shippingIndex ==
+                                                                  index
                                                               ? const Icon(
                                                                   Icons
                                                                       .check_circle,
@@ -188,43 +240,43 @@ class ShippingMethodBottomSheetWidgetState
                                           );
                                         },
                                       ),
-                                      const SizedBox(
-                                        height: Dimensions.paddingSizeDefault,
-                                      ),
-                                      shippingController.isLoading
-                                          ? const Center(
-                                              child:
-                                                  CircularProgressIndicator())
-                                          : CustomButton(
-                                              buttonText:
-                                                  '${getTranslated('select', context)}',
-                                              onTap: () {
-                                                Provider.of<ShippingController>(
-                                                        context,
-                                                        listen: false)
-                                                    .setSelectedShippingMethod(
-                                                        selectedIndex,
-                                                        widget.sellerIndex);
-                                                ShippingMethodModel shipping =
-                                                    ShippingMethodModel();
-                                                shipping.id = shippingController
-                                                    .shippingList![
-                                                        widget.sellerIndex]
-                                                    .shippingMethodList![
-                                                        selectedIndex]
-                                                    .id;
-                                                shipping.duration =
-                                                    widget.groupId;
-                                                shippingController.isLoading
-                                                    ? const Center(
-                                                        child:
-                                                            CircularProgressIndicator())
-                                                    : shippingController
-                                                        .addShippingMethod(
-                                                            context,
-                                                            shipping.id,
-                                                            shipping.duration);
-                                              })
+                                      // const SizedBox(
+                                      //   height: Dimensions.paddingSizeDefault,
+                                      // ),
+                                      // shippingController.isLoading
+                                      //     ? const Center(
+                                      //         child:
+                                      //             CircularProgressIndicator())
+                                      //     : CustomButton(
+                                      //         buttonText:
+                                      //             '${getTranslated('select', context)}',
+                                      //         onTap: () {
+                                      //           Provider.of<ShippingController>(
+                                      //                   context,
+                                      //                   listen: false)
+                                      //               .setSelectedShippingMethod(
+                                      //                   selectedIndex,
+                                      //                   widget.sellerIndex);
+                                      //           ShippingMethodModel shipping =
+                                      //               ShippingMethodModel();
+                                      //           shipping.id = shippingController
+                                      //               .shippingList![
+                                      //                   widget.sellerIndex]
+                                      //               .shippingMethodList![
+                                      //                   selectedIndex]
+                                      //               .id;
+                                      //           shipping.duration =
+                                      //               widget.groupId;
+                                      //           shippingController.isLoading
+                                      //               ? const Center(
+                                      //                   child:
+                                      //                       CircularProgressIndicator())
+                                      //               : shippingController
+                                      //                   .addShippingMethod(
+                                      //                       context,
+                                      //                       shipping.id,
+                                      //                       shipping.duration);
+                                      //         })
                                     ])
                               : Center(
                                   child: Text(

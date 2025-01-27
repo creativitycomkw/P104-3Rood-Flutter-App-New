@@ -38,7 +38,7 @@ class ChoosePaymentWidget extends StatelessWidget {
                       const Divider(thickness: .125,),
                       (orderProvider.paymentMethodIndex != -1)?
                       Row(children: [
-                        SizedBox(width: 40, child: CustomImageWidget(
+                        SizedBox(width: 150, child: CustomImageWidget(fit: BoxFit.contain,
                             image: '${configProvider.configModel?.paymentMethodImagePath}/${configProvider.configModel!.paymentMethods![orderProvider.paymentMethodIndex].additionalDatas!.gatewayImage??''}')),
                         Padding(padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
                           child: Text(configProvider.configModel!.paymentMethods![orderProvider.paymentMethodIndex].additionalDatas!.gatewayTitle??''),),

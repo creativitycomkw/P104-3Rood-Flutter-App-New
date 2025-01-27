@@ -43,8 +43,8 @@ class OrderAmountCalculation extends StatelessWidget {
             amount: PriceConverter.convertPrice(context, orderProvider.orders!.discountAmount),),
 
 
-          AmountWidget(title: getTranslated('tax', context),
-              amount: PriceConverter.convertPrice(context, tax)),
+          // AmountWidget(title: getTranslated('tax', context),
+          //     amount: PriceConverter.convertPrice(context, tax)),
 
 
           const Padding(padding: EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall),

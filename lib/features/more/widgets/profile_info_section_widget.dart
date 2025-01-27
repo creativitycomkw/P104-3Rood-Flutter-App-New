@@ -64,11 +64,13 @@ class ProfileInfoSectionWidget extends StatelessWidget {
                     Text(profile.userInfoModel?.phone??'', style: textRegular.copyWith(color: ColorResources.white, fontSize: Dimensions.fontSizeLarge)),
                   ],)),
 
-                  InkWell(onTap: ()=> Provider.of<ThemeController>(context, listen: false).toggleTheme(),
-                    child: Padding(padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(width: 40, child: Image.asset(Provider.of<ThemeController>(context).darkTheme ?
-                      Images.sunnyDay: Images.theme, color: Provider.of<ThemeController>(context).darkTheme ? Colors.white: null))),
-                  )])),
+                  // InkWell(onTap: ()=> Provider.of<ThemeController>(context, listen: false).toggleTheme(),
+                  //   child: Padding(padding: const EdgeInsets.all(8.0),
+                  //     child: SizedBox(width: 40, child: Image.asset(Provider.of<ThemeController>(context).darkTheme ?
+                  //     Images.sunnyDay: Images.theme, color: Provider.of<ThemeController>(context).darkTheme ? Colors.white: null))),
+                  // )
+                  ])
+                  ),
             ]));
         });
   }

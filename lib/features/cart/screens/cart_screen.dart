@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/common/basewidget/custom_loader_widget.dart';
 import 'package:flutter_ecommerce/features/cart/domain/models/cart_model.dart';
+import 'package:flutter_ecommerce/features/checkout/controllers/checkout_controller.dart';
 import 'package:flutter_ecommerce/features/shipping/controllers/shipping_controller.dart';
 import 'package:flutter_ecommerce/helper/price_converter.dart';
 import 'package:flutter_ecommerce/localization/language_constrants.dart';
@@ -238,14 +239,14 @@ class CartScreenState extends State<CartScreen> {
                                                             .hintColor
                                                         : Theme.of(context)
                                                             .primaryColor)),
-                                            Text(
-                                                '${getTranslated('inc_vat_tax', context)}',
-                                                style:
-                                                    titilliumSemiBold.copyWith(
-                                                        fontSize: Dimensions
-                                                            .fontSizeSmall,
-                                                        color: Theme.of(context)
-                                                            .hintColor))
+                                            // Text(
+                                            //     '${getTranslated('inc_vat_tax', context)}',
+                                            //     style:
+                                            //         titilliumSemiBold.copyWith(
+                                            //             fontSize: Dimensions
+                                            //                 .fontSizeSmall,
+                                            //             color: Theme.of(context)
+                                            //                 .hintColor))
                                           ]),
                                           Text(
                                               PriceConverter.convertPrice(
@@ -429,9 +430,9 @@ class CartScreenState extends State<CartScreen> {
                                               'unavailable_shop_product_in_your_cart',
                                               context),
                                           context);
-                                    } 
-                                    
-                                    ////Shipping checkingd 
+                                    }
+
+                                    ////Shipping checkingd
 
                                     // else if (hasNull &&
                                     //     configProvider
@@ -458,9 +459,8 @@ class CartScreenState extends State<CartScreen> {
                                     //           'select_all_shipping_method',
                                     //           context),
                                     //       context);
-                                    // } 
-                                    
-                                    
+                                    // }
+
                                     ////Shipping checkingd ends here
                                     else if (minimum) {
                                       changeColor();
@@ -483,7 +483,12 @@ class CartScreenState extends State<CartScreen> {
                                           sellerGroupLenght += 1;
                                         }
                                       }
-
+                                      Provider.of<CheckoutController>(context,
+                                              listen: false)
+                                          .setAddressIndex(null);
+                                           Provider.of<ShippingController>(context,
+                                              listen: false)
+                                          .clearChoosenShippingList();
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -664,45 +669,45 @@ class CartScreenState extends State<CartScreen> {
                                                                   child: Padding(
                                                                       padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
                                                                       child: Row(children: [
-                                                                        SizedBox(
-                                                                          height:
-                                                                              24,
-                                                                          width:
-                                                                              30,
-                                                                          child:
-                                                                              Checkbox(
-                                                                            visualDensity:
-                                                                                VisualDensity.compact,
-                                                                            side:
-                                                                                WidgetStateBorderSide.resolveWith((states) => BorderSide(width: 2, color: Theme.of(context).primaryColor.withValues(alpha: 0.10))),
-                                                                            checkColor:
-                                                                                Colors.white,
-                                                                            value:
-                                                                                sellerGroupList[index].isGroupChecked,
-                                                                            onChanged:
-                                                                                (bool? value) async {
-                                                                              List<int> ids = [];
-                                                                              for (CartModel cart in cartProductList[index]) {
-                                                                                ids.add(cart.id!);
-                                                                              }
-                                                                              showDialog(context: context, builder: (ctx) => const CustomLoaderWidget());
-                                                                              await cart.addRemoveCartSelectedItem(ids, sellerGroupList[index].isGroupChecked! ? false : true);
-                                                                              Navigator.of(Get.context!).pop();
-                                                                            },
-                                                                          ),
-                                                                        ),
-                                                                        Flexible(
-                                                                          child: Text(
-                                                                              sellerGroupList[index].shopInfo!,
-                                                                              maxLines: 1,
-                                                                              overflow: TextOverflow.ellipsis,
-                                                                              textAlign: TextAlign.start,
-                                                                              style: textBold.copyWith(fontSize: Dimensions.fontSizeLarge, color: Provider.of<ThemeController>(context, listen: false).darkTheme ? Theme.of(context).hintColor : Theme.of(context).primaryColor)),
-                                                                        ),
-                                                                        Padding(
-                                                                            padding:
-                                                                                const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeExtraSmall),
-                                                                            child: Text('(${cartProductList[index].length})', style: textBold.copyWith(color: Provider.of<ThemeController>(context, listen: false).darkTheme ? Theme.of(context).hintColor : Theme.of(context).primaryColor, fontSize: Dimensions.fontSizeLarge))),
+                                                                        // SizedBox(
+                                                                        //   height:
+                                                                        //       24,
+                                                                        //   width:
+                                                                        //       30,
+                                                                        //   child:
+                                                                        //       Checkbox(
+                                                                        //     visualDensity:
+                                                                        //         VisualDensity.compact,
+                                                                        //     side:
+                                                                        //         WidgetStateBorderSide.resolveWith((states) => BorderSide(width: 2, color: Theme.of(context).primaryColor.withValues(alpha: 0.10))),
+                                                                        //     checkColor:
+                                                                        //         Colors.white,
+                                                                        //     value:
+                                                                        //         sellerGroupList[index].isGroupChecked,
+                                                                        //     onChanged:
+                                                                        //         (bool? value) async {
+                                                                        //       List<int> ids = [];
+                                                                        //       for (CartModel cart in cartProductList[index]) {
+                                                                        //         ids.add(cart.id!);
+                                                                        //       }
+                                                                        //       showDialog(context: context, builder: (ctx) => const CustomLoaderWidget());
+                                                                        //       await cart.addRemoveCartSelectedItem(ids, sellerGroupList[index].isGroupChecked! ? false : true);
+                                                                        //       Navigator.of(Get.context!).pop();
+                                                                        //     },
+                                                                        //   ),
+                                                                        // ),
+                                                                        // Flexible(
+                                                                        //   child: Text(
+                                                                        //       sellerGroupList[index].shopInfo!,
+                                                                        //       maxLines: 1,
+                                                                        //       overflow: TextOverflow.ellipsis,
+                                                                        //       textAlign: TextAlign.start,
+                                                                        //       style: textBold.copyWith(fontSize: Dimensions.fontSizeLarge, color: Provider.of<ThemeController>(context, listen: false).darkTheme ? Theme.of(context).hintColor : Theme.of(context).primaryColor)),
+                                                                        // ),
+                                                                        // Padding(
+                                                                        //     padding:
+                                                                        //         const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeExtraSmall),
+                                                                        //     child: Text('(${cartProductList[index].length})', style: textBold.copyWith(color: Provider.of<ThemeController>(context, listen: false).darkTheme ? Theme.of(context).hintColor : Theme.of(context).primaryColor, fontSize: Dimensions.fontSizeLarge))),
                                                                         if (shopClose)
                                                                           JustTheTooltip(
                                                                             backgroundColor:
@@ -734,8 +739,6 @@ class CartScreenState extends State<CartScreen> {
                                                                             ),
                                                                           )
                                                                       ]))),
-                                                             
-                                                             
                                                               SizedBox(
                                                                 width: 200,
                                                                 child: configProvider.configModel!.shippingMethod ==
@@ -787,10 +790,6 @@ class CartScreenState extends State<CartScreen> {
                                                                       )
                                                                     : const SizedBox(),
                                                               )
-
-
-
-
                                                             ],
                                                           ),
                                                         )
@@ -1120,7 +1119,6 @@ class CartScreenState extends State<CartScreen> {
                                 ),
                               ),
 
-
                               // (!onlyDigital &&
                               //         configProvider
                               //                 .configModel!.shippingMethod !=
@@ -1245,10 +1243,6 @@ class CartScreenState extends State<CartScreen> {
                               //         ),
                               //       )
                               //     : const SizedBox(),
-
-
-
-
                             ],
                           ),
                         )

@@ -34,8 +34,8 @@ class CustomCheckBoxWidget extends StatelessWidget {
                     checkColor: Theme.of(context).cardColor,
                     onChanged: (bool? isChecked) => order.setDigitalPaymentMethodName(index, name))),
 
-                SizedBox(height: 40, child: Padding(padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                  child: CustomImageWidget(image : icon!))),
+                SizedBox(height: 40,width:150, child: Padding(padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                  child: CustomImageWidget(image : icon!,fit: BoxFit.contain,))),
                 Text(title, style: textRegular.copyWith(fontSize: Dimensions.fontSizeLarge),),
               ]),
             ),

@@ -73,6 +73,8 @@ class CheckoutScreenState extends State<CheckoutScreen> {
   late bool _billingAddress;
   double? _couponDiscount;
 
+  double _shippingFee = 0;
+
   @override
   void initState() {
     super.initState();
@@ -82,8 +84,8 @@ class CheckoutScreenState extends State<CheckoutScreen> {
     Provider.of<CartController>(context, listen: false).getCartData(context);
     Provider.of<CheckoutController>(context, listen: false)
         .resetPaymentMethod();
-    Provider.of<ShippingController>(context, listen: false)
-        .getChosenShippingMethod(context);
+    // Provider.of<ShippingController>(context, listen: false)
+    //     .getChosenShippingMethod(context);
     if (Provider.of<SplashController>(context, listen: false).configModel !=
             null &&
         Provider.of<SplashController>(context, listen: false)
@@ -105,7 +107,6 @@ class CheckoutScreenState extends State<CheckoutScreen> {
         1;
     Provider.of<CheckoutController>(context, listen: false).clearData();
 
-
     //  if (Provider.of<SplashController>(Get.context!, listen: false)
     //         .configModel!
     //         .shippingMethod !=
@@ -113,11 +114,14 @@ class CheckoutScreenState extends State<CheckoutScreen> {
     //   Provider.of<ShippingController>(Get.context!, listen: false)
     //       .getAdminShippingMethodList(Get.context!);
     // }
+
+    //Clear selected shipping method index
   }
 
   @override
   Widget build(BuildContext context) {
     _order = widget.totalOrderAmount + widget.discount;
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       key: _scaffoldKey,
@@ -279,14 +283,14 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                           currentBalance:
                                               profileProvider.balance ?? 0,
                                           orderAmount: _order +
-                                              widget.shippingFee -
+                                              _shippingFee -
                                               widget.discount -
                                               _couponDiscount! +
                                               widget.tax,
                                           onTap: () {
                                             if (profileProvider.balance! <
                                                 (_order +
-                                                    widget.shippingFee -
+                                                    _shippingFee -
                                                     widget.discount -
                                                     _couponDiscount! +
                                                     widget.tax)) {
@@ -337,6 +341,9 @@ class CheckoutScreenState extends State<CheckoutScreen> {
       body: Consumer<SplashController>(builder: (context, configProvider, _) {
         return Consumer<ShippingController>(
             builder: (context, shippingController, _) {
+          _shippingFee = shippingController.chosenShippingList.isNotEmpty
+              ? shippingController.chosenShippingList[0].shippingCost ?? 0
+              : 0;
           return Consumer<CartController>(builder: (context, cart, child) {
             return Consumer<AuthController>(
                 builder: (context, authProvider, _) {
@@ -368,132 +375,164 @@ class CheckoutScreenState extends State<CheckoutScreen> {
 
                             //Shipping method widget
 
-                            (!onlyDigital &&
-                                    configProvider
-                                            .configModel!.shippingMethod !=
-                                        'sellerwise_shipping' &&
-                                    configProvider.configModel!
-                                            .inhouseSelectedShippingType ==
-                                        'order_wise')
-                                ? InkWell(
-                                    onTap: () {
-                                      showModalBottomSheet(
-                                          context: context,
-                                          isScrollControlled: true,
-                                          backgroundColor: Colors.transparent,
-                                          builder: (context) =>
-                                              const ShippingMethodBottomSheetWidget(
-                                                  groupId: 'all_cart_group',
-                                                  sellerIndex: 0,
-                                                  sellerId: 1));
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          Dimensions.paddingSizeDefault,
-                                          Dimensions.paddingSizeSmall,
-                                          Dimensions.paddingSizeDefault,
-                                          16),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                width: 0.5, color: Colors.grey),
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(10))),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Row(children: [
-                                                  SizedBox(
-                                                      width: 15,
-                                                      height: 15,
-                                                      child: Image.asset(
-                                                          Images.delivery,
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyLarge
-                                                                  ?.color)),
-                                                  const SizedBox(
-                                                      width: Dimensions
-                                                          .paddingSizeExtraSmall),
-                                                  Text(
-                                                    getTranslated(
-                                                        'choose_shipping',
-                                                        context)!,
-                                                    style: textRegular,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    maxLines: 1,
-                                                  ),
-                                                ]),
-                                                Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.end,
-                                                    children: [
-                                                      Text(
-                                                        (shippingController
-                                                                        .shippingList ==
-                                                                    null ||
-                                                                shippingController
-                                                                    .chosenShippingList
-                                                                    .isEmpty ||
-                                                                shippingController
-                                                                    .shippingList!
-                                                                    .isEmpty ||
-                                                                shippingController
-                                                                        .shippingList![
-                                                                            0]
-                                                                        .shippingMethodList ==
-                                                                    null ||
-                                                                shippingController
-                                                                        .shippingList![
-                                                                            0]
-                                                                        .shippingIndex ==
-                                                                    -1)
-                                                            ? ''
-                                                            : shippingController
-                                                                .shippingList![
-                                                                    0]
-                                                                .shippingMethodList![
-                                                                    shippingController
-                                                                        .shippingList![
-                                                                            0]
-                                                                        .shippingIndex!]
-                                                                .title
-                                                                .toString(),
-                                                        style: titilliumSemiBold
-                                                            .copyWith(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .hintColor),
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                      const SizedBox(
-                                                          width: Dimensions
-                                                              .paddingSizeExtraSmall),
-                                                      Icon(
-                                                          Icons
-                                                              .keyboard_arrow_down,
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .primaryColor),
-                                                    ]),
-                                              ]),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                : const SizedBox(),
+                            // (!onlyDigital &&
+                            //         configProvider
+                            //                 .configModel!.shippingMethod !=
+                            //             'sellerwise_shipping' &&
+                            //         configProvider.configModel!
+                            //                 .inhouseSelectedShippingType ==
+                            //             'order_wise')
+                            //     ? InkWell(
+                            //         onTap: () {
+                            //           showModalBottomSheet(
+                            //               context: context,
+                            //               isScrollControlled: true,
+                            //               backgroundColor: Colors.transparent,
+                            //               builder: (context) =>
+                            //                   const ShippingMethodBottomSheetWidget(
+                            //                       groupId: 'all_cart_group',
+                            //                       sellerIndex: 0,
+                            //                       sellerId: 1));
+                            //         },
+                            //         child: Padding(
+                            //           padding: const EdgeInsets.fromLTRB(
+                            //               Dimensions.paddingSizeDefault,
+                            //               Dimensions.paddingSizeSmall,
+                            //               Dimensions.paddingSizeDefault,
+                            //               16),
+                            //           child: Container(
+                            //             decoration: BoxDecoration(
+                            //                 border: Border.all(
+                            //                     width: 0.5, color: Colors.grey),
+                            //                 borderRadius:
+                            //                     const BorderRadius.all(
+                            //                         Radius.circular(10))),
+                            //             child: Padding(
+                            //               padding: const EdgeInsets.all(8.0),
+                            //               child: Row(
+                            //                   mainAxisAlignment:
+                            //                       MainAxisAlignment
+                            //                           .spaceBetween,
+                            //                   children: [
+                            //                     Row(children: [
+                            //                       SizedBox(
+                            //                           width: 15,
+                            //                           height: 15,
+                            //                           child: Image.asset(
+                            //                               Images.delivery,
+                            //                               color:
+                            //                                   Theme.of(context)
+                            //                                       .textTheme
+                            //                                       .bodyLarge
+                            //                                       ?.color)),
+                            //                       const SizedBox(
+                            //                           width: Dimensions
+                            //                               .paddingSizeExtraSmall),
+                            //                       Text(
+                            //                         getTranslated(
+                            //                             'choose_shipping',
+                            //                             context)!,
+                            //                         style: textRegular,
+                            //                         overflow:
+                            //                             TextOverflow.ellipsis,
+                            //                         maxLines: 1,
+                            //                       ),
+                            //                     ]),
+                            //                     Row(
+                            //                         mainAxisAlignment:
+                            //                             MainAxisAlignment.end,
+                            //                         children: [
+                            //                           Text(
+                            //                             (shippingController
+                            //                                             .shippingList ==
+                            //                                         null ||
+                            //                                     shippingController
+                            //                                         .chosenShippingList
+                            //                                         .isEmpty ||
+                            //                                     shippingController
+                            //                                         .shippingList!
+                            //                                         .isEmpty ||
+                            //                                     shippingController
+                            //                                             .shippingList![
+                            //                                                 0]
+                            //                                             .shippingMethodList ==
+                            //                                         null ||
+                            //                                     shippingController
+                            //                                             .shippingList![
+                            //                                                 0]
+                            //                                             .shippingIndex ==
+                            //                                         -1)
+                            //                                 ? ''
+                            //                                 : shippingController
+                            //                                     .shippingList![
+                            //                                         0]
+                            //                                     .shippingMethodList![
+                            //                                         shippingController
+                            //                                             .shippingList![
+                            //                                                 0]
+                            //                                             .shippingIndex!]
+                            //                                     .title
+                            //                                     .toString(),
+                            //                             style: titilliumSemiBold
+                            //                                 .copyWith(
+                            //                                     color: Theme.of(
+                            //                                             context)
+                            //                                         .hintColor),
+                            //                             maxLines: 1,
+                            //                             overflow: TextOverflow
+                            //                                 .ellipsis,
+                            //                           ),
+                            //                           const SizedBox(
+                            //                               width: Dimensions
+                            //                                   .paddingSizeExtraSmall),
+                            //                           Icon(
+                            //                               Icons
+                            //                                   .keyboard_arrow_down,
+                            //                               color: Theme.of(
+                            //                                       context)
+                            //                                   .primaryColor),
+                            //                         ]),
+                            //                   ]),
+                            //             ),
+                            //           ),
+                            //         ),
+                            //       )
+                            //     : const SizedBox(),
 
+                            if (orderProvider.addressIndex != null)
+                              ShippingMethodBottomSheetWidget(
+                                  groupId: 'all_cart_group',
+                                  sellerIndex: 0,
+                                  sellerId: 1),
 
                             //Shipping method widget ends here
+
+                            //branch selection
+
+                            if (shippingController
+                                    .chosenShippingList.isNotEmpty &&
+                                shippingController.chosenShippingList[0]
+                                        .shippingMethodId ==
+                                    3)
+                              Column(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16.0),
+                                      child: Text(
+                                        "Select branch",
+                                        // getTranslated('select_shipping_method', context)!,
+                                        style: textMedium.copyWith(
+                                            fontSize: Dimensions.fontSizeLarge),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                            //branch selection ends here
 
                             if (Provider.of<AuthController>(context,
                                     listen: false)
@@ -554,7 +593,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                             title: getTranslated(
                                                 'shipping_fee', context),
                                             amount: PriceConverter.convertPrice(
-                                                context, widget.shippingFee)),
+                                                context, _shippingFee)),
                                         AmountWidget(
                                             title: getTranslated(
                                                 'discount', context),
@@ -565,11 +604,11 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                                 'coupon_voucher', context),
                                             amount: PriceConverter.convertPrice(
                                                 context, _couponDiscount)),
-                                        AmountWidget(
-                                            title:
-                                                getTranslated('tax', context),
-                                            amount: PriceConverter.convertPrice(
-                                                context, widget.tax)),
+                                        // AmountWidget(
+                                        //     title:
+                                        //         getTranslated('tax', context),
+                                        //     amount: PriceConverter.convertPrice(
+                                        //         context, widget.tax)),
                                         Divider(
                                             height: 5,
                                             color: Theme.of(context).hintColor),
@@ -579,7 +618,7 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                             amount: PriceConverter.convertPrice(
                                                 context,
                                                 (_order +
-                                                    widget.shippingFee -
+                                                    _shippingFee -
                                                     widget.discount -
                                                     _couponDiscount! +
                                                     widget.tax))),

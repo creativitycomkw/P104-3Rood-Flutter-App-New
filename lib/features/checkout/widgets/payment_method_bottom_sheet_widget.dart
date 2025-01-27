@@ -258,7 +258,8 @@ bool _isPaymentMethodsAvailable(BuildContext context, CheckoutController checkou
   bool isCashOnDeliveryOn = Provider.of<SplashController>(context, listen: false).configModel!.cashOnDelivery!;
   bool isWalletOn = Provider.of<SplashController>(context, listen: false).configModel != null && Provider.of<SplashController>(context, listen: false).configModel!.walletStatus! == 1 && Provider.of<AuthController>(context, listen: false).isLoggedIn();
   bool isOnlinePaymentMethodsOn = Provider.of<SplashController>(context, listen: false).configModel?.paymentMethods != null && Provider.of<SplashController>(context, listen: false).configModel!.paymentMethods!.isNotEmpty;
-  bool isOfflinePaymentMethodsOn = checkoutProvider.offlinePaymentModel!.offlineMethods != null && checkoutProvider.offlinePaymentModel!.offlineMethods!.isNotEmpty;
+  bool isOfflinePaymentMethodsOn = false;
+  // checkoutProvider.offlinePaymentModel!.offlineMethods != null && checkoutProvider.offlinePaymentModel!.offlineMethods!.isNotEmpty;
 
   return isCashOnDeliveryOn || isWalletOn || isOnlinePaymentMethodsOn || isOfflinePaymentMethodsOn;
 }

@@ -62,7 +62,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 key: forgetFormKey,
                 child: ListView(padding: const EdgeInsets.all(Dimensions.paddingSizeDefault), children: [
                   Center(child: Padding(padding: const EdgeInsets.all(50),
-                      child: Image.asset(Images.logoWithNameImage, height: 150, width: 150))),
+                      child: Image.asset(Images.logoImage, height: 150, width: 150))),
                   Text(getTranslated('forget_password', context)!, style: textMedium.copyWith(fontSize: Dimensions.fontSizeLarge)),
 
 

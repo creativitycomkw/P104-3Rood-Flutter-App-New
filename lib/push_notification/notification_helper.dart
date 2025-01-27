@@ -116,11 +116,11 @@ class NotificationHelper {
       if (kDebugMode) {
         print("onOpenApp: ${message.notification!.title}/${message.data}/${message.notification!.titleLocKey}");
       }
-      if(message.data['type'] == 'demo_reset') {
-        showDialog(context: Get.context!, builder: (context) => const Dialog(
-          backgroundColor: Colors.transparent,
-          child: DemoResetDialogWidget()));
-      }
+      // if(message.data['type'] == 'demo_reset') {
+      //   showDialog(context: Get.context!, builder: (context) => const Dialog(
+      //     backgroundColor: Colors.transparent,
+      //     child: DemoResetDialogWidget()));
+      // }
       try{
         if(message.data.isNotEmpty) {
           NotificationBody notificationBody = convertNotification(message.data);

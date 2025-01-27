@@ -89,13 +89,15 @@ class ShippingController extends ChangeNotifier {
     }
   }
 
-  Future<void> getAdminShippingMethodList(BuildContext context) async {
+  Future<void> getAdminShippingMethodList(BuildContext context, {String countryId='1'}) async {
+
+    print("Getting address list for country id ${countryId}");
     _isLoading = true;
     Provider.of<CartController>(context, listen: false).getCartDataLoaded();
     _shippingList = [];
-    await getChosenShippingMethod(context);
+    // await getChosenShippingMethod(context);
     ApiResponse apiResponse =
-        await shippingServiceInterface.getShippingMethod(1, 'admin');
+        await shippingServiceInterface.getShippingMethod(1, 'admin',countryId: countryId);
     if (apiResponse.response != null &&
         apiResponse.response!.statusCode == 200) {
       _shippingList!.add(ShippingModel(-1, '', []));
@@ -107,17 +109,17 @@ class ShippingController extends ChangeNotifier {
       _shippingList![0].shippingMethodList!.addAll(shippingMethodList);
       int index = -1;
 
-      if (_chosenShippingList.isNotEmpty) {
-        for (int j = 0; j < _shippingList![0].shippingMethodList!.length; j++) {
-          if (_shippingList![0].shippingMethodList![j].id ==
-              _chosenShippingList[0].shippingMethodId) {
-            index = j;
-            break;
-          }
-        }
-      }
+      // if (_chosenShippingList.isNotEmpty) {
+      //   for (int j = 0; j < _shippingList![0].shippingMethodList!.length; j++) {
+      //     if (_shippingList![0].shippingMethodList![j].id ==
+      //         _chosenShippingList[0].shippingMethodId) {
+      //       index = j;
+      //       break;
+      //     }
+      //   }
+      // }
 
-      _shippingList![0].shippingIndex = index;
+      // _shippingList![0].shippingIndex = index;
     } else {
       ApiChecker.checkApi(apiResponse);
     }
@@ -140,8 +142,21 @@ class ShippingController extends ChangeNotifier {
     notifyListeners();
   }
 
+
+  void clearChoosenShippingList(){
+    _chosenShippingList=[];
+    notifyListeners();
+  }
+
   void setSelectedShippingMethod(int? index, int sellerIndex) {
     _shippingList![sellerIndex].shippingIndex = index;
+    notifyListeners();
+  }
+
+   void resetSelectedShippingMethod() {
+
+    print("resetting");
+    _shippingList![0].shippingIndex = 0;
     notifyListeners();
   }
 
@@ -162,7 +177,7 @@ class ShippingController extends ChangeNotifier {
         apiResponse.response!.statusCode == 200) {
       await Provider.of<CartController>(Get.context!, listen: false)
           .getCartData(Get.context!, reload: false);
-      Navigator.pop(Get.context!);
+      // Navigator.pop(Get.context!);
       getChosenShippingMethod(Get.context!);
       showCustomSnackBar(
           getTranslated('shipping_method_added_successfully', Get.context!),

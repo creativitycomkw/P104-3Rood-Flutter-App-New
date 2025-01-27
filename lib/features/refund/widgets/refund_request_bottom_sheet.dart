@@ -61,8 +61,8 @@ class RefundBottomSheetState extends State<RefundBottomSheet> {
                               child: TitleWithAmountRow(title: getTranslated('product_discount', context)!,
                                   amount: '-${PriceConverter.convertPrice(context, refund.refundInfoModel!.refund!.productTotalDiscount)}')),
 
-                          TitleWithAmountRow(title: getTranslated('tax', context)!,
-                              amount: PriceConverter.convertPrice(context, refund.refundInfoModel!.refund!.productTotalTax)),
+                          // TitleWithAmountRow(title: getTranslated('tax', context)!,
+                          //     amount: PriceConverter.convertPrice(context, refund.refundInfoModel!.refund!.productTotalTax)),
 
                           Padding(padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall),
                               child: TitleWithAmountRow(title: getTranslated('sub_total', context)!,
