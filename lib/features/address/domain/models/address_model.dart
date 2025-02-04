@@ -50,8 +50,8 @@ class AddressModel {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     state = json['state'];
-    // country = json['country'];
-    country = '2';
+    country = json['country'].toString();
+
     latitude = json['latitude'];
     longitude = json['longitude'];
     isBilling = json['is_billing'] ?? false;

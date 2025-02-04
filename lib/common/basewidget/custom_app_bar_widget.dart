@@ -38,7 +38,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             iconTheme: IconThemeData(color: Theme.of(context).textTheme.bodyLarge?.color),
             automaticallyImplyLeading: false,
             title: Text(title??'', style: textMedium.copyWith(
-                fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).textTheme.bodyLarge?.color), maxLines: 1,textAlign: TextAlign.start, overflow: TextOverflow.ellipsis),
+                fontSize: Dimensions.fontSizeExtraLarge, color: Colors.white), maxLines: 1,textAlign: TextAlign.start, overflow: TextOverflow.ellipsis),
 
             centerTitle: true,
             excludeHeaderSemantics: true,

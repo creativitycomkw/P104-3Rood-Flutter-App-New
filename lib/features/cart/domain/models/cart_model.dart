@@ -176,7 +176,7 @@ class ProductInfo {
         minimumOrderQty = int.parse(json['minimum_order_qty'].toString());
       }
     }
-    totalCurrentStock = json['total_current_stock'];
+    totalCurrentStock = int.parse(json['total_current_stock'].toString());
     thumbnailFullUrl = json['thumbnail_full_url'] != null
         ? ImageFullUrl.fromJson(json['thumbnail_full_url'])
         : null;
