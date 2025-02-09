@@ -16,7 +16,7 @@ class ShippingService implements ShippingServiceInterface{
 
 
   @override
-  Future getShippingMethod(int? sellerId, String? type,{String countryId='1'}) async {
+  Future getShippingMethod(int? sellerId, String? type,String countryId) async {
     return await shippingRepositoryInterface.getShippingMethod(sellerId, type, countryId);
   }
 

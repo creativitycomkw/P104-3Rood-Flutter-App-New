@@ -7,8 +7,10 @@ import 'package:flutter_ecommerce/data/datasource/remote/exception/api_error_han
 import 'package:flutter_ecommerce/data/model/api_response.dart';
 import 'package:flutter_ecommerce/features/auth/controllers/auth_controller.dart';
 import 'package:flutter_ecommerce/features/auth/domain/repositories/auth_repository_interface.dart';
+import 'package:flutter_ecommerce/localization/controllers/localization_controller.dart';
 import 'package:flutter_ecommerce/main.dart';
 import 'package:flutter_ecommerce/utill/app_constants.dart';
+import 'package:flutter_ecommerce/utill/onesignal_service.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -120,6 +122,7 @@ class AuthRepository implements AuthRepoInterface{
     dioClient!.updateHeader(token, null);
     try {
       await sharedPreferences!.setString(AppConstants.userLoginToken, token);
+   
     } catch (e) {
       rethrow;
     }

@@ -252,8 +252,10 @@ class CartScreenState extends State<CartScreen> {
                                               PriceConverter.convertPrice(
                                                   context,
                                                   amount +
-                                                      tax +
-                                                      shippingAmount -
+                                                      tax 
+                                                      // +
+                                                      // shippingAmount 
+                                                      -
                                                       freeDeliveryAmountDiscount),
                                               style: titilliumSemiBold.copyWith(
                                                   color:
@@ -432,7 +434,7 @@ class CartScreenState extends State<CartScreen> {
                                           context);
                                     }
 
-                                    ////Shipping checkingd
+                                    // //Shipping checkingd
 
                                     // else if (hasNull &&
                                     //     configProvider
@@ -461,7 +463,7 @@ class CartScreenState extends State<CartScreen> {
                                     //       context);
                                     // }
 
-                                    ////Shipping checkingd ends here
+                                    // //Shipping checkingd ends here
                                     else if (minimum) {
                                       changeColor();
                                       showCustomSnackBar(
@@ -759,7 +761,7 @@ class CartScreenState extends State<CartScreen> {
                                                                               context: context,
                                                                               isScrollControlled: true,
                                                                               backgroundColor: Colors.transparent,
-                                                                              builder: (context) => ShippingMethodBottomSheetWidget(groupId: sellerGroupList[index].cartGroupId, sellerIndex: index, sellerId: sellerGroupList[index].id),
+                                                                              builder: (context) => ShippingMethodBottomSheetWidget(groupId: sellerGroupList[index].cartGroupId, sellerIndex: index, sellerId: sellerGroupList[index].id,callBack: (){},),
                                                                             );
                                                                           },
                                                                           child:

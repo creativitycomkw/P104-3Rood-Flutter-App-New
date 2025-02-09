@@ -51,7 +51,7 @@ class ShippingController extends ChangeNotifier {
     await getChosenShippingMethod(context);
     for (int i = 0; i < sellerIdList.length; i++) {
       ApiResponse apiResponse = await shippingServiceInterface
-          .getShippingMethod(sellerIdList[i], sellerTypeList[i]);
+          .getShippingMethod(sellerIdList[i], sellerTypeList[i],'2');
 
       if (apiResponse.response != null &&
           apiResponse.response!.statusCode == 200) {
@@ -89,7 +89,7 @@ class ShippingController extends ChangeNotifier {
     }
   }
 
-  Future<void> getAdminShippingMethodList(BuildContext context, {String countryId='1'}) async {
+  Future<void> getAdminShippingMethodList(BuildContext context, String countryId) async {
 
     print("Getting address list for country id ${countryId}");
     _isLoading = true;
@@ -97,7 +97,7 @@ class ShippingController extends ChangeNotifier {
     _shippingList = [];
     // await getChosenShippingMethod(context);
     ApiResponse apiResponse =
-        await shippingServiceInterface.getShippingMethod(1, 'admin',countryId: countryId);
+        await shippingServiceInterface.getShippingMethod(1, 'admin', countryId);
     if (apiResponse.response != null &&
         apiResponse.response!.statusCode == 200) {
       _shippingList!.add(ShippingModel(-1, '', []));
@@ -108,7 +108,7 @@ class ShippingController extends ChangeNotifier {
       _shippingList![0].shippingMethodList = [];
       _shippingList![0].shippingMethodList!.addAll(shippingMethodList);
       int index = -1;
-
+  clearChoosenShippingList();
       // if (_chosenShippingList.isNotEmpty) {
       //   for (int j = 0; j < _shippingList![0].shippingMethodList!.length; j++) {
       //     if (_shippingList![0].shippingMethodList![j].id ==

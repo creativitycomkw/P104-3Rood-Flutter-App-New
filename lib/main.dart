@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:flutter_ecommerce/utill/onesignal_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_ecommerce/data/local/cache_response.dart';
@@ -63,15 +64,15 @@ final database = AppDatabase();
 Future<void> main() async {
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
-
+  await OneSignalService().init();
 
 if(Firebase.apps.isEmpty) {
   if(Platform.isAndroid) {
     await Firebase.initializeApp(options: const FirebaseOptions(
-        apiKey: "AIzaSyCFGqSEiWMItei_AFIUgdM53PWrvyGmjFY",
-        projectId: "drivevalley-fdb7f",
-        messagingSenderId: "76471554747",
-        appId: "1:76471554747:android:3aa5d58a094e2a036d0f9e"
+        apiKey: "AIzaSyA89mrO2e_OhImkgp-wjagP-UnqfgQgrDM",
+        projectId: "roodq8",
+        messagingSenderId: "754467622956",
+        appId: "1:754467622956:android:62b125b133173c10"
     ));
   }else{
     await Firebase.initializeApp();

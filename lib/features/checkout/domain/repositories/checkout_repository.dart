@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:flutter_ecommerce/common/basewidget/show_custom_snakbar_widget.dart';
 import 'package:flutter_ecommerce/data/datasource/remote/dio/dio_client.dart';
 import 'package:flutter_ecommerce/data/datasource/remote/exception/api_error_handler.dart';
 import 'package:flutter_ecommerce/data/model/api_response.dart';
@@ -17,10 +18,10 @@ class CheckoutRepository implements CheckoutRepositoryInterface{
 
 
   @override
-  Future<ApiResponse> cashOnDeliveryPlaceOrder(String? addressID, String? couponCode,String? couponDiscountAmount, String? billingAddressId, String? orderNote, bool? isCheckCreateAccount, String? password) async {
+  Future<ApiResponse> cashOnDeliveryPlaceOrder(String? addressID, String? couponCode,String? couponDiscountAmount, String? billingAddressId, String? orderNote, bool? isCheckCreateAccount, String? password,String? branchId) async {
     int isCheckAccount = isCheckCreateAccount! ? 1: 0;
     try {
-      final response = await dioClient!.get('${AppConstants.orderPlaceUri}?address_id=$addressID&coupon_code=$couponCode&coupon_discount=$couponDiscountAmount&billing_address_id=$billingAddressId&order_note=$orderNote&guest_id=${Provider.of<AuthController>(Get.context!, listen: false).getGuestToken()}&is_guest=${Provider.of<AuthController>(Get.context!, listen: false).isLoggedIn()? 0 :1 }&is_check_create_account=$isCheckAccount&password=$password&branch_id=2');
+      final response = await dioClient!.get('${AppConstants.orderPlaceUri}?address_id=$addressID&coupon_code=$couponCode&coupon_discount=$couponDiscountAmount&billing_address_id=$billingAddressId&order_note=$orderNote&guest_id=${Provider.of<AuthController>(Get.context!, listen: false).getGuestToken()}&is_guest=${Provider.of<AuthController>(Get.context!, listen: false).isLoggedIn()? 0 :1 }&is_check_create_account=$isCheckAccount&password=$password&branch_id=$branchId');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -64,10 +65,10 @@ class CheckoutRepository implements CheckoutRepositoryInterface{
 
 
   @override
-  Future<ApiResponse> walletPaymentPlaceOrder(String? addressID, String? couponCode,String? couponDiscountAmount, String? billingAddressId, String? orderNote, bool? isCheckCreateAccount, String? password) async {
+  Future<ApiResponse> walletPaymentPlaceOrder(String? addressID, String? couponCode,String? couponDiscountAmount, String? billingAddressId, String? orderNote, bool? isCheckCreateAccount, String? password,String? branchId) async {
     int isCheckAccount = isCheckCreateAccount! ? 1: 0;
     try {
-      final response = await dioClient!.get('${AppConstants.walletPayment}?address_id=$addressID&coupon_code=$couponCode&coupon_discount=$couponDiscountAmount&billing_address_id=$billingAddressId&order_note=$orderNote&guest_id=${Provider.of<AuthController>(Get.context!, listen: false).getGuestToken()}&is_guest=${Provider.of<AuthController>(Get.context!, listen: false).isLoggedIn()? 0 :1}&is_check_create_account=$isCheckAccount&password=$password',);
+      final response = await dioClient!.get('${AppConstants.walletPayment}?address_id=$addressID&coupon_code=$couponCode&coupon_discount=$couponDiscountAmount&billing_address_id=$billingAddressId&order_note=$orderNote&guest_id=${Provider.of<AuthController>(Get.context!, listen: false).getGuestToken()}&is_guest=${Provider.of<AuthController>(Get.context!, listen: false).isLoggedIn()? 0 :1}&is_check_create_account=$isCheckAccount&password=$password&branch_id=$branchId',);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -95,7 +96,7 @@ class CheckoutRepository implements CheckoutRepositoryInterface{
       String? couponDiscount,
       String? paymentMethod,
       bool? isCheckCreateAccount,
-      String? password
+      String? password,String? branchId
       ) async {
 
     try {
@@ -115,8 +116,11 @@ class CheckoutRepository implements CheckoutRepositoryInterface{
         'is_guest': !Provider.of<AuthController>(Get.context!, listen: false).isLoggedIn(),
         'is_check_create_account' : isCheckAccount.toString(),
         'password' : password,
+        'branch_id':branchId
       };
 
+
+       
 
       final response = await dioClient!.post(AppConstants.digitalPayment, data: {
         "order_note": orderNote,
@@ -133,6 +137,7 @@ class CheckoutRepository implements CheckoutRepositoryInterface{
         'is_guest': !Provider.of<AuthController>(Get.context!, listen: false).isLoggedIn(),
         'is_check_create_account' : isCheckAccount.toString(),
         'password' : password,
+         'branch_id':branchId
       });
       return ApiResponse.withSuccess(response);
     } catch (e) {

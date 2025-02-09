@@ -9,6 +9,7 @@ import 'package:flutter_ecommerce/features/offline_payment/screens/offline_payme
 import 'package:flutter_ecommerce/features/profile/controllers/profile_contrroller.dart';
 import 'package:flutter_ecommerce/features/shipping/controllers/shipping_controller.dart';
 import 'package:flutter_ecommerce/features/shipping/widgets/shipping_method_bottom_sheet_widget.dart';
+import 'package:flutter_ecommerce/features/splash/domain/models/config_model.dart';
 import 'package:flutter_ecommerce/helper/price_converter.dart';
 import 'package:flutter_ecommerce/localization/language_constrants.dart';
 import 'package:flutter_ecommerce/main.dart';
@@ -75,6 +76,8 @@ class CheckoutScreenState extends State<CheckoutScreen> {
 
   double _shippingFee = 0;
 
+  int? selected_branch_id;
+
   @override
   void initState() {
     super.initState();
@@ -111,8 +114,8 @@ class CheckoutScreenState extends State<CheckoutScreen> {
     //         .configModel!
     //         .shippingMethod !=
     //     'sellerwise_shipping') {
-    //   Provider.of<ShippingController>(Get.context!, listen: false)
-    //       .getAdminShippingMethodList(Get.context!);
+      Provider.of<ShippingController>(Get.context!, listen: false)
+          .clearChoosenShippingList();
     // }
 
     //Clear selected shipping method index
@@ -122,223 +125,270 @@ class CheckoutScreenState extends State<CheckoutScreen> {
   Widget build(BuildContext context) {
     _order = widget.totalOrderAmount + widget.discount;
 
+    final configModel = Provider.of<SplashController>(context, listen: false);
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       key: _scaffoldKey,
-      bottomNavigationBar:
-          Consumer<AddressController>(builder: (context, locationProvider, _) {
-        return Consumer<CheckoutController>(
-            builder: (context, orderProvider, child) {
-          return Consumer<CouponController>(
-              builder: (context, couponProvider, _) {
-            return Consumer<CartController>(
-                builder: (context, cartProvider, _) {
-              return Consumer<ProfileController>(
-                  builder: (context, profileProvider, _) {
-                return orderProvider.isLoading
-                    ? const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                            SizedBox(
-                                width: 30,
-                                height: 30,
-                                child: CircularProgressIndicator())
-                          ])
-                    : Padding(
-                        padding:
-                            const EdgeInsets.all(Dimensions.paddingSizeDefault),
-                        child: CustomButton(
-                          onTap: () async {
-                            if (orderProvider.addressIndex == null &&
-                                widget.hasPhysical) {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      const SavedAddressListScreen()));
-                              showCustomSnackBar(
-                                  getTranslated(
-                                      'select_a_shipping_address', context),
-                                  context,
-                                  isToaster: true);
-                            } else if ((orderProvider.billingAddressIndex ==
-                                    null &&
-                                !widget.hasPhysical &&
-                                !_billingAddress)) {
-                              showCustomSnackBar(
-                                  getTranslated(
-                                      'you_cant_place_order_of_digital_product_without_billing_address',
-                                      context),
-                                  context,
-                                  isToaster: true);
-                            } else if ((orderProvider.billingAddressIndex ==
-                                        null &&
-                                    !widget.hasPhysical &&
-                                    !orderProvider.sameAsBilling &&
-                                    _billingAddress) ||
-                                (orderProvider.billingAddressIndex == null &&
-                                    _billingAddress &&
-                                    !orderProvider.sameAsBilling)) {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      const SavedBillingAddressListScreen()));
-                              showCustomSnackBar(
-                                  getTranslated(
-                                      'select_a_billing_address', context),
-                                  context,
-                                  isToaster: true);
-                            }
+      bottomNavigationBar: Consumer<ShippingController>(
+          builder: (context, shippingController, _) {
+        return Consumer<AddressController>(
+            builder: (context, locationProvider, _) {
+          return Consumer<CheckoutController>(
+              builder: (context, orderProvider, child) {
+            return Consumer<CouponController>(
+                builder: (context, couponProvider, _) {
+              return Consumer<CartController>(
+                  builder: (context, cartProvider, _) {
+                return Consumer<ProfileController>(
+                    builder: (context, profileProvider, _) {
+                  return orderProvider.isLoading
+                      ? const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                              SizedBox(
+                                  width: 30,
+                                  height: 30,
+                                  child: CircularProgressIndicator())
+                            ])
+                      : Padding(
+                          padding: const EdgeInsets.all(
+                              Dimensions.paddingSizeDefault),
+                          child: CustomButton(
+                            onTap: () async {
 
-                            // else if (orderProvider.isCheckCreateAccount && orderProvider.passwordController.text.isEmpty) {
-                            //   showCustomSnackBar(getTranslated('password_is_required', context), context);
-                            // } else if (orderProvider.isCheckCreateAccount && orderProvider.passwordController.text.length < 8){
-                            //   showCustomSnackBar(getTranslated('minimum_password_is_8_character', context), context);
-                            // } else if (orderProvider.isCheckCreateAccount && orderProvider.confirmPasswordController.text.isEmpty){
-                            //   showCustomSnackBar(getTranslated('confirm_password_must_be_required', context), context);
-                            // }else if (orderProvider.isCheckCreateAccount && (orderProvider.passwordController.text != orderProvider.confirmPasswordController.text)) {
-                            //   showCustomSnackBar(getTranslated('confirm_password_not_matched', context), context);
-                            // }
+                                //Shipping checkingd
 
-                            else {
-                              if (!orderProvider.isCheckCreateAccount ||
-                                  (orderProvider.isCheckCreateAccount &&
-                                      (passwordFormKey.currentState
-                                              ?.validate() ??
-                                          false))) {
-                                String orderNote = orderProvider
-                                    .orderNoteController.text
-                                    .trim();
-                                String couponCode =
-                                    couponProvider.discount != null &&
-                                            couponProvider.discount != 0
-                                        ? couponProvider.couponCode
-                                        : '';
-                                String couponCodeAmount =
-                                    couponProvider.discount != null &&
-                                            couponProvider.discount != 0
-                                        ? couponProvider.discount.toString()
-                                        : '0';
+                             if (shippingController
+                                            .chosenShippingList.isEmpty &&
+                                        configModel
+                                                .configModel!.shippingMethod !=
+                                            'sellerwise_shipping' &&
+                                        configModel.configModel!
+                                                .inhouseSelectedShippingType ==
+                                            'order_wise' ) {
+                                      showCustomSnackBar(
+                                          getTranslated(
+                                              'select_all_shipping_method',
+                                              context),
+                                          context);
 
-                                // String addressId = !widget.onlyDigital? locationProvider.addressList![orderProvider.addressIndex!].id.toString():'';
-                                // String billingAddressId = (_billingAddress)? orderProvider.sameAsBilling? addressId:
-                                // locationProvider.addressList![orderProvider.billingAddressIndex!].id.toString() : '';
+                                          return ;
+                                    }
 
-                                String addressId =
-                                    orderProvider.addressIndex != null
-                                        ? locationProvider
-                                            .addressList![
-                                                orderProvider.addressIndex!]
-                                            .id
-                                            .toString()
-                                        : '';
+                                    //Shipping checkingd ends here
+                              if (shippingController
+                                      .chosenShippingList.isNotEmpty &&
+                                  shippingController.chosenShippingList[0]
+                                          .shippingMethodId ==
+                                      3) {
 
-                                String billingAddressId = (_billingAddress)
-                                    ? !orderProvider.sameAsBilling
-                                        ? locationProvider
-                                            .addressList![orderProvider
-                                                .billingAddressIndex!]
-                                            .id
-                                            .toString()
-                                        : locationProvider
-                                            .addressList![
-                                                orderProvider.addressIndex!]
-                                            .id
-                                            .toString()
-                                    : '';
+                                        if(selected_branch_id==null){
+                                           showCustomSnackBar(
+                                    getTranslated(
+                                        'select_a_branch', context),
+                                    context,
+                                    isToaster: true);
+                                    return ;
+                                        }
 
-                                if (orderProvider.paymentMethodIndex != -1) {
-                                  orderProvider.digitalPaymentPlaceOrder(
-                                      orderNote: orderNote,
-                                      customerId: Provider.of<AuthController>(
-                                                  context,
-                                                  listen: false)
-                                              .isLoggedIn()
-                                          ? profileProvider.userInfoModel?.id
+
+                                      }
+                              if (orderProvider.addressIndex == null &&
+                                  widget.hasPhysical) {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        const SavedAddressListScreen()));
+                                showCustomSnackBar(
+                                    getTranslated(
+                                        'select_a_shipping_address', context),
+                                    context,
+                                    isToaster: true);
+                              } else if ((orderProvider.billingAddressIndex ==
+                                      null &&
+                                  !widget.hasPhysical &&
+                                  !_billingAddress)) {
+                                showCustomSnackBar(
+                                    getTranslated(
+                                        'you_cant_place_order_of_digital_product_without_billing_address',
+                                        context),
+                                    context,
+                                    isToaster: true);
+                              } else if ((orderProvider.billingAddressIndex ==
+                                          null &&
+                                      !widget.hasPhysical &&
+                                      !orderProvider.sameAsBilling &&
+                                      _billingAddress) ||
+                                  (orderProvider.billingAddressIndex == null &&
+                                      _billingAddress &&
+                                      !orderProvider.sameAsBilling)) {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        const SavedBillingAddressListScreen()));
+                                showCustomSnackBar(
+                                    getTranslated(
+                                        'select_a_billing_address', context),
+                                    context,
+                                    isToaster: true);
+                              }
+
+                              // else if (orderProvider.isCheckCreateAccount && orderProvider.passwordController.text.isEmpty) {
+                              //   showCustomSnackBar(getTranslated('password_is_required', context), context);
+                              // } else if (orderProvider.isCheckCreateAccount && orderProvider.passwordController.text.length < 8){
+                              //   showCustomSnackBar(getTranslated('minimum_password_is_8_character', context), context);
+                              // } else if (orderProvider.isCheckCreateAccount && orderProvider.confirmPasswordController.text.isEmpty){
+                              //   showCustomSnackBar(getTranslated('confirm_password_must_be_required', context), context);
+                              // }else if (orderProvider.isCheckCreateAccount && (orderProvider.passwordController.text != orderProvider.confirmPasswordController.text)) {
+                              //   showCustomSnackBar(getTranslated('confirm_password_not_matched', context), context);
+                              // }
+
+                              else {
+                                if (!orderProvider.isCheckCreateAccount ||
+                                    (orderProvider.isCheckCreateAccount &&
+                                        (passwordFormKey.currentState
+                                                ?.validate() ??
+                                            false))) {
+                                  String orderNote = orderProvider
+                                      .orderNoteController.text
+                                      .trim();
+                                  String couponCode =
+                                      couponProvider.discount != null &&
+                                              couponProvider.discount != 0
+                                          ? couponProvider.couponCode
+                                          : '';
+                                  String couponCodeAmount =
+                                      couponProvider.discount != null &&
+                                              couponProvider.discount != 0
+                                          ? couponProvider.discount.toString()
+                                          : '0';
+
+                                  // String addressId = !widget.onlyDigital? locationProvider.addressList![orderProvider.addressIndex!].id.toString():'';
+                                  // String billingAddressId = (_billingAddress)? orderProvider.sameAsBilling? addressId:
+                                  // locationProvider.addressList![orderProvider.billingAddressIndex!].id.toString() : '';
+
+                                  String addressId =
+                                      orderProvider.addressIndex != null
+                                          ? locationProvider
+                                              .addressList![
+                                                  orderProvider.addressIndex!]
+                                              .id
                                               .toString()
-                                          : Provider.of<AuthController>(context,
-                                                  listen: false)
-                                              .getGuestToken(),
-                                      addressId: addressId,
-                                      billingAddressId: billingAddressId,
-                                      couponCode: couponCode,
-                                      couponDiscount: couponCodeAmount,
-                                      paymentMethod: orderProvider
-                                          .selectedDigitalPaymentMethodName);
-                                } else if (orderProvider.codChecked &&
-                                    !widget.onlyDigital) {
-                                  orderProvider.placeOrder(
-                                      callback: _callback,
-                                      addressID: addressId,
-                                      couponCode: couponCode,
-                                      couponAmount: couponCodeAmount,
-                                      billingAddressId: billingAddressId,
-                                      orderNote: orderNote);
-                                } else if (orderProvider.offlineChecked) {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (_) => OfflinePaymentScreen(
-                                          payableAmount: _order,
-                                          callback: _callback)));
-                                } else if (orderProvider.walletChecked) {
-                                  showAnimatedDialog(
-                                      context,
-                                      WalletPaymentWidget(
-                                          currentBalance:
-                                              profileProvider.balance ?? 0,
-                                          orderAmount: _order +
-                                              _shippingFee -
-                                              widget.discount -
-                                              _couponDiscount! +
-                                              widget.tax,
-                                          onTap: () {
-                                            if (profileProvider.balance! <
-                                                (_order +
-                                                    _shippingFee -
-                                                    widget.discount -
-                                                    _couponDiscount! +
-                                                    widget.tax)) {
-                                              showCustomSnackBar(
-                                                  getTranslated(
-                                                      'insufficient_balance',
-                                                      context),
-                                                  context,
-                                                  isToaster: true);
-                                            } else {
-                                              Navigator.pop(context);
-                                              orderProvider.placeOrder(
-                                                  callback: _callback,
-                                                  wallet: true,
-                                                  addressID: addressId,
-                                                  couponCode: couponCode,
-                                                  couponAmount:
-                                                      couponCodeAmount,
-                                                  billingAddressId:
-                                                      billingAddressId,
-                                                  orderNote: orderNote);
-                                            }
-                                          }),
-                                      dismissible: false,
-                                      willFlip: true);
-                                } else {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    isScrollControlled: true,
-                                    backgroundColor: Colors.transparent,
-                                    builder: (c) =>
-                                        PaymentMethodBottomSheetWidget(
-                                            onlyDigital: widget.onlyDigital),
-                                  );
+                                          : '';
+
+                                  String billingAddressId = (_billingAddress)
+                                      ? !orderProvider.sameAsBilling
+                                          ? locationProvider
+                                              .addressList![orderProvider
+                                                  .billingAddressIndex!]
+                                              .id
+                                              .toString()
+                                          : locationProvider
+                                              .addressList![
+                                                  orderProvider.addressIndex!]
+                                              .id
+                                              .toString()
+                                      : '';
+
+                                  if (orderProvider.paymentMethodIndex != -1) {
+                                    orderProvider.digitalPaymentPlaceOrder(
+                                      selected_branch_id.toString(),
+                                        orderNote: orderNote,
+                                        customerId: Provider.of<AuthController>(
+                                                    context,
+                                                    listen: false)
+                                                .isLoggedIn()
+                                            ? profileProvider.userInfoModel?.id
+                                                .toString()
+                                            : Provider.of<AuthController>(
+                                                    context,
+                                                    listen: false)
+                                                .getGuestToken(),
+                                        addressId: addressId,
+                                        billingAddressId: billingAddressId,
+                                        couponCode: couponCode,
+                                        couponDiscount: couponCodeAmount,
+                                        paymentMethod: orderProvider
+                                            .selectedDigitalPaymentMethodName);
+                                  } else if (orderProvider.codChecked &&
+                                      !widget.onlyDigital) {
+                                    orderProvider.placeOrder(
+                                        callback: _callback,
+                                        addressID: addressId,
+                                        couponCode: couponCode,
+                                        couponAmount: couponCodeAmount,
+                                        billingAddressId: billingAddressId,
+                                        orderNote: orderNote,branchId: selected_branch_id.toString());
+                                  } else if (orderProvider.offlineChecked) {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                OfflinePaymentScreen(
+                                                    payableAmount: _order,
+                                                    callback: _callback)));
+                                  } else if (orderProvider.walletChecked) {
+                                    showAnimatedDialog(
+                                        context,
+                                        WalletPaymentWidget(
+                                            currentBalance:
+                                                profileProvider.balance ?? 0,
+                                            orderAmount: _order +
+                                                _shippingFee -
+                                                widget.discount -
+                                                _couponDiscount! +
+                                                widget.tax,
+                                            onTap: () {
+                                              if (profileProvider.balance! <
+                                                  (_order +
+                                                      _shippingFee -
+                                                      widget.discount -
+                                                      _couponDiscount! +
+                                                      widget.tax)) {
+                                                showCustomSnackBar(
+                                                    getTranslated(
+                                                        'insufficient_balance',
+                                                        context),
+                                                    context,
+                                                    isToaster: true);
+                                              } else {
+                                                Navigator.pop(context);
+                                                orderProvider.placeOrder(
+                                                    callback: _callback,
+                                                    wallet: true,
+                                                    addressID: addressId,
+                                                    couponCode: couponCode,
+                                                    couponAmount:
+                                                        couponCodeAmount,
+                                                    billingAddressId:
+                                                        billingAddressId,
+                                                    orderNote: orderNote,branchId: selected_branch_id.toString());
+                                              }
+                                            }),
+                                        dismissible: false,
+                                        willFlip: true);
+                                  } else {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      builder: (c) =>
+                                          PaymentMethodBottomSheetWidget(
+                                              onlyDigital: widget.onlyDigital),
+                                    );
+                                  }
                                 }
                               }
-                            }
-                          },
-                          buttonText: '${getTranslated('proceed', context)}',
-                        ),
-                      );
+                            },
+                            buttonText: '${getTranslated('proceed', context)}',
+                          ),
+                        );
+                });
               });
             });
           });
         });
       }),
       appBar: CustomAppBar(title: getTranslated('checkout', context)),
-      body: Consumer<SplashController>(builder: (context, configProvider, _) {
+      body: Consumer<SplashController>(builder: (context, configModel, _) {
         return Consumer<ShippingController>(
             builder: (context, shippingController, _) {
           _shippingFee = shippingController.chosenShippingList.isNotEmpty
@@ -376,10 +426,10 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                             //Shipping method widget
 
                             // (!onlyDigital &&
-                            //         configProvider
+                            //         configModel
                             //                 .configModel!.shippingMethod !=
                             //             'sellerwise_shipping' &&
-                            //         configProvider.configModel!
+                            //         configModel.configModel!
                             //                 .inhouseSelectedShippingType ==
                             //             'order_wise')
                             //     ? InkWell(
@@ -503,7 +553,11 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                               ShippingMethodBottomSheetWidget(
                                   groupId: 'all_cart_group',
                                   sellerIndex: 0,
-                                  sellerId: 1),
+                                  sellerId: 1,callBack: (){
+                                    setState(() {
+                                      selected_branch_id=null;
+                                    });
+                                  }),
 
                             //Shipping method widget ends here
 
@@ -522,13 +576,92 @@ class CheckoutScreenState extends State<CheckoutScreen> {
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 16.0),
                                       child: Text(
-                                        "Select branch",
-                                        // getTranslated('select_shipping_method', context)!,
+                                       
+                                        getTranslated('select_a_branch', context)!,
                                         style: textMedium.copyWith(
                                             fontSize: Dimensions.fontSizeLarge),
                                       ),
                                     ),
                                   ),
+
+                                  //Branch lsit
+
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 16.0, horizontal: 16),
+                                    child: ListView.builder(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount: configModel
+                                          .configModel!.branches!.length,
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        Branch branch = configModel
+                                            .configModel!.branches![index];
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom:
+                                                  Dimensions.paddingSizeSmall),
+                                          child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          Dimensions
+                                                              .paddingSizeSmall),
+                                                  border: Border.all(
+                                                      color: Theme.of(context)
+                                                          .primaryColor
+                                                          .withValues(
+                                                              alpha: .25),
+                                                      width: .5),
+                                                  color: branch.id ==
+                                                          selected_branch_id
+                                                      ? Theme.of(context)
+                                                          .primaryColor
+                                                          .withValues(alpha: .1)
+                                                      : Theme.of(context)
+                                                          .cardColor),
+                                              child: InkWell(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      selected_branch_id =
+                                                          branch.id;
+                                                    });
+                                                  },
+                                                  child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(8.0),
+                                                      child: Row(children: [
+                                                        branch.id ==
+                                                                selected_branch_id
+                                                            ? const Icon(
+                                                                Icons
+                                                                    .check_circle,
+                                                                color: Colors
+                                                                    .green,
+                                                              )
+                                                            : Icon(
+                                                                Icons
+                                                                    .circle_outlined,
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .hintColor,
+                                                              ),
+                                                        const SizedBox(
+                                                            width: Dimensions
+                                                                .paddingSizeSmall),
+                                                        Expanded(
+                                                          child: Text(
+                                                              '${branch.name_en ?? ''}'),
+                                                        ),
+                                                        const SizedBox(
+                                                            width: Dimensions
+                                                                .paddingSizeSmall),
+                                                      ])))),
+                                        );
+                                      },
+                                    ),
+                                  )
                                 ],
                               ),
 

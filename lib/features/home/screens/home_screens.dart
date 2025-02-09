@@ -182,7 +182,6 @@ class _HomePageState extends State<HomePage> {
                 //   title: Image.asset(Images.logoImage, height: 55),
                 // ),
                 SliverToBoxAdapter(
-                  
                     child: Provider.of<SplashController>(context, listen: false)
                                 .configModel!
                                 .announcement!
@@ -207,7 +206,6 @@ class _HomePageState extends State<HomePage> {
                         color: Theme.of(context).primaryColor,
                         child: Row(
                           children: [
-                        
                             Expanded(
                               child: InkWell(
                                 onTap: () => Navigator.push(
@@ -216,7 +214,8 @@ class _HomePageState extends State<HomePage> {
                                         builder: (_) => const SearchScreen())),
                                 child: const Hero(
                                     tag: 'search',
-                                    child: Material(child: SearchHomePageWidget())),
+                                    child: Material(
+                                        child: SearchHomePageWidget())),
                               ),
                             ),
                           ],
@@ -227,18 +226,17 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                     
                       const SizedBox(height: Dimensions.paddingSizeDefault),
-            
+
                       const CategoryListWidget(isHomePage: true),
-                       const SizedBox(height: Dimensions.paddingSizeDefault),
+                      const SizedBox(height: Dimensions.paddingSizeDefault),
                       const BannersWidget(),
                       const SizedBox(height: Dimensions.paddingSizeDefault),
-                           const Padding(
+                      const Padding(
                           padding: EdgeInsets.only(
                               bottom: Dimensions.paddingSizeDefault),
                           child: LatestProductListWidget()),
-            
+
                       Consumer<FlashDealController>(
                           builder: (context, megaDeal, child) {
                         return megaDeal.flashDeal == null
@@ -253,9 +251,10 @@ class _HomePageState extends State<HomePage> {
                                         title:
                                             getTranslated('flash_deal', context)
                                                 ?.toUpperCase(),
-                                        eventDuration: megaDeal.flashDeal != null
-                                            ? megaDeal.duration
-                                            : null,
+                                        eventDuration:
+                                            megaDeal.flashDeal != null
+                                                ? megaDeal.duration
+                                                : null,
                                         onTap: () {
                                           Navigator.push(
                                               context,
@@ -283,8 +282,10 @@ class _HomePageState extends State<HomePage> {
                                                         listen: false)
                                                     .darkTheme
                                                 ? Theme.of(context).hintColor
-                                                : Theme.of(context).primaryColor,
-                                            fontSize: Dimensions.fontSizeDefault),
+                                                : Theme.of(context)
+                                                    .primaryColor,
+                                            fontSize:
+                                                Dimensions.fontSizeDefault),
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
@@ -295,7 +296,7 @@ class _HomePageState extends State<HomePage> {
                                 : const SizedBox.shrink();
                       }),
                       const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-            
+
                       Consumer<FeaturedDealController>(
                           builder: (context, featuredDealProvider, child) {
                         return featuredDealProvider.featuredDealProductList !=
@@ -332,20 +333,22 @@ class _HomePageState extends State<HomePage> {
                                         ]),
                                       ]),
                                       const SizedBox(
-                                          height: Dimensions.paddingSizeDefault),
+                                          height:
+                                              Dimensions.paddingSizeDefault),
                                     ],
                                   )
                                 : const SizedBox.shrink()
                             : const FindWhatYouNeedShimmer();
                       }),
-            
+
                       const ClearanceListWidget(),
                       const SizedBox(height: Dimensions.paddingSizeDefault),
-            
+
                       Consumer<BannerController>(
                           builder: (context, footerBannerProvider, child) {
                         return footerBannerProvider.footerBannerList != null &&
-                                footerBannerProvider.footerBannerList!.isNotEmpty
+                                footerBannerProvider
+                                    .footerBannerList!.isNotEmpty
                             ? Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: Dimensions.paddingSizeDefault),
@@ -355,13 +358,13 @@ class _HomePageState extends State<HomePage> {
                             : const SizedBox();
                       }),
                       // const SizedBox(height: Dimensions.paddingSizeDefault),
-            
+
                       Consumer<ProductController>(
                           builder: (context, productController, _) {
                         return const FeaturedProductWidget();
                       }),
                       const SizedBox(height: Dimensions.paddingSizeDefault),
-            
+
                       singleVendor
                           ? const SizedBox()
                           : Consumer<ShopController>(
@@ -369,10 +372,11 @@ class _HomePageState extends State<HomePage> {
                               return (topSellerProvider.sellerModel != null &&
                                       (topSellerProvider.sellerModel!.sellers !=
                                               null &&
-                                          topSellerProvider
-                                              .sellerModel!.sellers!.isNotEmpty))
+                                          topSellerProvider.sellerModel!
+                                              .sellers!.isNotEmpty))
                                   ? TitleRowWidget(
-                                      title: getTranslated('top_seller', context),
+                                      title:
+                                          getTranslated('top_seller', context),
                                       onTap: () => Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -385,7 +389,7 @@ class _HomePageState extends State<HomePage> {
                       singleVendor
                           ? const SizedBox(height: 0)
                           : const SizedBox(height: Dimensions.paddingSizeSmall),
-            
+
                       singleVendor
                           ? const SizedBox()
                           : Consumer<ShopController>(
@@ -393,28 +397,29 @@ class _HomePageState extends State<HomePage> {
                               return (topSellerProvider.sellerModel != null &&
                                       (topSellerProvider.sellerModel!.sellers !=
                                               null &&
-                                          topSellerProvider
-                                              .sellerModel!.sellers!.isNotEmpty))
+                                          topSellerProvider.sellerModel!
+                                              .sellers!.isNotEmpty))
                                   ? Padding(
                                       padding: const EdgeInsets.only(
-                                          bottom: Dimensions.paddingSizeDefault),
+                                          bottom:
+                                              Dimensions.paddingSizeDefault),
                                       child: SizedBox(
-                                          height: ResponsiveHelper.isTab(context)
-                                              ? 170
-                                              : 165,
+                                          height:
+                                              ResponsiveHelper.isTab(context)
+                                                  ? 170
+                                                  : 165,
                                           child: TopSellerView(
                                             isHomePage: true,
                                             scrollController: _scrollController,
                                           )))
                                   : const SizedBox();
                             }),
-            
+
                       const Padding(
                           padding: EdgeInsets.only(
                               bottom: Dimensions.paddingSizeDefault),
                           child: RecommendedProductWidget()),
-            
-                 
+
                       if (configModel?.brandSetting == "1")
                         TitleRowWidget(
                           title: getTranslated('brand', context),
@@ -423,23 +428,303 @@ class _HomePageState extends State<HomePage> {
                               MaterialPageRoute(
                                   builder: (_) => const BrandsView())),
                         ),
-            
+
                       SizedBox(
                           height: configModel?.brandSetting == "1"
                               ? Dimensions.paddingSizeSmall
                               : 0),
-            
+
                       if (configModel!.brandSetting == "1") ...[
                         const BrandListWidget(isHomePage: true),
                         const SizedBox(height: Dimensions.paddingSizeDefault),
                       ],
-            
+
+                      //Branches listing
+                      SizedBox(
+                        height: 18,
+                      ),
+                      if (configModel.branches!.isNotEmpty)
+                        Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 16.0, vertical: 18),
+                                child: Text(
+                                    getTranslated('Our Branches', context) ?? '',
+                                    style: textRegular.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    )),
+                              ),
+                            ),
+                            Container(
+                              height: 110,
+                              child: Scaffold(
+                                body: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Stack(
+                                      children: [
+                                        // GoogleMap(
+                                        //   // markers: Set<Marker>.of([currentLocationMarker!]),
+                                        //   onMapCreated:
+                                        //       (GoogleMapController controller) {
+                                        //     _controller = controller;
+                                        //   },
+                                        //   initialCameraPosition: CameraPosition(
+                                        //     target: controller.coordinates.value[
+                                        //         0], // Center the map on the first coordinate
+                                        //     zoom: _currentZoom,
+                                        //   ),
+
+                                        //   zoomControlsEnabled: false,
+                                        //   myLocationButtonEnabled: false,
+                                        //   mapToolbarEnabled: false,
+                                        //   scrollGesturesEnabled: true,
+                                        //   // cameraTargetBounds: CameraTargetBounds(_bounds(_markers)),
+
+                                        //   markers: controller.data!.branches!
+                                        //       .map((branch) {
+                                        //     return Marker(
+                                        //       markerId: MarkerId(
+                                        //           branch.latitude.toString()),
+                                        //       position: LatLng(
+                                        //           double.parse(
+                                        //             branch.latitude.toString(),
+                                        //           ),
+                                        //           double.parse(branch.longitude
+                                        //               .toString())),
+                                        //       infoWindow: InfoWindow(
+                                        //         title: 'storeLocation'.tr,
+                                        //         snippet:
+                                        //             '${isEnglish.value ? branch.nameEn : branch.nameAr}',
+                                        //       ),
+                                        //     );
+                                        //   }).toSet(),
+                                        // ),
+                                        // Positioned(
+                                        //   top: 20,
+                                        //   right: 12,
+                                        //   child: Column(
+                                        //     children: [
+                                        //       FloatingActionButton(
+                                        //         onPressed: _zoomIn,
+                                        //         mini: true,
+                                        //         backgroundColor: themeColor,
+                                        //         child: Icon(Icons.add,
+                                        //             color: Colors.white),
+                                        //       ),
+                                        //       // SizedBox(height: 2),
+                                        //       FloatingActionButton(
+                                        //         onPressed: _zoomOut,
+                                        //         mini: true,
+                                        //         backgroundColor: themeColor,
+                                        //         child: Icon(Icons.remove,
+                                        //             color: Colors.white),
+                                        //       ),
+                                        //     ],
+                                        //   ),
+                                        // ),
+                                      ],
+                                    ),
+                                    Positioned(
+                                      bottom: -10,
+                                      left: 0,
+                                      right: 0,
+                                      child: SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 16),
+                                        child: Row(
+                                          children: [
+                                            for (int i = 0;
+                                                i <
+                                                    configModel
+                                                        .branches!.length;
+                                                i++)
+                                              InkWell(
+                                                onTap: () async {
+                                                  if (await canLaunchUrlString(
+                                                      configModel.branches![i]
+                                                          .mapUrl!)) {
+                                                    await launchUrlString(
+                                                        configModel.branches![i]
+                                                            .mapUrl!,
+                                                        mode: LaunchMode
+                                                            .externalApplication);
+                                                  }
+                                              
+                                                },
+                                                child: Container(
+                                                  width: 279,
+                                                  padding: EdgeInsets.all(8),
+                                                  margin: EdgeInsets.only(
+                                                      right: 16),
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                            color: Color(
+                                                                    0xFF000000)
+                                                                .withOpacity(
+                                                                    0.04),
+                                                            blurRadius: 16,
+                                                            spreadRadius: 0,
+                                                            offset:
+                                                                Offset(0, 8))
+                                                      ]),
+                                                  child: Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Container(
+                                                            width: 72,
+                                                            height: 72,
+                                                            child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5),
+                                                              child:
+                                                                  CachedNetworkImage(
+                                                                imageUrl: configModel
+                                                                        .branches![
+                                                                            i]
+                                                                        .iconFullUrl!
+                                                                        .path ??
+                                                                    '',
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Image.asset(
+                                                                        Images
+                                                                            .logoWithNameImage,
+                                                                        height:
+                                                                            35),
+                                                                fit:
+                                                                    BoxFit.fill,
+                                                              ),
+                                                            )),
+                                                        Expanded(
+                                                          child: Padding(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        12,
+                                                                    vertical:
+                                                                        4),
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .stretch,
+                                                              children: [
+                                                                Text(
+                                                                  configModel
+                                                                          .branches![
+                                                                              i]
+                                                                          .name_en ??
+                                                                      '',
+                                                                  style: TextStyle(
+                                                                      color: Theme.of(
+                                                                              context)
+                                                                          .primaryColor,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          12),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 2,
+                                                                ),
+                                                                Text(
+                                                                  configModel
+                                                                          .branches![
+                                                                              i]
+                                                                          .description ??
+                                                                      'Description',
+                                                                  maxLines: 2,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  softWrap:
+                                                                      true,
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .grey,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontSize:
+                                                                          10),
+                                                                ),
+                                                                Padding(
+                                                                  padding: EdgeInsets
+                                                                      .symmetric(
+                                                                          vertical:
+                                                                              4),
+                                                                ),
+                                                                Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
+                                                                  children: [
+                                                                    Icon(
+                                                                      Icons
+                                                                          .directions_rounded,
+                                                                      size: 16,
+                                                                      color: Colors
+                                                                          .black,
+                                                                    ),
+                                                                    Padding(
+                                                                      padding: EdgeInsets.symmetric(
+                                                                          horizontal:
+                                                                              4),
+                                                                    ),
+                                                                    Text(
+                                                                      "direction",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Theme.of(context)
+                                                                            .primaryColor,
+                                                                        fontSize:
+                                                                            12,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ]),
+                                                ),
+                                              )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      // Branches listing ends here
+
                       const HomeCategoryProductWidget(isHomePage: true),
                       const SizedBox(height: Dimensions.paddingSizeDefault),
-            
+
                       const FooterBannerSliderWidget(),
                       const SizedBox(height: Dimensions.paddingSizeDefault),
-            
+
                       Consumer<ProductController>(
                           builder: (ctx, prodProvider, child) {
                         return Container(
@@ -466,12 +751,13 @@ class _HomePageState extends State<HomePage> {
                                                 style: titleHeader)),
                                         prodProvider.latestProductList != null
                                             ? PopupMenuButton(
-                                                padding: const EdgeInsets.all(0),
+                                                padding:
+                                                    const EdgeInsets.all(0),
                                                 itemBuilder: (context) {
                                                   return [
                                                     PopupMenuItem(
-                                                      value:
-                                                          ProductType.newArrival,
+                                                      value: ProductType
+                                                          .newArrival,
                                                       child: Text(
                                                           getTranslated(
                                                                   'new_arrival',
@@ -494,8 +780,8 @@ class _HomePageState extends State<HomePage> {
                                                           )),
                                                     ),
                                                     PopupMenuItem(
-                                                      value:
-                                                          ProductType.topProduct,
+                                                      value: ProductType
+                                                          .topProduct,
                                                       child: Text(
                                                           getTranslated(
                                                                   'top_product',
@@ -518,8 +804,8 @@ class _HomePageState extends State<HomePage> {
                                                           )),
                                                     ),
                                                     PopupMenuItem(
-                                                      value:
-                                                          ProductType.bestSelling,
+                                                      value: ProductType
+                                                          .bestSelling,
                                                       child: Text(
                                                           getTranslated(
                                                                   'best_selling',
@@ -585,7 +871,8 @@ class _HomePageState extends State<HomePage> {
                                                     child: Image.asset(
                                                         Images.dropdown,
                                                         scale: 3)),
-                                                onSelected: (ProductType value) {
+                                                onSelected:
+                                                    (ProductType value) {
                                                   if (value ==
                                                       ProductType.newArrival) {
                                                     Provider.of<ProductController>(
@@ -633,280 +920,9 @@ class _HomePageState extends State<HomePage> {
                                       height: Dimensions.homePagePadding)
                                 ]));
                       }),
-            
+
                       // Branches slider
-                     
-            
-                     
-                    
-                      // if (configModel.branches!.isNotEmpty)
-                      //   Column(
-                      //     children: [
-                      //        Padding(
-                      //   padding: EdgeInsets.symmetric(horizontal: 16.0,vertical: 18),
-                      //   child:Text(
-                      //                                     getTranslated(
-                      //                                             'Our Branches',
-                      //                                             context) ??
-                      //                                         '',
-                      //                                     style: textRegular
-                      //                                         .copyWith(
-                      //                                           fontWeight: FontWeight.bold,
-                      //                                           fontSize: 16,
-                      //                                       color:  Theme.of(
-                      //                                                   context)
-                      //                                               .primaryColor,
-                      //                                     )),
-                      // ),
-                      //       Container(
-                      //         height: 340,
-                      //         child: Scaffold(
-                      //           body: Stack(
-                      //             clipBehavior: Clip.none,
-                      //             children: [
-                      //               Stack(
-                      //                 children: [
-                      //                   // GoogleMap(
-                      //                   //   // markers: Set<Marker>.of([currentLocationMarker!]),
-                      //                   //   onMapCreated:
-                      //                   //       (GoogleMapController controller) {
-                      //                   //     _controller = controller;
-                      //                   //   },
-                      //                   //   initialCameraPosition: CameraPosition(
-                      //                   //     target: controller.coordinates.value[
-                      //                   //         0], // Center the map on the first coordinate
-                      //                   //     zoom: _currentZoom,
-                      //                   //   ),
-            
-                      //                   //   zoomControlsEnabled: false,
-                      //                   //   myLocationButtonEnabled: false,
-                      //                   //   mapToolbarEnabled: false,
-                      //                   //   scrollGesturesEnabled: true,
-                      //                   //   // cameraTargetBounds: CameraTargetBounds(_bounds(_markers)),
-            
-                      //                   //   markers: controller.data!.branches!
-                      //                   //       .map((branch) {
-                      //                   //     return Marker(
-                      //                   //       markerId: MarkerId(
-                      //                   //           branch.latitude.toString()),
-                      //                   //       position: LatLng(
-                      //                   //           double.parse(
-                      //                   //             branch.latitude.toString(),
-                      //                   //           ),
-                      //                   //           double.parse(branch.longitude
-                      //                   //               .toString())),
-                      //                   //       infoWindow: InfoWindow(
-                      //                   //         title: 'storeLocation'.tr,
-                      //                   //         snippet:
-                      //                   //             '${isEnglish.value ? branch.nameEn : branch.nameAr}',
-                      //                   //       ),
-                      //                   //     );
-                      //                   //   }).toSet(),
-                      //                   // ),
-                      //                   // Positioned(
-                      //                   //   top: 20,
-                      //                   //   right: 12,
-                      //                   //   child: Column(
-                      //                   //     children: [
-                      //                   //       FloatingActionButton(
-                      //                   //         onPressed: _zoomIn,
-                      //                   //         mini: true,
-                      //                   //         backgroundColor: themeColor,
-                      //                   //         child: Icon(Icons.add,
-                      //                   //             color: Colors.white),
-                      //                   //       ),
-                      //                   //       // SizedBox(height: 2),
-                      //                   //       FloatingActionButton(
-                      //                   //         onPressed: _zoomOut,
-                      //                   //         mini: true,
-                      //                   //         backgroundColor: themeColor,
-                      //                   //         child: Icon(Icons.remove,
-                      //                   //             color: Colors.white),
-                      //                   //       ),
-                      //                   //     ],
-                      //                   //   ),
-                      //                   // ),
-                      //                 ],
-                      //               ),
-                      //               Positioned(
-                      //                 bottom: -60,
-                      //                 left: 0,
-                      //                 right: 0,
-                      //                 child: SingleChildScrollView(
-                      //                   scrollDirection: Axis.horizontal,
-                      //                   padding: EdgeInsets.symmetric(
-                      //                       horizontal: 8, vertical: 16),
-                      //                   child: Row(
-                      //                     children: [
-                      //                       for (int i = 0;
-                      //                           i <
-                      //                               configModel.branches!.length;
-                      //                           i++)
-                      //                         InkWell(
-                      //                           onTap: () async {
-                      //                             if (await canLaunchUrlString(
-                      //                                 configModel.branches![i]
-                      //                                     .mapUrl!)) {
-                      //                               await launchUrlString(
-                      //                                   configModel.branches![i]
-                      //                                     .mapUrl!,
-                      //                                   mode: LaunchMode
-                      //                                       .externalApplication);
-                      //                             }
-                      //                             // openGoogleMaps(
-                      //                             //     double.parse(
-                      //                             //         controller
-                      //                             //             .data!
-                      //                             //             .branches![
-                      //                             //                 i]
-                      //                             //             .latitude
-                      //                             //             .toString()),
-                      //                             //     double.parse(controller
-                      //                             //         .data!
-                      //                             //         .branches![i]
-                      //                             //         .longitude
-                      //                             //         .toString()));
-                      //                           },
-                      //                           child: Container(
-                      //                             width: 279,
-                      //                             padding: EdgeInsets.all(8),
-                      //                             margin: EdgeInsets.only(
-                      //                                 right: 16),
-                      //                             decoration: BoxDecoration(
-                      //                                 color: Colors.white,
-                      //                                 borderRadius:
-                      //                                     BorderRadius.circular(
-                      //                                         8),
-                      //                                 boxShadow: [
-                      //                                   BoxShadow(
-                      //                                       color:
-                      //                                           Color(0xFF000000)
-                      //                                               .withOpacity(
-                      //                                                   0.04),
-                      //                                       blurRadius: 16,
-                      //                                       spreadRadius: 0,
-                      //                                       offset: Offset(0, 8))
-                      //                                 ]),
-                      //                             child: Row(
-                      //                                 crossAxisAlignment:
-                      //                                     CrossAxisAlignment
-                      //                                         .start,
-                      //                                 children: [
-                      //                                   Container(
-                      //                                       width: 72,
-                      //                                       height: 72,
-                      //                                       child: ClipRRect(
-                      //                                         borderRadius:
-                      //                                             BorderRadius
-                      //                                                 .circular(
-                      //                                                     5),
-                      //                                         child:
-                      //                                             CachedNetworkImage(
-                      //                                           imageUrl: configModel.branches![i]
-                      //                                     .iconFullUrl!.path!,
-                      //                                           errorWidget: (context,
-                      //                                                   url,
-                      //                                                   error) =>
-                      //                                               Image.asset(Images.logoWithNameImage, height: 35),
-                      //                                           fit: BoxFit.fill,
-                      //                                         ),
-                      //                                       )),
-                      //                                   Expanded(
-                      //                                     child: Padding(
-                      //                                       padding: EdgeInsets
-                      //                                           .symmetric(
-                      //                                               horizontal:
-                      //                                                   12,
-                      //                                               vertical:
-                      //                                                   4),
-                      //                                       child: Column(
-                      //                                         crossAxisAlignment:
-                      //                                             CrossAxisAlignment
-                      //                                                 .stretch,
-                      //                                         children: [
-                      //                                           Text(
-                      //                                             configModel.branches![i].name!,
-                      //                                             style: TextStyle(
-                      //                                                 color:
-                      //                                                   Theme.of(context).primaryColor,
-                      //                                                 fontWeight:
-                      //                                                     FontWeight
-                      //                                                         .bold,
-                      //                                                 fontSize:
-                      //                                                     12),
-                      //                                           ),
-                      //                                           SizedBox(
-                      //                                             height: 2,
-                      //                                           ),
-                      //                                           Text(
-                      //                                            configModel.branches![i].description!,
-                      //                                             maxLines: 2,
-                      //                                             overflow:
-                      //                                                 TextOverflow
-                      //                                                     .ellipsis,
-                      //                                             softWrap: true,
-                      //                                             style: TextStyle(
-                      //                                                 color:
-                      //                                                    Colors.grey,
-                      //                                                 fontWeight:
-                      //                                                     FontWeight
-                      //                                                         .w500,
-                      //                                                 fontSize:
-                      //                                                     10),
-                      //                                           ),
-                      //                                           Padding(
-                      //                                             padding: EdgeInsets
-                      //                                                 .symmetric(
-                      //                                                     vertical:
-                      //                                                         4),
-                      //                                           ),
-                      //                                           Row(
-                      //                                             mainAxisSize:
-                      //                                                 MainAxisSize
-                      //                                                     .min,
-                      //                                             children: [
-                      //                                               Icon(
-                      //                                                 Icons
-                      //                                                     .directions_rounded,
-                      //                                                 size: 16,
-                      //                                                 color: Colors
-                      //                                                     .black,
-                      //                                               ),
-                      //                                               Padding(
-                      //                                                 padding: EdgeInsets.symmetric(
-                      //                                                     horizontal:
-                      //                                                         4),
-                      //                                               ),
-                      //                                               Text(
-                      //                                                 "direction"
-                      //                                                     ,
-                      //                                                 style:
-                      //                                                     TextStyle(
-                      //                                                   color:
-                      //                                                      Theme.of(context).primaryColor,
-                      //                                                   fontSize:
-                      //                                                       12,
-                      //                                                 ),
-                      //                                               ),
-                      //                                             ],
-                      //                                           )
-                      //                                         ],
-                      //                                       ),
-                      //                                     ),
-                      //                                   ),
-                      //                                 ]),
-                      //                           ),
-                      //                         )
-                      //                     ],
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
+
                       SizedBox(
                         height: 60,
                       ),

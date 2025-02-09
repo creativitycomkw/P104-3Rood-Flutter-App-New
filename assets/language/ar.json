@@ -236,6 +236,7 @@
     "select_at_least_one_product": "حدد منتجًا واحدًا على الأقل.",
     "select_all_shipping_method": "حدد كل طريقة الشحن",
     "select_a_shipping_address": "حدد عنوان التسليم",
+    "select_a_branch": "حدد الفرع",
     "verify": "يؤكد",
     "please_select_shipping_method_for_all_seller": "يرجى تحديد طريقة الشحن لجميع البائعين",
     "not_logged_in": "لم تقم بتسجيل الدخول",

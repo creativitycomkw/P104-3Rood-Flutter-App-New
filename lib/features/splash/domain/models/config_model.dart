@@ -993,83 +993,47 @@ String branchToJson(List<Branch> data) =>
 
 class Branch {
   int? id;
-  String? name;
+  String? name_en;
+   String? name_ar;
   String? description;
   String? mapUrl;
-  String? slug;
-  String? icon;
-  String? iconStorageType;
-  int? parentId;
-  int? position;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-  int? homeStatus;
-  int? priority;
+  
   IconFullUrl? iconFullUrl;
-  List<dynamic>? translations;
+
 
   Branch({
     this.id,
-    this.name,
+    this.name_en,
+    this.name_ar,
     this.description,
     this.mapUrl,
-    this.slug,
-    this.icon,
-    this.iconStorageType,
-    this.parentId,
-    this.position,
-    this.createdAt,
-    this.updatedAt,
-    this.homeStatus,
-    this.priority,
+   
     this.iconFullUrl,
-    this.translations,
+
   });
 
   factory Branch.fromJson(Map<String, dynamic> json) => Branch(
         id: json["id"],
-        name: json["name"],
+        name_en: json["name_en"],
+         name_ar: json["name_ar"],
         description: json["description"],
         mapUrl: json["map_url"],
-        slug: json["slug"],
-        icon: json["icon"],
-        iconStorageType: json["icon_storage_type"],
-        parentId: json["parent_id"],
-        position: json["position"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null
-            ? null
-            : DateTime.parse(json["updated_at"]),
-        homeStatus: json["home_status"],
-        priority: json["priority"],
+      
         iconFullUrl: json["icon_full_url"] == null
             ? null
             : IconFullUrl.fromJson(json["icon_full_url"]),
-        translations: json["translations"] == null
-            ? []
-            : List<dynamic>.from(json["translations"]!.map((x) => x)),
+      
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "name": name,
+        "name_en": name_en,
+         "name_ar": name_ar,
         "description": description,
         "map_url": mapUrl,
-        "slug": slug,
-        "icon": icon,
-        "icon_storage_type": iconStorageType,
-        "parent_id": parentId,
-        "position": position,
-        "created_at": createdAt?.toIso8601String(),
-        "updated_at": updatedAt?.toIso8601String(),
-        "home_status": homeStatus,
-        "priority": priority,
+      
         "icon_full_url": iconFullUrl?.toJson(),
-        "translations": translations == null
-            ? []
-            : List<dynamic>.from(translations!.map((x) => x)),
+      
       };
 }
 

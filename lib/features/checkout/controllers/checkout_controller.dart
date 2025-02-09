@@ -58,6 +58,7 @@ class CheckoutController with ChangeNotifier {
       String? paymentNote,
       int? id,
       String? name,
+      String?branchId,
       bool isfOffline = false,
       bool wallet = false}) async {
     for (TextEditingController textEditingController
@@ -92,7 +93,7 @@ class CheckoutController with ChangeNotifier {
                     billingAddressId,
                     orderNote,
                     _isCheckCreateAccount,
-                    passwordController.text.trim())
+                    passwordController.text.trim(),branchId)
             : apiResponse =
                 await checkoutServiceInterface.cashOnDeliveryPlaceOrder(
                     addressID,
@@ -101,7 +102,7 @@ class CheckoutController with ChangeNotifier {
                     billingAddressId,
                     orderNote,
                     _isCheckCreateAccount,
-                    passwordController.text.trim());
+                    passwordController.text.trim(),branchId);
 
     if (apiResponse.response != null &&
         apiResponse.response!.statusCode == 200) {
@@ -132,7 +133,7 @@ class CheckoutController with ChangeNotifier {
     if(index!=null){
 Provider.of<ShippingController>(Get.context!, listen: false)
         .getAdminShippingMethodList(Get.context!,
-            countryId:
+          
                 Provider.of<AddressController>(Get.context!, listen: false)!
                     .addressList![index!]!
                     .country!);
@@ -271,13 +272,18 @@ Provider.of<ShippingController>(Get.context!, listen: false)
   }
 
   Future<ApiResponse> digitalPaymentPlaceOrder(
+    String? branchId,
       {String? orderNote,
       String? customerId,
       String? addressId,
       String? billingAddressId,
       String? couponCode,
       String? couponDiscount,
+      
       String? paymentMethod}) async {
+
+       
+        
     _isLoading = true;
 
     ApiResponse apiResponse =
@@ -290,7 +296,7 @@ Provider.of<ShippingController>(Get.context!, listen: false)
             couponDiscount,
             paymentMethod,
             _isCheckCreateAccount,
-            passwordController.text.trim());
+            passwordController.text.trim(),branchId);
     if (apiResponse.response != null &&
         apiResponse.response!.statusCode == 200) {
       _addressIndex = null;

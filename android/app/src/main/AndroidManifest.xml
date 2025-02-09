@@ -44,7 +44,9 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCFGqSEiWMItei_AFIUgdM53PWrvyGmjFY" />
+            android:value="AIzaSyA13pG1Qd48p72LxyETEgSkHHqvmmXA1po" />
+
+            
 
         <activity
             android:name=".MainActivity"
@@ -64,6 +66,17 @@
                 android:name="io.flutter.embedding.android.SplashScreenDrawable"
                 android:resource="@drawable/launch_background"
                 />
+
+                               <meta-data
+    android:name="com.onesignal.messaging.default_notification_icon"
+    android:resource="@drawable/ic_stat_onesignal_default" />
+
+<meta-data
+    android:name="com.onesignal.NotificationAccentColor.DEFAULT"
+    android:value="FFD21F3C" />
+              <meta-data
+    android:name="com.google.firebase.messaging.default_notification_icon"
+    android:resource="@mipmap/ic_stat_onesignal_default" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -77,6 +90,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+            
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
 
@@ -119,4 +133,7 @@
         </provider>
 
     </application>
+     <queries>
+        <package android:name="com.whatsapp"/>
+    </queries>
 </manifest>

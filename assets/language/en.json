@@ -236,6 +236,7 @@
     "select_at_least_one_product": "Select at least one product.",
     "select_all_shipping_method": "Select all shipping method",
     "select_a_shipping_address": "Select a delivery address",
+    "select_a_branch": "Select branch",
     "verify": "Verify",
     "please_select_shipping_method_for_all_seller": "Please select shipping method for all seller",
     "not_logged_in": "You are not logged in",

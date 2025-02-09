@@ -14,11 +14,12 @@ class ShippingMethodBottomSheetWidget extends StatefulWidget {
   final String? groupId;
   final int? sellerId;
   final int sellerIndex;
+  final Function callBack;
   const ShippingMethodBottomSheetWidget(
       {super.key,
       required this.groupId,
       required this.sellerId,
-      required this.sellerIndex});
+      required this.sellerIndex,required this.callBack});
 
   @override
   ShippingMethodBottomSheetWidgetState createState() =>
@@ -41,13 +42,13 @@ class ShippingMethodBottomSheetWidgetState
       //         .shippingIndex ??
       //     0;
     } else {
-      if (Provider.of<SplashController>(Get.context!, listen: false)
-              .configModel!
-              .shippingMethod !=
-          'sellerwise_shipping') {
-        Provider.of<ShippingController>(Get.context!, listen: false)
-            .getAdminShippingMethodList(Get.context!);
-      }
+      // if (Provider.of<SplashController>(Get.context!, listen: false)
+      //         .configModel!
+      //         .shippingMethod !=
+      //     'sellerwise_shipping') {
+      //   Provider.of<ShippingController>(Get.context!, listen: false)
+      //       .getAdminShippingMethodList(Get.context!,'2');
+      // }
     }
     super.initState();
   }
@@ -155,7 +156,7 @@ class ShippingMethodBottomSheetWidgetState
                                                         : Theme.of(context).cardColor),
                                                 child: InkWell(
                                                     onTap: () {
-                                                    
+                                                    widget.callBack();
 
                                                       setState(() {
                                                         selectedIndex = index;
